@@ -16,7 +16,7 @@ Aplikacija je pokrenuta i prikazuje se glavni meni.
 ### Alternativni tokovi:  
 A1. Izlazak iz aplikacije. Ukoliko igrač izađe iz aplikacije njegova podešavanja se gube. 
 
-###Podtokovi: 
+### Podtokovi: 
 /
 
 
