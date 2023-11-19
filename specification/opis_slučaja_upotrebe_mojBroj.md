@@ -1,10 +1,10 @@
-# Slučaj upotrebe: Igra "My number"
+# Slučaj upotrebe: Igra "Moj broj"
 
   
 
 ### Kratak opis:
 
-Igra "My number" se sastoji iz dve runde.  Za svaku rundu, aplikacija generiše jedan (traženi) broj 1-999, potom četiri jednocifrena (brojevi 1-9) i dva dvocifrena broja (brojeve 10,  15, 25, 50 ili 75). Koristeći operacije +, -, * i / igrači treba da dobiju što približnije rešenje traženom broju.
+Igra "Moj broj" se sastoji iz dve runde.  Za svaku rundu, aplikacija generiše jedan (traženi) broj 1-999, potom četiri jednocifrena (brojevi 1-9) i dva dvocifrena broja (brojeve 10,  15, 25, 50 ili 75). Koristeći operacije +, -, * i / igrači treba da dobiju što približnije rešenje traženom broju.
   
 
 ### Akteri:
@@ -13,11 +13,11 @@ Igrači
 
 ### Preduslovi:
 
-Završen je prethodni slučaj upotrebe, Igra _____ .
+Završen je prethodni slučaj upotrebe, Igra "Rečko" .
   
 ### Postuslovi:
 
-Rezultati partije igre "My number" se čuvaju. Prelazi se na slučaj upotrebe Igru ______.
+Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotrebe Igru "Pogodi šta".
 
 ### Osnovni tok:
 
@@ -46,7 +46,7 @@ Rezultati partije igre "My number" se čuvaju. Prelazi se na slučaj upotrebe Ig
         6.1.1. Prelazi se na korak 2.
       6.2. Ukoliko je završena druga runda
         6.2.1. Prelazi se na korak 7.
-    7. Prelazi se na slučaj upotrebe _____.
+    7. Prelazi se na slučaj upotrebe Igru "Pogodi šta".
   
 
 ### Alternativni tokovi:
@@ -66,15 +66,15 @@ Slučaj upotrebe se završava.
 
 ### Specijalni zahtevi:
 
-Postoji konekcija aplikacije sa serverom tokom trajanja igre.
+/
   
 
 ### Dodatne informacije:
 
-DI1.  Postoje dve runde igre.
+DI1. Postoje dve runde igre.
 
 DI2. Vremensko ograničenje jedne runde je 60s.
 
 DI3. Broj poena koji se dodeljuje igraču koji je pobedio u rundi je 10.
 
-DI4. Postupak se smatra neispravnim ukoliko ne postoji ili se javlja ???? greška.
+DI4. Postupak se smatra neispravnim ukoliko ne postoji ili se javlja sintaksna greška.
