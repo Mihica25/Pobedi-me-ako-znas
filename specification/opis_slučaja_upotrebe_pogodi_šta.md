@@ -64,9 +64,11 @@ Slučaj upotrebe se završava.
 ### Specijalni zahtevi
 Aplikacija i server su povezani međusobno.
 
-### Dodatne informacija: /
+### Dodatne informacija: 
+```
 D1 - Igra se sastoji iz dve partije (dve zagonetne slike) po 5 rundi
 
 D2 - Svaka runda traje 12 sekundi (celokupna partija 60 sekundi) 
 
 D3 - Pogodjeno rešenje nosi 25, 20, 15, 10, 5 poena po rundama 
+```
