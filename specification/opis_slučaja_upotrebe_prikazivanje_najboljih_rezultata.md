@@ -23,9 +23,9 @@ Informacije o najboljim rezultatima su prikazane na ekranu.
 
     4. Aplikacija prima podatke i prikazuje ih Igraču na ekranu.
 
-	3. Igrač bira dugme za povratak u glavni meni.
+	5. Igrač bira dugme za povratak u glavni meni.
 
-	4. Aplikacija prikazuje glavni meni.
+	6. Aplikacija prikazuje glavni meni.
 
 ### Alternativni tokovi: 
 A1: Neočekivani izlazak iz aplikacije. Ukoliko u bilo kojem koraku korisnik isključi aplikaciju, sve informacije o rezultatima ostaju upamćene. Aplikacija završava rad.
