@@ -11,7 +11,8 @@ Kratak opis: Igrači započinju jednu partiju igre. Dobijaju pitanje i 4 ponuđe
 ### Akteri:
 
 Igrač1 – igra jednu partiju igre
-&nbsp; Igrač2 – igra istu tu partiju igre
+&nbsp; 
+Igrač2 – igra istu tu partiju igre
 
 ### Preduslovi:
 
