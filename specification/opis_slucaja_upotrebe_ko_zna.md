@@ -44,7 +44,7 @@ Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe
                 2.5.3.3. Aplikacija konstruiše tajmer2 i započinje odbrojavanje
                 2.5.3.4. Igrač1 unosi broj
                 2.5.3.5. Igrač2 unosi broj
-`               2.5.3.6. Aplikacija proverava da li je isteklo vreme
+                2.5.3.6. Aplikacija proverava da li je isteklo vreme
                     2.5.3.6.1. Aplikacija proverava da li je Igrač1 bio bliži
                         2.5.3.6.1.1. Igrač1 dobija poene
 	    	            2.5.3.6.1.2. Prelazi se na korak 2.1.
