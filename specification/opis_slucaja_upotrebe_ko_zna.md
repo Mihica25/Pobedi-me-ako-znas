@@ -10,9 +10,7 @@ Kratak opis: Igrači započinju jednu partiju igre. Dobijaju pitanje i 4 ponuđe
 
 ### Akteri:
 
-Igrač1 – igra jednu partiju igre
-&nbsp; 
-Igrač2 – igra istu tu partiju igre
+Igrači
 
 ### Preduslovi:
 
@@ -28,36 +26,19 @@ Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe
     2. Dok ne prođu sva pitanja, ponvljaju se sledeći koraci:
         2.1. Aplikacija prikazuje pitanje sa 4 ponuđena odgovora
         2.2. Aplikacija konstruiše tajmer i započinje odbrojavanje
-        2.3. Igrač1 odgovara na pitanje
-        2.4. Igrač2 odgovara na pitanje
-        2.5. Aplikacija proverava da li je isteklo vreme
-            2.5.1. Aplikacija proverava da li je Igrač1 odgovorio tačno, a Igrač2 nije
-                2.5.1.1. Igrač1 dobija poene
-                2.5.1.2. Igrač2 dobija kaznene poene
-	            2.5.1.3. Prelazi se na korak 2.1.
-            2.5.2. Aplikacija proverava da li je Igrač2 odgovorio tačno, a Igrač1 nije
-                2.5.2.1. Igrač1 dobija kaznene poene
-	            2.5.2.2. Igrač2 dobija poene
-	            2.5.2.3. Prelazi se na korak 2.1.
-            2.5.3. Aplikacija proverava da li su oba igrača odgovorila tačno
-                2.5.3.1. Aplikacija otvara podrundu - pitanje
-                2.5.3.2. Aplikacija konstruiše tajmer1 i započinje odbrojavanje
-                2.5.3.3. Aplikacija konstruiše tajmer2 i započinje odbrojavanje
-                2.5.3.4. Igrač1 unosi broj
-                2.5.3.5. Igrač2 unosi broj
-                2.5.3.6. Aplikacija proverava da li je isteklo vreme
-                    2.5.3.6.1. Aplikacija proverava da li je Igrač1 bio bliži
-                        2.5.3.6.1.1. Igrač1 dobija poene
-	    	            2.5.3.6.1.2. Prelazi se na korak 2.1.
-                    2.5.3.6.2. Aplikacija proverava da li je Igrač2 bio bliži
-                        2.5.3.6.2.1. Igrač2 dobija poene
-	    	            2.5.3.6.2.2. Prelazi se na korak 2.1.
-                    2.5.3.6.3. Aplikacija proverava da li su rešenja oba igrača jednako udaljena od tačnog rešenja
-                        2.5.3.6.3.1. Aplikacija proverava da li je Igrač1 brže odgovorio
-                            2.5.3.6.3.1.1. Igrač1 dobija poene
-	    	    	        2.5.3.6.3.1.2. Prelazi se na korak 2.1.
-                        2.5.3.6.3.2. Aplikacija proverava da li je Igrač2 brže odgovorio
-                            2.5.3.6.3.2.1. Igrač2 dobija poene
+        2.3. Igrači imaju priliku do kraja isteka vremena na tajmeru da odgovore na pitanje
+        2.4. Aplikacija dodeljuje poene u odnosu na odgovore igrača
+            2.4.1. Ukoliko je samo jedan igrač odgovorio tačno na pitanje, dodeljuju mu se poeni
+            2.4.2. Ukoliko su neki ili oba igraca dali pogrešan odgovor, dobijaju kaznene poene
+            2.4.3. Ukoliko su oba igrača odgovorila tačno na pitanje
+	            2.4.3.1. Aplikacija otvara podrundu - pitanje
+                2.4.3.2. Aplikacija konstruiše novi tajmer i započinje odbrojavanje
+                2.4.3.3. Igrači unose broj
+                2.4.3.4. Aplikacija dodeljuje poene u odnosu na odgovore igrača
+                    2.4.3.4.1. Ukoliko je jedan igrač bio bliži odogovoru, dodeljuju mu se poeni
+                    2.4.3.4.2. Ukoliko su rešenja oba igrača jednako udaljena od tačnog odgovora, poeni se dodeljuju bržem
+                2.4.3.5 Prikazuje se tačan odogovor iz podrunde i prelazi na korak 3
+        2.5. Prikazuje se tačan odgovor
     3. Prelazi se na slučaj upotrebe „Čuvanje rezultata”
     4. Aplikacija prelazi na igru "Memorija"
   
