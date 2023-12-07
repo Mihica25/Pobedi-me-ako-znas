@@ -26,12 +26,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    wordlewindow.cpp
+    wordlewindow.cpp \
+    kozna.cpp \
+    mojbroj.cpp
+
 
 HEADERS += \
+    kozna.h \
         mainwindow.h \
+    mojbroj.h \
     wordlewindow.h
+
+
 
 FORMS += \
         mainwindow.ui \
-    wordlewindow.ui
+    wordlewindow.ui \
+    kozna.ui \
+    mojbroj.ui
+

@@ -1,21 +1,23 @@
-#include "mojbroj.h"
-#include "ui_mojbroj.h"
+#include "kozna.h"
+#include "ui_kozna.h"
 
-Mojbroj::Mojbroj(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Mojbroj)
+KoZna::KoZna(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::KoZna)
 {
     ui->setupUi(this);
 
     ui->setupUi(this);
-    QPixmap bkgnd("/home/user/pobedi-me-ako-znas/application/resources/moj_broj.png");
+    QPixmap bkgnd("/home/user/pobedi-me-ako-znas/application/resources/ko_zna.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
 }
 
-Mojbroj::~Mojbroj()
+KoZna::~KoZna()
 {
     delete ui;
 }
+

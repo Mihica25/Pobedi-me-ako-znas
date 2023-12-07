@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "wordlewindow.h"
+#include "kozna.h"
+#include "mojbroj.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,5 +11,13 @@ int main(int argc, char *argv[])
 //    w.show();
     WordleWindow ww;
     ww.show();
+
+    KoZna kz;
+    kz.show();
+
+
+    Mojbroj mb;
+    mb.show();
+
     return a.exec();
 }
