@@ -1,9 +1,9 @@
-#include "kozna.h"
-#include "ui_kozna.h"
+#include "podrundaui.h"
+#include "ui_podrundaui.h"
 
-KoZna::KoZna(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::KoZna)
+podrundaui::podrundaui(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::podrundaui)
 {
     ui->setupUi(this);
 
@@ -13,10 +13,9 @@ KoZna::KoZna(QWidget *parent)
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
-
 }
 
-KoZna::~KoZna()
+podrundaui::~podrundaui()
 {
     delete ui;
 }

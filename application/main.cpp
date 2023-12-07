@@ -3,6 +3,7 @@
 #include "wordlewindow.h"
 #include "kozna.h"
 #include "mojbroj.h"
+#include "podrundaui.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,6 +19,11 @@ int main(int argc, char *argv[])
 
     Mojbroj mb;
     mb.show();
+
+
+    podrundaui pr;
+    pr.show();
+
 
     return a.exec();
 }

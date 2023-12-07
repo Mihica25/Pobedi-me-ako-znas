@@ -28,14 +28,16 @@ SOURCES += \
         mainwindow.cpp \
     wordlewindow.cpp \
     kozna.cpp \
-    mojbroj.cpp
+    mojbroj.cpp \
+    podrundaui.cpp
 
 
 HEADERS += \
     kozna.h \
         mainwindow.h \
     mojbroj.h \
-    wordlewindow.h
+    wordlewindow.h \
+    podrundaui.h
 
 
 
@@ -43,5 +45,6 @@ FORMS += \
         mainwindow.ui \
     wordlewindow.ui \
     kozna.ui \
-    mojbroj.ui
+    mojbroj.ui \
+    podrundaui.ui
 
