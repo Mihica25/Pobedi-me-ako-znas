@@ -14,14 +14,14 @@ enum class GamePhase
 class MojBroj
 {
 public:
-    MojBroj() = default;
-    virtual ~MojBroj() = default;
+    MojBroj();
+    ~MojBroj()=default;
 
     void startGame();
     void endGame();
     void chooseNumber(int number);
     void chooseOperation(const std::string& operation);
-    void submitSolution(const std::string& solution);
+    void submitSolution(const std::string& solution, const std::string& indicator);
     void deleteLastInput();
 
     void test();
@@ -30,12 +30,13 @@ private:
     int targetNumber;
     std::vector<int> availableNumbers;
     std::vector<std::string> availableOperations;
-    std::string currentExpression;
-    GamePhase currentRound = GamePhase::Round1;
+    std::vector<std::string> currentExpression;
+    GamePhase currentRound;
 
     int generateTargetNumber();
     std::vector<int> generateInitialNumbers();
 
+    std::string vectorToString(const std::vector<std::string>& vec);
     bool validateExpression(const std::string& expression) const;
     int evaluateExpression(const std::string& expression) const;
 };

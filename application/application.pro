@@ -29,6 +29,7 @@ SOURCES += \
     wordlewindow.cpp \
     kozna.cpp \
     mojbroj.cpp \
+    mojbrojlogic.cpp \
     podrundaui.cpp
 
 
@@ -36,6 +37,7 @@ HEADERS += \
     kozna.h \
         mainwindow.h \
     mojbroj.h \
+    mojbrojlogic.hpp\
     wordlewindow.h \
     podrundaui.h
 

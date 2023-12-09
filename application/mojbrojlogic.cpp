@@ -6,14 +6,24 @@
 #include <string>
 #include <cstdlib>
 #include <sstream>
+#include <numeric>
+#include <algorithm>
 #include <stack>
 #include <cctype>
 
 /*
-MojBroj::MojBroj() {
-    // Constructor implementation, if any
-}
+    TODO:
+    1. solver - closest number
+    2. FIXME2 - 2 consecutive numbers
 */
+
+
+MojBroj::MojBroj()
+    : currentRound(GamePhase::Round1)
+    , availableOperations({"+", "-", "*", "/", "(", ")"})
+{
+    
+}
 
 void MojBroj::startGame()
 {
@@ -22,15 +32,12 @@ void MojBroj::startGame()
 
     targetNumber = generateTargetNumber();
     availableNumbers = generateInitialNumbers();
-    availableOperations = {"+", "-", "*", "/"};
-    currentExpression = "";
 
     // TODO: Implement your timer logic here
 
     // Test
     test();
 }
-
 
 void MojBroj::endGame()
 {
@@ -39,6 +46,7 @@ void MojBroj::endGame()
     // Reset variables
     targetNumber = 0;
     availableNumbers.clear();
+    currentExpression.clear();
 
     switch (currentRound)
     {
@@ -54,7 +62,6 @@ void MojBroj::endGame()
             break;
     }
 }
-
 
 int MojBroj::generateTargetNumber()
 {
@@ -83,14 +90,13 @@ std::vector<int> MojBroj::generateInitialNumbers()
     return initialNumbers;
 }
 
-
 void MojBroj::chooseNumber(int number)
 {
     auto it = std::find(availableNumbers.begin(), availableNumbers.end(), number);
 
     if (it != availableNumbers.end())
     {
-        currentExpression += std::to_string(number);
+        currentExpression.push_back(std::to_string(number));
         availableNumbers.erase(it);
     }
     else
@@ -99,26 +105,34 @@ void MojBroj::chooseNumber(int number)
     }
 }
 
-void MojBroj::chooseOperation(const std::string& operation) {
-    currentExpression += operation;
+void MojBroj::chooseOperation(const std::string& operation)
+{
+    currentExpression.push_back(operation);
 }
 
-// FIXME: example: 5*20 --del--> 5*2 and returned available number is 0  (incorrect)
-//                 5*20 --del--> 5*  and returned available number is 20 (correct)
 void MojBroj::deleteLastInput()
 {
     if (!currentExpression.empty())
     {
-        char lastChar = currentExpression.back();
+        std::string lastElement = currentExpression.back();
+        
+        // Pokušaj konverzije u broj
+        char* endptr;
+        int number = std::strtol(lastElement.c_str(), &endptr, 10);
 
-        if (std::isdigit(lastChar))
+        if (*endptr == '\0')\
         {
-            int lastNumber = lastChar - '0';
-            availableNumbers.push_back(lastNumber);
+            // Ako je unesen broj
+            availableNumbers.push_back(number);
         }
-
+        
         currentExpression.pop_back();
     }
+}
+
+std::string MojBroj::vectorToString(const std::vector<std::string>& vec)
+{
+    return std::accumulate(vec.begin(), vec.end(), std::string());;
 }
 
 bool MojBroj::validateExpression(const std::string& expression) const
@@ -137,25 +151,52 @@ bool MojBroj::validateExpression(const std::string& expression) const
         return false;
     }
 
+    std::stack<char> brackets;
+
+    for (char token : expression)
+    {
+        if (token == '(')
+        {
+            brackets.push(token);
+        } else if (token == ')')
+        {
+            if (brackets.empty())
+            {
+                std::cout << "Neispravno zadat izraz: Neuparena zagrada ')'" << std::endl;
+                return false;
+            } else
+            {
+                brackets.pop();
+            }
+        }
+    }
+
+    if (!brackets.empty())
+    {
+        std::cout << "Neispravno zadat izraz: Neuparena zagrada '('." << std::endl;
+        return false;
+    }
+
     return true;
 }
 
-int MojBroj::evaluateExpression(const std::string& expression) const {
-    
+int MojBroj::evaluateExpression(const std::string& expression) const
+{
     if (!validateExpression(expression))
     {
         std::cout << "Neispravan postupak." << std::endl;
         return -1;  // or another specific value
     }
-   
-   
-    auto priority = [](char op) {
+
+    auto priority = [](char op)
+    {
         if (op == '*' || op == '/') return 2;
         if (op == '+' || op == '-') return 1;
         return 0;
     };
 
-    auto applyOperation = [](int a, int b, char op) {
+    auto applyOperation = [](int a, int b, char op)
+    {
         switch (op) {
             case '+': return a + b;
             case '-': return a - b;
@@ -171,14 +212,37 @@ int MojBroj::evaluateExpression(const std::string& expression) const {
     std::istringstream iss(expression);
     char token;
 
-    while (iss >> token) {
-        if (isdigit(token)) {
+    while (iss >> token)
+    {
+        if (isdigit(token))
+        {
             iss.putback(token);
             int number;
             iss >> number;
             numbers.push(number);
-        } else if (token == '+' || token == '-' || token == '*' || token == '/') {
-            while (!operations.empty() && priority(operations.top()) >= priority(token)) {
+        } else if (token == '(')
+        {
+            // Ako je otvorena zagrada, stavi operaciju na stek
+            operations.push(token);
+        } else if (token == ')')
+        {
+            // Ako je zatvorena zagrada, izvrši operacije unutar zagrada
+            while (!operations.empty() && operations.top() != '(')
+            {
+                int b = numbers.top();
+                numbers.pop();
+                int a = numbers.top();
+                numbers.pop();
+                char op = operations.top();
+                operations.pop();
+                numbers.push(applyOperation(a, b, op));
+            }
+            operations.pop();  // Skloni otvorenu zagradu sa steka
+        } else if (token == '+' || token == '-' || token == '*' || token == '/')
+        {
+            // Ako je operator, izvrši operacije sa operatorima većim prioriteta
+            while (!operations.empty() && priority(operations.top()) >= priority(token))
+            {
                 int b = numbers.top();
                 numbers.pop();
                 int a = numbers.top();
@@ -191,7 +255,8 @@ int MojBroj::evaluateExpression(const std::string& expression) const {
         }
     }
 
-    while (!operations.empty()) {
+    while (!operations.empty())
+    {
         int b = numbers.top();
         numbers.pop();
         int a = numbers.top();
@@ -204,15 +269,23 @@ int MojBroj::evaluateExpression(const std::string& expression) const {
     return numbers.top();
 }
 
-void MojBroj::submitSolution(const std::string& solution)
+void MojBroj::submitSolution(const std::string& solution, const std::string& indicator)
 {
-    if (solution == "-1" || solution == "-2")
+    if (indicator == "-179")
     {   
         // TODO: player "X" -> points to opponent?
-        std::cout<<"KORISNIK PREKINUO ili PREDAO PRAZAN POSTUPAK RESAVANJA"<<std::endl;
+        std::cout<<"KORISNIK PREDAO PRAZAN POSTUPAK RESAVANJA"<<std::endl;
         endGame();
         return;
+    } else if (indicator == "-219")
+    {
+        // TODO: player "X" -> points to opponent?
+        std::cout<<"KORISNIK PREKINUO POSTUPAK RESAVANJA"<<std::endl;
+        endGame();
+        return;
+
     }
+
 
     int result = evaluateExpression(solution);
 
@@ -228,7 +301,8 @@ void MojBroj::submitSolution(const std::string& solution)
     // TODO: compare results with opponent
     std::cout << "Konacni postupak: " << solution << std::endl;
     std::cout << "Rastojanje od traženog broja je: " << difference << std::endl;
-
+    std::cout << "---------------------------\n" << std::endl;
+        
     endGame();
 }
 
@@ -238,42 +312,50 @@ void MojBroj::test()
     std::cout << "---------------------"<<std::endl;
     std::cout << "| Traženi broj: " << targetNumber << " |"<< std::endl;
     std::cout << "---------------------"<<std::endl;
-    // FIXME: 2 consecutive numbers in an expression are 1 number (incorrect)
-
+    
+    std::string indicator;
+    std::string expression;
+    std::string userInput;
+    
     // Unos brojeva i operacija sve dok ne unesemo slovo X
-    while (true) {
+    while (true)
+    {
         // Prikazujemo trenutni izraz
-        std::cout << "Trenutni izraz: " << currentExpression << std::endl;
+        expression = vectorToString(currentExpression);
+        std::cout << "Trenutni izraz: " << expression << std::endl;
 
         // Ispisujemo dostupne brojeve i operacije
         std::cout << "Dostupni brojevi: ";
-        for (int num : availableNumbers) {
+        for (int num : availableNumbers)
+        {
             std::cout << num << " ";
         }
         std::cout << std::endl;
         std::cout << "Dostupne operacije: ";
-        for (const std::string& op : availableOperations) {
+        for (const std::string& op : availableOperations)
+        {
             std::cout << op << " ";
         }
         std::cout << std::endl;
 
         // Korisnik unosi broj, operaciju ili "del" za brisanje poslednjeg unosa
         std::cout << "Unesi broj, operaciju ili 'del' za brisanje poslednjeg unosa (X za izlaz - POTVRDI za potvrdu): ";
-        std::string userInput;
         std::cin >> userInput;
-
+        std::cout << "---------------------------" << std::endl;
+        
         // Konvertujemo korisnički unos u odgovarajući tip
-        if (userInput == "POTVRDA")  {
+        if (userInput == "POTVRDA")
+        {
             // Korisnik predao odgovor ili je postupak zavrsen
             std::cout<<"POTVRDA"<<std::endl;
-            if (currentExpression == "")
-                currentExpression = "-2";
+            if (currentExpression.empty())
+                indicator = "-179";           // indikator za prazan postupak
             break;
-        } else if (userInput == "X" || userInput == "x") {
+        } else if (userInput == "X" || userInput == "x")
+        {
             // Provera da li korisnik želi izlaz
-            currentExpression.clear();
-            currentExpression = "-1";
             std::cout<<"IZLAZ"<<std::endl;
+            indicator = "-219";     // indikator za izlaz
             break;
         } else if (userInput == "del") {
             // Ako je unet "del", brišemo poslednji unos
@@ -284,22 +366,31 @@ void MojBroj::test()
             int number = std::strtol(userInput.c_str(), &endptr, 10);
 
             if (*endptr == '\0') {
-                // Ako je unesen broj
+                // input is a number
+
+                // FIXME2: 2 consecutive numbers in an expression are 1 number (incorrect)
+                // Current input is number, but is previos also a number?
+                
                 chooseNumber(number);
+
                 if (availableNumbers.size() == 0)
                 {
                     std::cout<<"POTVRDA(kraj postupka)"<<std::endl;   
                     break;
                 }
-            } else if (userInput == "+" || userInput == "-" || userInput == "*" || userInput == "/") {
-                // Ako je uneta operacija
+            } else if (userInput == "+" || userInput == "-" || userInput == "*" || userInput == "/" || userInput == "(" || userInput == ")" )
+            {
+                // input is an operation
                 chooseOperation(userInput);
-            } else {
-                // Ako korisnik unese nešto što nije broj, operacija ili "del"
+            } else
+            {
+                // input is not a number nor an operation
                 std::cout << "Nevažeći unos. Unesi broj, operaciju ili 'del' za brisanje poslednjeg unosa." << std::endl;
             }
         }
     }
 
-    submitSolution(currentExpression);
+    expression = vectorToString(currentExpression); 
+
+    submitSolution(expression, indicator);
 }
