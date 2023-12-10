@@ -8,7 +8,7 @@ Mojbroj::Mojbroj(QWidget *parent) :
     ui->setupUi(this);
 
     ui->setupUi(this);
-    QPixmap bkgnd("/home/user/pobedi-me-ako-znas/application/resources/moj_broj.png");
+    QPixmap bkgnd(":background/resources/moj_broj.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
