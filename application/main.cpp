@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
     kz.show();
 
 
-    Mojbroj mb;
+   /* Mojbroj mb;
     mb.show();
-
+*/
 
     podrundaui pr;
     pr.show();

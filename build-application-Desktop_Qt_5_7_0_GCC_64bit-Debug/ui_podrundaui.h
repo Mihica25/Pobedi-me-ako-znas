@@ -38,16 +38,17 @@ public:
         podrundaui->setMaximumSize(QSize(400, 300));
         label = new QLabel(podrundaui);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(30, 150, 111, 31));
+        label->setGeometry(QRect(30, 170, 111, 31));
         pushButton = new QPushButton(podrundaui);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(270, 150, 80, 31));
+        pushButton->setGeometry(QRect(270, 170, 80, 31));
         textEdit = new QTextEdit(podrundaui);
         textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(150, 150, 104, 31));
+        textEdit->setGeometry(QRect(150, 170, 91, 31));
         label_2 = new QLabel(podrundaui);
         label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(60, 50, 271, 51));
+        label_2->setGeometry(QRect(60, 100, 271, 41));
+        label_2->setStyleSheet(QStringLiteral("background-color: white"));
 
         retranslateUi(podrundaui);
 
