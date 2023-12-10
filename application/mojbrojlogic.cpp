@@ -35,7 +35,7 @@ void MojBrojLogic::startGame()
     // TODO: Implement your timer logic here
 
     // Test
-    test();
+    //test();
 }
 
 void MojBrojLogic::endGame()

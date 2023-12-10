@@ -26,6 +26,10 @@ public:
 
     void test();
 
+    int targetNumber;
+    std::vector<int> availableNumbers;
+
+private:
     std::vector<std::string> availableOperations;
     std::vector<std::string> currentExpression;
     GamePhase currentRound;
@@ -36,10 +40,6 @@ public:
     std::string vectorToString(const std::vector<std::string>& vec);
     bool validateExpression(const std::string& expression) const;
     int evaluateExpression(const std::string& expression) const;
-
-private:
-    int targetNumber;
-    std::vector<int> availableNumbers;
 
 };
 

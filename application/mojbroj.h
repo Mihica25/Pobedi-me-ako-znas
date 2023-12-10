@@ -20,11 +20,14 @@ private:
     Ui::Mojbroj *ui;
     MojBrojLogic *m_mojbroj;
 
-    void setNumbers();
     void initGame();
+    void deinitGame();
+    void setNumbers();
+
 
 private slots:
-    void buttonPressed();
+    void buttonPressedNum();
+    void buttonPressedOp();
     void del();
 };
 

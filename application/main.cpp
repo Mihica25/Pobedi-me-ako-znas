@@ -16,10 +16,8 @@ int main(int argc, char *argv[])
 //    KoZna kz;
 //    kz.show();
 
-
     Mojbroj mb;
     mb.show();
-
 
 //    podrundaui pr;
 //    pr.show();
