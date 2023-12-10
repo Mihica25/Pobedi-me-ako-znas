@@ -1,14 +1,14 @@
-#include "kozna.h"
-#include "ui_kozna.h"
+#include "pocetniekran.h"
+#include "ui_pocetniekran.h"
 
-KoZna::KoZna(QWidget *parent)
+PocetniEkran::PocetniEkran(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::KoZna)
+    , ui(new Ui::PocetniEkran)
 {
     ui->setupUi(this);
 
     ui->setupUi(this);
-    QPixmap bkgnd(":/background/resources/ko_zna.png");
+    QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -16,7 +16,7 @@ KoZna::KoZna(QWidget *parent)
 
 }
 
-KoZna::~KoZna()
+PocetniEkran::~PocetniEkran()
 {
     delete ui;
 }

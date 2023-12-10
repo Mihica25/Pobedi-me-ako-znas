@@ -29,13 +29,15 @@ SOURCES += \
     wordlewindow.cpp \
     kozna.cpp \
     mojbroj.cpp \
-    podrundaui.cpp
+    podrundaui.cpp \
+    pocetniekran.cpp
 
 
 HEADERS += \
     kozna.h \
         mainwindow.h \
     mojbroj.h \
+    pocetniekran.h \
     wordlewindow.h \
     podrundaui.h
 
@@ -46,5 +48,8 @@ FORMS += \
     wordlewindow.ui \
     kozna.ui \
     mojbroj.ui \
-    podrundaui.ui
+    podrundaui.ui \
+    pocetniekran.ui
+
+RESOURCES += resources.qrc
 

@@ -1,11 +1,7 @@
 <RCC>
     <qresource prefix="/background">
         <file>resources/pogodi_sta.png</file>
+        <file>resources/ko_zna.png</file>
+        <file>resources/start_menu.png</file>
     </qresource>
-    <qresource prefix="/guess_img">
-        <file>resources/guessing_images/londonsko_oko.jpg</file>
-        <file>resources/guessing_images/nikola_tesla.jpg</file>
-        <file>resources/guessing_images/majkl_dzordan.jpg</file>
-    </qresource>
-    <qresource prefix="/new/prefix1"/>
 </RCC>
