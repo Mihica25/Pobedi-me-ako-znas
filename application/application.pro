@@ -29,17 +29,23 @@ SOURCES += \
     wordlewindow.cpp \
     kozna.cpp \
     mojbroj.cpp \
+    mojbrojlogic.cpp \
     podrundaui.cpp \
-    pocetniekran.cpp
+    pocetniekran.cpp \
+
+
+
+
 
 
 HEADERS += \
     kozna.h \
         mainwindow.h \
     mojbroj.h \
-    pocetniekran.h \
+    mojbrojlogic.hpp\
     wordlewindow.h \
-    podrundaui.h
+    podrundaui.h \
+    pocetniekran.h \
 
 
 
