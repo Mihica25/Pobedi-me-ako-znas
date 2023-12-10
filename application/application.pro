@@ -24,11 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    game.cpp \
         main.cpp \
         mainwindow.cpp \
     wordlewindow.cpp
 
 HEADERS += \
+    game.h \
         mainwindow.h \
     wordlewindow.h
 

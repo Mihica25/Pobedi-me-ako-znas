@@ -35,7 +35,7 @@ void WordleWindow::newWordle(){
 }
 
 void WordleWindow::setUpBackground(){
-    QPixmap background("/home/dida/Desktop/pobedi-me-ako-znas/application/resources/recko.png");
+    QPixmap background("/home/user/Desktop/pobedi-me-ako-znas/application/resources/recko.png");
     background.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, background);
