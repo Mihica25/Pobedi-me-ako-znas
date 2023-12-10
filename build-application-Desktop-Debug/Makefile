@@ -57,28 +57,30 @@ SOURCES       = ../application/main.cpp \
 		../application/wordlewindow.cpp \
 		../application/kozna.cpp \
 		../application/mojbroj.cpp \
+		../application/mojbrojlogic.cpp \
 		../application/podrundaui.cpp \
 		../application/pocetniekran.cpp qrc_resources.cpp \
 		moc_kozna.cpp \
 		moc_mainwindow.cpp \
 		moc_mojbroj.cpp \
-		moc_pocetniekran.cpp \
 		moc_wordlewindow.cpp \
-		moc_podrundaui.cpp
+		moc_podrundaui.cpp \
+		moc_pocetniekran.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		wordlewindow.o \
 		kozna.o \
 		mojbroj.o \
+		mojbrojlogic.o \
 		podrundaui.o \
 		pocetniekran.o \
 		qrc_resources.o \
 		moc_kozna.o \
 		moc_mainwindow.o \
 		moc_mojbroj.o \
-		moc_pocetniekran.o \
 		moc_wordlewindow.o \
-		moc_podrundaui.o
+		moc_podrundaui.o \
+		moc_pocetniekran.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -158,13 +160,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../application/application.pro ../application/kozna.h \
 		../application/mainwindow.h \
 		../application/mojbroj.h \
-		../application/pocetniekran.h \
+		../application/mojbrojlogic.hpp \
 		../application/wordlewindow.h \
-		../application/podrundaui.h ../application/main.cpp \
+		../application/podrundaui.h \
+		../application/pocetniekran.h ../application/main.cpp \
 		../application/mainwindow.cpp \
 		../application/wordlewindow.cpp \
 		../application/kozna.cpp \
 		../application/mojbroj.cpp \
+		../application/mojbrojlogic.cpp \
 		../application/podrundaui.cpp \
 		../application/pocetniekran.cpp
 QMAKE_TARGET  = application
@@ -351,8 +355,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/kozna.h ../application/mainwindow.h ../application/mojbroj.h ../application/pocetniekran.h ../application/wordlewindow.h ../application/podrundaui.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/main.cpp ../application/mainwindow.cpp ../application/wordlewindow.cpp ../application/kozna.cpp ../application/mojbroj.cpp ../application/podrundaui.cpp ../application/pocetniekran.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/kozna.h ../application/mainwindow.h ../application/mojbroj.h ../application/mojbrojlogic.hpp ../application/wordlewindow.h ../application/podrundaui.h ../application/pocetniekran.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/main.cpp ../application/mainwindow.cpp ../application/wordlewindow.cpp ../application/kozna.cpp ../application/mojbroj.cpp ../application/mojbrojlogic.cpp ../application/podrundaui.cpp ../application/pocetniekran.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/mainwindow.ui ../application/wordlewindow.ui ../application/kozna.ui ../application/mojbroj.ui ../application/podrundaui.ui ../application/pocetniekran.ui $(DISTDIR)/
 
 
@@ -393,9 +397,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_kozna.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_pocetniekran.cpp moc_wordlewindow.cpp moc_podrundaui.cpp
+compiler_moc_header_make_all: moc_kozna.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_wordlewindow.cpp moc_podrundaui.cpp moc_pocetniekran.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_kozna.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_pocetniekran.cpp moc_wordlewindow.cpp moc_podrundaui.cpp
+	-$(DEL_FILE) moc_kozna.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_wordlewindow.cpp moc_podrundaui.cpp moc_pocetniekran.cpp
 moc_kozna.cpp: ../application/kozna.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -411,11 +415,6 @@ moc_mojbroj.cpp: ../application/mojbroj.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/mojbroj.h -o moc_mojbroj.cpp
 
-moc_pocetniekran.cpp: ../application/pocetniekran.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/pocetniekran.h -o moc_pocetniekran.cpp
-
 moc_wordlewindow.cpp: ../application/wordlewindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -425,6 +424,11 @@ moc_podrundaui.cpp: ../application/podrundaui.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/podrundaui.h -o moc_podrundaui.cpp
+
+moc_pocetniekran.cpp: ../application/pocetniekran.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/pocetniekran.h -o moc_pocetniekran.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -471,7 +475,8 @@ main.o: ../application/main.cpp ../application/mainwindow.h \
 		../application/wordlewindow.h \
 		../application/kozna.h \
 		../application/mojbroj.h \
-		../application/podrundaui.h
+		../application/podrundaui.h \
+		../application/pocetniekran.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../application/main.cpp
 
 mainwindow.o: ../application/mainwindow.cpp ../application/mainwindow.h \
@@ -489,6 +494,9 @@ kozna.o: ../application/kozna.cpp ../application/kozna.h \
 mojbroj.o: ../application/mojbroj.cpp ../application/mojbroj.h \
 		ui_mojbroj.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mojbroj.o ../application/mojbroj.cpp
+
+mojbrojlogic.o: ../application/mojbrojlogic.cpp ../application/mojbrojlogic.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mojbrojlogic.o ../application/mojbrojlogic.cpp
 
 podrundaui.o: ../application/podrundaui.cpp ../application/podrundaui.h \
 		ui_podrundaui.h
@@ -510,14 +518,14 @@ moc_mainwindow.o: moc_mainwindow.cpp
 moc_mojbroj.o: moc_mojbroj.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mojbroj.o moc_mojbroj.cpp
 
-moc_pocetniekran.o: moc_pocetniekran.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pocetniekran.o moc_pocetniekran.cpp
-
 moc_wordlewindow.o: moc_wordlewindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_wordlewindow.o moc_wordlewindow.cpp
 
 moc_podrundaui.o: moc_podrundaui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_podrundaui.o moc_podrundaui.cpp
+
+moc_pocetniekran.o: moc_pocetniekran.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_pocetniekran.o moc_pocetniekran.cpp
 
 ####### Install
 

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'podrundaui.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.12.8
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,10 +10,7 @@
 #define UI_PODRUNDAUI_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTextEdit>
@@ -32,20 +29,23 @@ public:
     void setupUi(QWidget *podrundaui)
     {
         if (podrundaui->objectName().isEmpty())
-            podrundaui->setObjectName(QStringLiteral("podrundaui"));
-        podrundaui->resize(395, 246);
+            podrundaui->setObjectName(QString::fromUtf8("podrundaui"));
+        podrundaui->resize(400, 300);
+        podrundaui->setMinimumSize(QSize(400, 300));
+        podrundaui->setMaximumSize(QSize(400, 300));
         label = new QLabel(podrundaui);
-        label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(30, 150, 111, 31));
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(30, 170, 111, 31));
         pushButton = new QPushButton(podrundaui);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        pushButton->setGeometry(QRect(270, 150, 80, 31));
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(270, 170, 80, 31));
         textEdit = new QTextEdit(podrundaui);
-        textEdit->setObjectName(QStringLiteral("textEdit"));
-        textEdit->setGeometry(QRect(150, 150, 104, 31));
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(150, 170, 91, 31));
         label_2 = new QLabel(podrundaui);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(60, 50, 271, 51));
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(60, 100, 271, 41));
+        label_2->setStyleSheet(QString::fromUtf8("background-color: white"));
 
         retranslateUi(podrundaui);
 
@@ -54,10 +54,10 @@ public:
 
     void retranslateUi(QWidget *podrundaui)
     {
-        podrundaui->setWindowTitle(QApplication::translate("podrundaui", "podrundaui", 0));
-        label->setText(QApplication::translate("podrundaui", "Unesite odgovor:", 0));
-        pushButton->setText(QApplication::translate("podrundaui", "Odgovori", 0));
-        label_2->setText(QApplication::translate("podrundaui", "<html><head/><body><p align=\"center\">PITANJE</p></body></html>", 0));
+        podrundaui->setWindowTitle(QApplication::translate("podrundaui", "podrundaui", nullptr));
+        label->setText(QApplication::translate("podrundaui", "Unesite odgovor:", nullptr));
+        pushButton->setText(QApplication::translate("podrundaui", "Odgovori", nullptr));
+        label_2->setText(QApplication::translate("podrundaui", "<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">PITANJE</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };
