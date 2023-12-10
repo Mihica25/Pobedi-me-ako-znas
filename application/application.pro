@@ -26,28 +26,28 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    wordlewindow.cpp \
-    kozna.cpp \
-    mojbroj.cpp \
-    mojbrojlogic.cpp \
-    podrundaui.cpp
+        mojbrojlogic.cpp \
+        wordlewindow.cpp \
+        kozna.cpp \
+        mojbroj.cpp \
+        podrundaui.cpp
 
 
 HEADERS += \
-    kozna.h \
+        kozna.h \
         mainwindow.h \
-    mojbroj.h \
-    mojbrojlogic.hpp\
-    wordlewindow.h \
-    podrundaui.h
+        mojbroj.h \
+        mojbrojlogic.h \
+        wordlewindow.h \
+        podrundaui.h
 
 RESOURCES += resources.qrc
 
 
 FORMS += \
         mainwindow.ui \
-    wordlewindow.ui \
-    kozna.ui \
-    mojbroj.ui \
-    podrundaui.ui
+        wordlewindow.ui \
+        kozna.ui \
+        mojbroj.ui \
+        podrundaui.ui
 

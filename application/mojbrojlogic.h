@@ -1,5 +1,5 @@
-#ifndef MOJBROJLOGIC_HPP
-#define MOJBROJLOGIC_HPP
+#ifndef MOJBROJLOGIC_H
+#define MOJBROJLOGIC_H
 
 #include <vector>
 #include <string>
@@ -11,11 +11,11 @@ enum class GamePhase
     End
 };
 
-class MojBroj
+class MojBrojLogic
 {
 public:
-    MojBroj();
-    ~MojBroj()=default;
+    MojBrojLogic();
+    ~MojBrojLogic()=default;
 
     void startGame();
     void endGame();
@@ -26,9 +26,6 @@ public:
 
     void test();
 
-private:
-    int targetNumber;
-    std::vector<int> availableNumbers;
     std::vector<std::string> availableOperations;
     std::vector<std::string> currentExpression;
     GamePhase currentRound;
@@ -39,6 +36,11 @@ private:
     std::string vectorToString(const std::vector<std::string>& vec);
     bool validateExpression(const std::string& expression) const;
     int evaluateExpression(const std::string& expression) const;
+
+private:
+    int targetNumber;
+    std::vector<int> availableNumbers;
+
 };
 
-#endif // MOJBROJLOGIC_HPP
+#endif // MOJBROJLOGIC_H

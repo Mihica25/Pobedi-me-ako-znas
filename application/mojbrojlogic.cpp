@@ -1,4 +1,4 @@
-#include "mojbrojlogic.hpp"
+#include "mojbrojlogic.h"
 #include <iostream>
 #include <cstdlib>  // For rand() function
 #include <vector>
@@ -18,14 +18,13 @@
 */
 
 
-MojBroj::MojBroj()
-    : currentRound(GamePhase::Round1)
-    , availableOperations({"+", "-", "*", "/", "(", ")"})
+MojBrojLogic::MojBrojLogic()
 {
-    
+    currentRound = GamePhase::Round1;
+    availableOperations = {"+", "-", "*", "/", "(", ")"};
 }
 
-void MojBroj::startGame()
+void MojBrojLogic::startGame()
 {
     // Initialize random seed
     std::srand(static_cast<unsigned>(std::time(nullptr)));
@@ -39,7 +38,7 @@ void MojBroj::startGame()
     test();
 }
 
-void MojBroj::endGame()
+void MojBrojLogic::endGame()
 {
     // TODO: Implement timer destruction logic
 
@@ -63,13 +62,13 @@ void MojBroj::endGame()
     }
 }
 
-int MojBroj::generateTargetNumber()
+int MojBrojLogic::generateTargetNumber()
 {
     // Generate a random number between 1 and 1000
     return rand() % 999 + 1;
 }
 
-std::vector<int> MojBroj::generateInitialNumbers()
+std::vector<int> MojBrojLogic::generateInitialNumbers()
 {
     std::vector<int> initialNumbers;
 
@@ -90,7 +89,7 @@ std::vector<int> MojBroj::generateInitialNumbers()
     return initialNumbers;
 }
 
-void MojBroj::chooseNumber(int number)
+void MojBrojLogic::chooseNumber(int number)
 {
     auto it = std::find(availableNumbers.begin(), availableNumbers.end(), number);
 
@@ -105,17 +104,17 @@ void MojBroj::chooseNumber(int number)
     }
 }
 
-void MojBroj::chooseOperation(const std::string& operation)
+void MojBrojLogic::chooseOperation(const std::string& operation)
 {
     currentExpression.push_back(operation);
 }
 
-void MojBroj::deleteLastInput()
+void MojBrojLogic::deleteLastInput()
 {
     if (!currentExpression.empty())
     {
         std::string lastElement = currentExpression.back();
-        
+
         // Pokušaj konverzije u broj
         char* endptr;
         int number = std::strtol(lastElement.c_str(), &endptr, 10);
@@ -125,17 +124,17 @@ void MojBroj::deleteLastInput()
             // Ako je unesen broj
             availableNumbers.push_back(number);
         }
-        
+
         currentExpression.pop_back();
     }
 }
 
-std::string MojBroj::vectorToString(const std::vector<std::string>& vec)
+std::string MojBrojLogic::vectorToString(const std::vector<std::string>& vec)
 {
     return std::accumulate(vec.begin(), vec.end(), std::string());;
 }
 
-bool MojBroj::validateExpression(const std::string& expression) const
+bool MojBrojLogic::validateExpression(const std::string& expression) const
 {
     std::regex consecutiveOperationsRegex("[+\\-*\\/]{2,}");
     if (std::regex_search(expression, consecutiveOperationsRegex))
@@ -180,7 +179,7 @@ bool MojBroj::validateExpression(const std::string& expression) const
     return true;
 }
 
-int MojBroj::evaluateExpression(const std::string& expression) const
+int MojBrojLogic::evaluateExpression(const std::string& expression) const
 {
     if (!validateExpression(expression))
     {
@@ -269,10 +268,10 @@ int MojBroj::evaluateExpression(const std::string& expression) const
     return numbers.top();
 }
 
-void MojBroj::submitSolution(const std::string& solution, const std::string& indicator)
+void MojBrojLogic::submitSolution(const std::string& solution, const std::string& indicator)
 {
     if (indicator == "-179")
-    {   
+    {
         // TODO: player "X" -> points to opponent?
         std::cout<<"KORISNIK PREDAO PRAZAN POSTUPAK RESAVANJA"<<std::endl;
         endGame();
@@ -302,21 +301,21 @@ void MojBroj::submitSolution(const std::string& solution, const std::string& ind
     std::cout << "Konacni postupak: " << solution << std::endl;
     std::cout << "Rastojanje od traženog broja je: " << difference << std::endl;
     std::cout << "---------------------------\n" << std::endl;
-        
+
     endGame();
 }
 
-void MojBroj::test()
+void MojBrojLogic::test()
 {
     // Ispisujemo dobijene vrednosti u toku igre
     std::cout << "---------------------"<<std::endl;
     std::cout << "| Traženi broj: " << targetNumber << " |"<< std::endl;
     std::cout << "---------------------"<<std::endl;
-    
+
     std::string indicator;
     std::string expression;
     std::string userInput;
-    
+
     // Unos brojeva i operacija sve dok ne unesemo slovo X
     while (true)
     {
@@ -342,7 +341,7 @@ void MojBroj::test()
         std::cout << "Unesi broj, operaciju ili 'del' za brisanje poslednjeg unosa (X za izlaz - POTVRDI za potvrdu): ";
         std::cin >> userInput;
         std::cout << "---------------------------" << std::endl;
-        
+
         // Konvertujemo korisnički unos u odgovarajući tip
         if (userInput == "POTVRDA")
         {
@@ -370,12 +369,12 @@ void MojBroj::test()
 
                 // FIXME2: 2 consecutive numbers in an expression are 1 number (incorrect)
                 // Current input is number, but is previos also a number?
-                
+
                 chooseNumber(number);
 
                 if (availableNumbers.size() == 0)
                 {
-                    std::cout<<"POTVRDA(kraj postupka)"<<std::endl;   
+                    std::cout<<"POTVRDA(kraj postupka)"<<std::endl;
                     break;
                 }
             } else if (userInput == "+" || userInput == "-" || userInput == "*" || userInput == "/" || userInput == "(" || userInput == ")" )
@@ -390,7 +389,7 @@ void MojBroj::test()
         }
     }
 
-    expression = vectorToString(currentExpression); 
+    expression = vectorToString(currentExpression);
 
     submitSolution(expression, indicator);
 }
