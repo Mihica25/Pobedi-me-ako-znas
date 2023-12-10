@@ -24,14 +24,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    game.cpp \
         main.cpp \
         mainwindow.cpp \
-    wordlewindow.cpp \
     kozna.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
     podrundaui.cpp \
     pocetniekran.cpp \
+    recko.cpp \
+    reckoui.cpp
 
 
 
@@ -39,19 +41,21 @@ SOURCES += \
 
 
 HEADERS += \
+    game.h \
     kozna.h \
         mainwindow.h \
     mojbroj.h \
     mojbrojlogic.hpp\
-    wordlewindow.h \
     podrundaui.h \
     pocetniekran.h \
+    recko.h \
+    reckoui.h
 
 
 
 FORMS += \
         mainwindow.ui \
-    wordlewindow.ui \
+    reckoui.ui \
     kozna.ui \
     mojbroj.ui \
     podrundaui.ui \
