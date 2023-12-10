@@ -27,13 +27,15 @@ SOURCES += \
     game.cpp \
         main.cpp \
         mainwindow.cpp \
-    wordlewindow.cpp
+    recko.cpp \
+    reckoui.cpp
 
 HEADERS += \
     game.h \
         mainwindow.h \
-    wordlewindow.h
+    recko.h \
+    reckoui.h
 
 FORMS += \
         mainwindow.ui \
-    wordlewindow.ui
+    reckoui.ui

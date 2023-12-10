@@ -4,7 +4,7 @@
 
 class Game
 {
-public:
+
 public:
     Game()=default;
     ~Game() = default;
