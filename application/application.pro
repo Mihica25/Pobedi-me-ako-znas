@@ -41,6 +41,7 @@ HEADERS += \
     wordlewindow.h \
     podrundaui.h
 
+RESOURCES += resources.qrc
 
 
 FORMS += \

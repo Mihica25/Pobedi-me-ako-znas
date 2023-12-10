@@ -10,19 +10,19 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 //    MainWindow w;
 //    w.show();
-    WordleWindow ww;
-    ww.show();
+//    WordleWindow ww;
+//    ww.show();
 
-    KoZna kz;
-    kz.show();
+//    KoZna kz;
+//    kz.show();
 
 
     Mojbroj mb;
     mb.show();
 
 
-    podrundaui pr;
-    pr.show();
+//    podrundaui pr;
+//    pr.show();
 
 
     return a.exec();
