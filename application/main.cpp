@@ -4,6 +4,7 @@
 #include "mojbroj.h"
 #include "podrundaui.h"
 #include "pocetniekran.h"
+#include "reckoui.h"
 
 int main(int argc, char *argv[])
 {
