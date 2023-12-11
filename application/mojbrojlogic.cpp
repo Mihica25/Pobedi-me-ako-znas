@@ -26,6 +26,7 @@
 //Done
 MojBrojLogic::MojBrojLogic()
 {
+    numIndicator = 0;
     currentRound = GamePhase::Round1;
     availableOperations = {"+", "-", "*", "/", "(", ")"};
 }
@@ -420,7 +421,7 @@ void MojBrojLogic::test()
 
     expression = vectorToString(currentExpression);
 
-    int result = submitSolution(expression, indicator);
+    submitSolution(expression, indicator);
 
     */
 }

@@ -21,17 +21,19 @@ public:
     void endGame();
     void chooseNumber(int number);
     void chooseOperation(const QString& operation);
-    int submitSolution(const QString& solution, const QString& indicator);
     void deleteLastInput();
+    int submitSolution(const QString& solution, const QString& indicator);
 
     void test();
 
+    int numIndicator;
+
     int targetNumber;
     QVector<int> availableNumbers;
+    QVector<QString> currentExpression;
 
 private:
     QVector<QString> availableOperations;
-    QVector<QString> currentExpression;
     GamePhase currentRound;
 
     int generateTargetNumber();

@@ -89,10 +89,27 @@ Mojbroj::~Mojbroj()
 
 void Mojbroj::buttonPressedNum()
 {
-    //qDebug() << "test";
-    QPushButton *button = (QPushButton*)sender();
 
-    QString expression = ui->lineEdit->text() + button->text();
+    QVector<QString> currentExpression = m_mojbroj->currentExpression;
+    if(!currentExpression.isEmpty())
+    {
+        QString lastElement = currentExpression.back();
+
+        bool isInt;
+        int intValue = lastElement.toInt(&isInt);
+
+        if (isInt)
+        {
+            return;
+        }
+    }
+        //inace nije broj pa ga dodajemo
+    QPushButton *button = (QPushButton*)sender();
+    QString number = button->text();
+
+    m_mojbroj->chooseNumber(number.toInt());
+
+    QString expression = ui->lineEdit->text() + number;
     ui->lineEdit->setText(expression);
 
     button->setEnabled(false);
@@ -101,10 +118,12 @@ void Mojbroj::buttonPressedNum()
 void Mojbroj::buttonPressedOp()
 {
     QPushButton *button = (QPushButton*)sender();
+    QString operation = button->text();
 
-    QString expression = ui->lineEdit->text() + button->text();
+    m_mojbroj->chooseOperation(operation);
+
+    QString expression = ui->lineEdit->text() + operation;
     ui->lineEdit->setText(expression);
-
 }
 
 void Mojbroj::buttonPressedSubmit()
@@ -124,16 +143,24 @@ void Mojbroj::buttonPressedSubmit()
     ui->pushButton_del->setEnabled(false);
     ui->pushButton_submit->setEnabled(false);
 
+    // Connect with opponent
     ui->lineEdit_2->show();
     ui->lineEdit_result_2->show();
 
     QString expression = ui->lineEdit->text();
     qDebug() << expression;
-    int result = m_mojbroj->submitSolution(expression, "1");
+
+    QString indicator = "1";
+    if (expression.isEmpty())
+    {
+        indicator = "-179";
+    }
+    int result = m_mojbroj->submitSolution(expression, indicator);
     ui->lineEdit_result->setText(QString::number(result));
 
 }
-
+// : 25+4*3***4+
+//0: 1 010100010
 void Mojbroj::del()
 {
     QString expression = ui->lineEdit->text();
