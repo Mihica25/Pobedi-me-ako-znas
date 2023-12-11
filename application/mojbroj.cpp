@@ -22,6 +22,19 @@ Mojbroj::Mojbroj(QWidget *parent) :
     this->setPalette(palette);
 
     ui->lineEdit->setReadOnly(true);
+    ui->lineEdit_result->setReadOnly(true);
+    ui->lineEdit_2->setReadOnly(true);
+    ui->lineEdit_result_2->setReadOnly(true);
+
+    QFont font;
+    font.setPointSize(14);
+    ui->lineEdit_result->setFont(font);
+    ui->lineEdit_result->setStyleSheet("color : red");
+    ui->lineEdit_result_2->setFont(font);
+    ui->lineEdit_result_2->setStyleSheet("color : red");
+
+    ui->lineEdit_2->hide();
+    ui->lineEdit_result_2->hide();
 
     connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
@@ -29,12 +42,15 @@ Mojbroj::Mojbroj(QWidget *parent) :
     connect(ui->pushButton_num4,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num5,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num6,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+
     connect(ui->pushButton_add,SIGNAL(released()),this,SLOT(buttonPressedOp()));
     connect(ui->pushButton_sub,SIGNAL(released()),this,SLOT(buttonPressedOp()));
     connect(ui->pushButton_mul,SIGNAL(released()),this,SLOT(buttonPressedOp()));
     connect(ui->pushButton_div,SIGNAL(released()),this,SLOT(buttonPressedOp()));
     connect(ui->pushButton_leftBr,SIGNAL(released()),this,SLOT(buttonPressedOp()));
     connect(ui->pushButton_rightBr,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+
+    connect(ui->pushButton_submit,SIGNAL(released()),this,SLOT(buttonPressedSubmit()));
 
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
 
@@ -84,11 +100,37 @@ void Mojbroj::buttonPressedNum()
 
 void Mojbroj::buttonPressedOp()
 {
-    //qDebug() << "test";
     QPushButton *button = (QPushButton*)sender();
 
     QString expression = ui->lineEdit->text() + button->text();
     ui->lineEdit->setText(expression);
+
+}
+
+void Mojbroj::buttonPressedSubmit()
+{
+    ui->pushButton_num1->setEnabled(false);
+    ui->pushButton_num2->setEnabled(false);
+    ui->pushButton_num3->setEnabled(false);
+    ui->pushButton_num4->setEnabled(false);
+    ui->pushButton_num5->setEnabled(false);
+    ui->pushButton_num6->setEnabled(false);
+    ui->pushButton_add->setEnabled(false);
+    ui->pushButton_sub->setEnabled(false);
+    ui->pushButton_mul->setEnabled(false);
+    ui->pushButton_div->setEnabled(false);
+    ui->pushButton_leftBr->setEnabled(false);
+    ui->pushButton_rightBr->setEnabled(false);
+    ui->pushButton_del->setEnabled(false);
+    ui->pushButton_submit->setEnabled(false);
+
+    ui->lineEdit_2->show();
+    ui->lineEdit_result_2->show();
+
+    QString expression = ui->lineEdit->text();
+    qDebug() << expression;
+    int result = m_mojbroj->submitSolution(expression, "1");
+    ui->lineEdit_result->setText(QString::number(result));
 
 }
 
@@ -106,7 +148,7 @@ void Mojbroj::del()
 void Mojbroj::setNumbers()
 {
     // FIXME new generated numbers dont show up
-    std::vector<int> initialNumbers = m_mojbroj->availableNumbers;
+    QVector<int> initialNumbers = m_mojbroj->availableNumbers;
     ui->pushButton_num1->setText(QString::number(initialNumbers[0]));
     ui->pushButton_num2->setText(QString::number(initialNumbers[1]));
     ui->pushButton_num3->setText(QString::number(initialNumbers[2]));

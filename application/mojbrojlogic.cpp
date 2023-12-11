@@ -11,19 +11,27 @@
 #include <stack>
 #include <cctype>
 
+#include <QRandomGenerator>
+#include <QRegularExpression>
+#include <QStack>
+#include <QTextStream>
+#include <QDebug>
+
 /*
     TODO:
     1. solver - closest number
     2. FIXME2 - 2 consecutive numbers
 */
 
-
+//Done
 MojBrojLogic::MojBrojLogic()
 {
     currentRound = GamePhase::Round1;
     availableOperations = {"+", "-", "*", "/", "(", ")"};
 }
 
+//Done
+// FIXME srand - do not need it here
 void MojBrojLogic::startGame()
 {
     // Initialize random seed
@@ -38,6 +46,7 @@ void MojBrojLogic::startGame()
     //test();
 }
 
+//Done
 void MojBrojLogic::endGame()
 {
     // TODO: Implement timer destruction logic
@@ -62,106 +71,120 @@ void MojBrojLogic::endGame()
     }
 }
 
+//Done - added QRandomGenerator
 int MojBrojLogic::generateTargetNumber()
 {
-    // Generate a random number between 1 and 1000
-    return rand() % 999 + 1;
+    return QRandomGenerator::global()->bounded(1,1000);
 }
 
-std::vector<int> MojBrojLogic::generateInitialNumbers()
+//Done - added QRadnomGenerator
+QVector<int> MojBrojLogic::generateInitialNumbers()
 {
-    std::vector<int> initialNumbers;
+    QVector<int> initialNumbers;
 
     for (int i = 0; i < 4; ++i)
     {
-        int randomNumber = rand() % 9 + 1;
-        initialNumbers.push_back(randomNumber);
+        int randomNumber = QRandomGenerator::global()->bounded(1,10);
+        initialNumbers.append(randomNumber);
     }
 
     int fifthNumberOptions[] = {10, 15, 20};
-    int fifthNumber = fifthNumberOptions[rand() % 3];
-    initialNumbers.push_back(fifthNumber);
+    int fifthNumber = QRandomGenerator::global()->bounded(3);
+    initialNumbers.append(fifthNumberOptions[fifthNumber]);
 
     int sixthNumberOptions[] = {25, 50, 75, 100};
-    int sixthNumber = sixthNumberOptions[rand() % 4];
-    initialNumbers.push_back(sixthNumber);
+    int sixthNumber = QRandomGenerator::global()->bounded(3);
+    initialNumbers.append(sixthNumberOptions[sixthNumber]);
 
     return initialNumbers;
 }
 
+//Done - changed method
 void MojBrojLogic::chooseNumber(int number)
 {
-    auto it = std::find(availableNumbers.begin(), availableNumbers.end(), number);
-
-    if (it != availableNumbers.end())
+    if(availableNumbers.contains(number))
     {
-        currentExpression.push_back(std::to_string(number));
-        availableNumbers.erase(it);
-    }
-    else
+        currentExpression += QString::number(number);
+        availableNumbers.removeOne(number);
+    } else
     {
-        std::cout << "Broj " << number << " nije dostupan. Izaberite drugi broj." << std::endl;
+        qDebug() << "Broj" << number << "nije dostupan. Izaberite drugi!";
     }
 }
 
-void MojBrojLogic::chooseOperation(const std::string& operation)
+//Done
+void MojBrojLogic::chooseOperation(const QString& operation)
 {
-    currentExpression.push_back(operation);
+    currentExpression.append(operation);
 }
 
+//Done - .back not .at
 void MojBrojLogic::deleteLastInput()
 {
-    if (!currentExpression.empty())
+    if (!currentExpression.isEmpty())
     {
-        std::string lastElement = currentExpression.back();
+        QString lastElement = currentExpression.back();
 
-        // Pokušaj konverzije u broj
-        char* endptr;
-        int number = std::strtol(lastElement.c_str(), &endptr, 10);
+        bool isInt;
+        int intValue = lastElement.toInt(&isInt);
 
-        if (*endptr == '\0')\
+        if(isInt)
         {
-            // Ako je unesen broj
-            availableNumbers.push_back(number);
+            availableNumbers.append(intValue);
         }
 
-        currentExpression.pop_back();
+        currentExpression.removeLast();
+
     }
 }
 
-std::string MojBrojLogic::vectorToString(const std::vector<std::string>& vec)
+// Done - changed method
+QString MojBrojLogic::vectorToString(const QVector<QString>& vec)
 {
-    return std::accumulate(vec.begin(), vec.end(), std::string());;
+    QString result;
+    for (const QString& str : vec)
+    {
+        result += str;
+    }
+
+    return result;
 }
 
-bool MojBrojLogic::validateExpression(const std::string& expression) const
+
+
+
+
+
+//Done - QRegularExpression and QStack
+bool MojBrojLogic::validateExpression(const QString& expression) const
 {
-    std::regex consecutiveOperationsRegex("[+\\-*\\/]{2,}");
-    if (std::regex_search(expression, consecutiveOperationsRegex))
+    QRegularExpression consecutiveOperationsRegex("[+\\-*\\/]{2,}");
+    if (consecutiveOperationsRegex.match(expression).hasMatch())
     {
-        std::cout << "Neispravno zadat izraz: Dve ili više računskih operacija su zajedno." << std::endl;
+        qDebug() << "Neispravno zadat izraz: Dve ili više računskih operacija su zajedno.";
         return false;
     }
 
-    std::regex startEndOperationRegex("^[+\\-*\\/]|[+\\-*\\/]$");
-    if (std::regex_search(expression, startEndOperationRegex))
+
+    QRegularExpression startEndOperationRegex("^[+\\-*\\/]|[+\\-*\\/]$");
+    if (startEndOperationRegex.match(expression).hasMatch())
     {
-        std::cout << "Neispravno zadat izraz: Izraz počinje ili se završava računskom operacijom." << std::endl;
+        qDebug() << "Neispravno zadat izraz: Izraz počinje ili se završava računskom operacijom.";
         return false;
     }
 
-    std::stack<char> brackets;
+    QStack<QChar> brackets;
 
-    for (char token : expression)
+    for (const QChar token : expression)
     {
         if (token == '(')
         {
             brackets.push(token);
         } else if (token == ')')
         {
-            if (brackets.empty())
+            if (brackets.isEmpty())
             {
-                std::cout << "Neispravno zadat izraz: Neuparena zagrada ')'" << std::endl;
+                qDebug() << "Neispravno zadat izraz: Neuparena zagrada ')'";
                 return false;
             } else
             {
@@ -170,33 +193,35 @@ bool MojBrojLogic::validateExpression(const std::string& expression) const
         }
     }
 
-    if (!brackets.empty())
+    if (!brackets.isEmpty())
     {
-        std::cout << "Neispravno zadat izraz: Neuparena zagrada '('." << std::endl;
+        qDebug() << "Neispravno zadat izraz: Neuparena zagrada '('.";
         return false;
     }
 
     return true;
 }
 
-int MojBrojLogic::evaluateExpression(const std::string& expression) const
+//FIXME
+int MojBrojLogic::evaluateExpression(const QString& expression) const
 {
+
     if (!validateExpression(expression))
     {
-        std::cout << "Neispravan postupak." << std::endl;
+        qDebug() << "Neispravan postupak.";
         return -1;  // or another specific value
     }
 
-    auto priority = [](char op)
+    auto priority = [](QChar op)
     {
         if (op == '*' || op == '/') return 2;
         if (op == '+' || op == '-') return 1;
         return 0;
     };
 
-    auto applyOperation = [](int a, int b, char op)
+    auto applyOperation = [](int a, int b, QChar op)
     {
-        switch (op) {
+        switch (op.toLatin1()) {
             case '+': return a + b;
             case '-': return a - b;
             case '*': return a * b;
@@ -205,48 +230,46 @@ int MojBrojLogic::evaluateExpression(const std::string& expression) const
         }
     };
 
-    std::stack<int> numbers;
-    std::stack<char> operations;
+    QStack<int> numbers;
+    QStack<QChar> operations;
 
-    std::istringstream iss(expression);
-    char token;
+    QTextStream stream(expression.toUtf8());
+    QChar token;
 
-    while (iss >> token)
+    while (!stream.atEnd())
     {
-        if (isdigit(token))
+        stream >> token;
+        if (token.isDigit())
         {
-            iss.putback(token);
+            stream.seek(stream.pos()-1);
             int number;
-            iss >> number;
+            stream >> number;
             numbers.push(number);
         } else if (token == '(')
         {
-            // Ako je otvorena zagrada, stavi operaciju na stek
             operations.push(token);
         } else if (token == ')')
         {
-            // Ako je zatvorena zagrada, izvrši operacije unutar zagrada
-            while (!operations.empty() && operations.top() != '(')
+            while (!operations.isEmpty() && operations.top() != '(')
             {
                 int b = numbers.top();
                 numbers.pop();
                 int a = numbers.top();
                 numbers.pop();
-                char op = operations.top();
+                QChar op = operations.top();
                 operations.pop();
                 numbers.push(applyOperation(a, b, op));
             }
-            operations.pop();  // Skloni otvorenu zagradu sa steka
+            operations.pop();
         } else if (token == '+' || token == '-' || token == '*' || token == '/')
         {
-            // Ako je operator, izvrši operacije sa operatorima većim prioriteta
-            while (!operations.empty() && priority(operations.top()) >= priority(token))
+            while (!operations.isEmpty() && priority(operations.top()) >= priority(token))
             {
                 int b = numbers.top();
                 numbers.pop();
                 int a = numbers.top();
                 numbers.pop();
-                char op = operations.top();
+                QChar op = operations.top();
                 operations.pop();
                 numbers.push(applyOperation(a, b, op));
             }
@@ -254,13 +277,13 @@ int MojBrojLogic::evaluateExpression(const std::string& expression) const
         }
     }
 
-    while (!operations.empty())
+    while (!operations.isEmpty())
     {
         int b = numbers.top();
         numbers.pop();
         int a = numbers.top();
         numbers.pop();
-        char op = operations.top();
+        QChar op = operations.top();
         operations.pop();
         numbers.push(applyOperation(a, b, op));
     }
@@ -268,21 +291,21 @@ int MojBrojLogic::evaluateExpression(const std::string& expression) const
     return numbers.top();
 }
 
-void MojBrojLogic::submitSolution(const std::string& solution, const std::string& indicator)
+//Done
+int MojBrojLogic::submitSolution(const QString& solution, const QString& indicator)
 {
     if (indicator == "-179")
     {
         // TODO: player "X" -> points to opponent?
-        std::cout<<"KORISNIK PREDAO PRAZAN POSTUPAK RESAVANJA"<<std::endl;
-        endGame();
-        return;
+        qDebug() << "KORISNIK PREDAO PRAZAN POSTUPAK RESAVANJA";
+        //endGame();
+        return -179;
     } else if (indicator == "-219")
     {
         // TODO: player "X" -> points to opponent?
-        std::cout<<"KORISNIK PREKINUO POSTUPAK RESAVANJA"<<std::endl;
-        endGame();
-        return;
-
+        qDebug() << "KORISNIK PREKINUO POSTUPAK RESAVANJA";
+       // endGame();
+        return -219;
     }
 
 
@@ -291,30 +314,36 @@ void MojBrojLogic::submitSolution(const std::string& solution, const std::string
     if (result == -1)
     {
         // TODO: if solution can not be parsed -> points to opponent?
-        endGame();
-        return;
+        //endGame();
+        return -1;
     }
 
-    int difference = std::abs(result - targetNumber);
+    int difference = qAbs(result - targetNumber);
 
     // TODO: compare results with opponent
-    std::cout << "Konacni postupak: " << solution << std::endl;
-    std::cout << "Rastojanje od traženog broja je: " << difference << std::endl;
-    std::cout << "---------------------------\n" << std::endl;
+    qDebug() << "Konacni postupak: " << solution;
+    qDebug() << "Rezultat: " << result;
+    qDebug() << "Rastojanje od traženog broja je: " << difference;
+    qDebug() << "---------------------------\n";
 
-    endGame();
+    //endGame();
+
+    return result;
 }
 
+//FIXME - test
 void MojBrojLogic::test()
 {
+    /*
+
     // Ispisujemo dobijene vrednosti u toku igre
     std::cout << "---------------------"<<std::endl;
     std::cout << "| Traženi broj: " << targetNumber << " |"<< std::endl;
     std::cout << "---------------------"<<std::endl;
 
-    std::string indicator;
-    std::string expression;
-    std::string userInput;
+    QString indicator;
+    QString expression;
+    QString userInput;
 
     // Unos brojeva i operacija sve dok ne unesemo slovo X
     while (true)
@@ -331,7 +360,7 @@ void MojBrojLogic::test()
         }
         std::cout << std::endl;
         std::cout << "Dostupne operacije: ";
-        for (const std::string& op : availableOperations)
+        for (const QString& op : availableOperations)
         {
             std::cout << op << " ";
         }
@@ -347,7 +376,7 @@ void MojBrojLogic::test()
         {
             // Korisnik predao odgovor ili je postupak zavrsen
             std::cout<<"POTVRDA"<<std::endl;
-            if (currentExpression.empty())
+            if (currentExpression.isEmpty())
                 indicator = "-179";           // indikator za prazan postupak
             break;
         } else if (userInput == "X" || userInput == "x")
@@ -391,5 +420,7 @@ void MojBrojLogic::test()
 
     expression = vectorToString(currentExpression);
 
-    submitSolution(expression, indicator);
+    int result = submitSolution(expression, indicator);
+
+    */
 }
