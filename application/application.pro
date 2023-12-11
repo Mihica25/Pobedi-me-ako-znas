@@ -25,8 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     game.cpp \
-        main.cpp \
-        mainwindow.cpp \
+    main.cpp \
+    mainwindow.cpp \
     kozna.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
@@ -34,34 +34,38 @@ SOURCES += \
     pocetniekran.cpp \
     recko.cpp \
     reckoui.cpp \
-    podrunda.cpp
-
-
-
+    podrunda.cpp \
+    pogodista.cpp \
+    pogodistaui.cpp
 
 
 
 HEADERS += \
     game.h \
     kozna.h \
-        mainwindow.h \
+    mainwindow.h \
     mojbroj.h \
     mojbrojlogic.hpp\
     podrundaui.h \
     pocetniekran.h \
     recko.h \
     reckoui.h \
-    podrunda.h
+    podrunda.h \
+    pogodista.h \
+    pogodistaui.h
 
 
 
 FORMS += \
-        mainwindow.ui \
+    mainwindow.ui \
+    pogodistaui.ui \
     reckoui.ui \
     kozna.ui \
     mojbroj.ui \
     podrundaui.ui \
     pocetniekran.ui
 
-RESOURCES += resources.qrc
+RESOURCES += \
+    resources.qrc
+
 
