@@ -25,9 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     game.cpp \
+    kozna.cpp \
+    koznaui.cpp \
         main.cpp \
         mainwindow.cpp \
-    kozna.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
     podrundaui.cpp \
@@ -43,6 +44,7 @@ SOURCES += \
 HEADERS += \
     game.h \
     kozna.h \
+    koznaui.h \
         mainwindow.h \
     mojbroj.h \
     mojbrojlogic.hpp\

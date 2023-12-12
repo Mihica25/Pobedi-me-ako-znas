@@ -106,7 +106,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color:  #800020</string>
+         <string notr="true">background-color:  #741515</string>
         </property>
         <property name="text">
          <string>Pokreni igru</string>

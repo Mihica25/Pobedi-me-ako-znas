@@ -1,0 +1,226 @@
+#include "koznaui.h"
+#include "ui_kozna.h"
+#include <cstring>
+#include <iostream>
+#include <QDebug>
+
+
+KoZnaui::KoZnaui(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::KoZnaui),tajmer(new QTimer(this))
+{
+    ui->setupUi(this);
+
+
+    QPixmap bkgnd(":/background/resources/ko_zna.png");
+    bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
+
+    connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1);
+    connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2);
+    connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3);
+    connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4);
+
+    numberOfQuestion = 0;
+
+    time = 45;
+    ui->labelTimer->setText(QString::number(time));
+
+    connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
+    connect(this, &KoZnaui::gameEnds, this, &KoZnaui::on_gameEnds);
+
+    tajmer->start(1000);
+
+
+
+
+
+
+    this->displayQuestion(numberOfQuestion);
+
+
+
+
+
+}
+
+KoZnaui::~KoZnaui()
+{
+    delete ui;
+}
+
+
+QVector<QString> KoZnaui::getQuestion(int numberOfQuestion)
+{
+    QVector<QVector<QString>> questions;
+    QVector<QString> question1;
+    question1 << "Koji mesece ima tacno 28 dana?" << "Janaur" << "Februar" << "Mart" << "April" << "Februar";
+    questions.append(question1);
+    QVector<QString> question2;
+    question2 << "Neutralna boja?" << "Bela" << "Plava" << "Crvena" << "Zelena" << "Crvena";
+    questions.append(question2);
+
+
+
+    return  questions[numberOfQuestion];
+}
+
+
+
+void KoZnaui::displayQuestion(int questionNumber)
+{
+
+    QVector<QString> questions = this->getQuestion(questionNumber);
+
+
+
+
+    ui->labQuestion->setText(questions[0]);
+    ui->pushButtonAns1->setText(questions[1]);
+    ui->pushButtonAns2->setText(questions[2]);
+    ui->pushButtonAns3->setText(questions[3]);
+    ui->pushButtonAns4->setText(questions[4]);
+
+
+
+ }
+
+
+void KoZnaui::on_pushButtonAns1(){
+
+    QString answer = ui->pushButtonAns1->text();
+    if (guess(answer)){
+        ui->pushButtonAns1->setStyleSheet("background-color: green");
+      }
+    else{
+        ui->pushButtonAns1->setStyleSheet("background-color: red");
+       };
+}
+
+void KoZnaui::on_pushButtonAns2(){
+
+    QString answer = ui->pushButtonAns2->text();
+    if (guess(answer)){
+        ui->pushButtonAns2->setStyleSheet("background-color: green");
+      }
+    else{
+        ui->pushButtonAns2->setStyleSheet("background-color: red");
+       };
+}
+
+void KoZnaui::on_pushButtonAns3(){
+
+    QString answer = ui->pushButtonAns3->text();
+    if (guess(answer)){
+        ui->pushButtonAns3->setStyleSheet("background-color: green");
+      }
+    else{
+        ui->pushButtonAns4->setStyleSheet("background-color: red");
+       };
+}
+
+void KoZnaui::on_pushButtonAns4(){
+
+    QString answer = ui->pushButtonAns4->text();
+    if (guess(answer)){
+        ui->pushButtonAns4->setStyleSheet("background-color: green");
+      }
+    else{
+        ui->pushButtonAns4->setStyleSheet("background-color: red");
+       };
+}
+
+bool KoZnaui::guess(QString answer)
+{
+    QString correctAns = this->getCorrectAnswer();
+
+    if(correctAns == answer){
+        return true;
+    }
+    else {
+        return false;
+
+    }
+
+  }
+
+
+
+
+
+
+
+void KoZnaui::displayAnswer()
+{
+
+}
+
+
+QString KoZnaui::getCorrectAnswer()
+{
+    QVector<QString> questions = this->getQuestion(1);
+    QString correctAns = questions[4];
+
+    return correctAns;
+
+}
+
+
+
+void KoZnaui::on_timesUp()
+{
+    time = 45;
+    ui->labelTimer->setText(QString::number(time));
+    tajmer->start();
+    //qDebug() << "Isteklo vreme";
+    this->displayQuestion(++this->numberOfQuestion);
+}
+
+void KoZnaui::on_gameEnds(){
+    tajmer->stop();
+    ukupni_bodovi += bodovi;
+    //ui->leBodovi->setText(QString::number(ukupni_bodovi));
+    //showSolution();
+    qDebug() << "Game ends";
+
+}
+
+
+void KoZnaui::updateTime()
+{
+    if (time >= 0){
+        ui->labelTimer->setText(QString::number(time));
+    }
+
+    if(time--==0){
+        if(numberOfQuestion == 10)
+            emit gameEnds();
+        else {
+
+            emit timesUp();
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
