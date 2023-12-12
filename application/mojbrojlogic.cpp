@@ -20,13 +20,11 @@
 /*
     TODO:
     1. solver - closest number
-    2. FIXME2 - 2 consecutive numbers
 */
 
 //Done
 MojBrojLogic::MojBrojLogic()
 {
-    numIndicator = 0;
     currentRound = GamePhase::Round1;
     availableOperations = {"+", "-", "*", "/", "(", ")"};
 }
@@ -48,7 +46,7 @@ void MojBrojLogic::startGame()
 }
 
 //Done
-void MojBrojLogic::endGame()
+bool MojBrojLogic::endGame()
 {
     // TODO: Implement timer destruction logic
 
@@ -57,19 +55,24 @@ void MojBrojLogic::endGame()
     availableNumbers.clear();
     currentExpression.clear();
 
+    //FIXME: returns
     switch (currentRound)
     {
         case GamePhase::Round1:
             currentRound = GamePhase::Round2;
+            qDebug() << "Kraj 1. runde";
             startGame();
-            break;
+            return false;
         case GamePhase::Round2:
             currentRound = GamePhase::End;
+            qDebug() << "Kraj 2. runde";
             // TODO: Implement updateScore and next game in the queue logic
-            break;
+            return true;
         default:
-            break;
+            return true;
     }
+
+    return true;
 }
 
 //Done - added QRandomGenerator

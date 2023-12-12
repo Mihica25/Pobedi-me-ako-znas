@@ -18,15 +18,13 @@ public:
     ~MojBrojLogic()=default;
 
     void startGame();
-    void endGame();
+    bool endGame();
     void chooseNumber(int number);
     void chooseOperation(const QString& operation);
     void deleteLastInput();
     int submitSolution(const QString& solution, const QString& indicator);
 
     void test();
-
-    int numIndicator;
 
     int targetNumber;
     QVector<int> availableNumbers;

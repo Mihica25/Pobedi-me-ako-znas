@@ -3,9 +3,6 @@
 #include "mojbrojlogic.h"
 
 #include <QDebug>
-#include <QLabel>
-#include <QFrame>
-#include <QHBoxLayout>
 #include <QFont>
 #include <QTimer>
 
@@ -36,6 +33,12 @@ Mojbroj::Mojbroj(QWidget *parent) :
     ui->lineEdit_2->hide();
     ui->lineEdit_result_2->hide();
 
+    ui->pushButton_nextRound->hide();
+    ui->pushButton_nextGame->hide();
+
+
+    connect(ui->pushButton_startGame,SIGNAL(released()),this,SLOT(buttonPressedStart()));
+
     connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num3,SIGNAL(released()),this,SLOT(buttonPressedNum()));
@@ -52,10 +55,12 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     connect(ui->pushButton_submit,SIGNAL(released()),this,SLOT(buttonPressedSubmit()));
 
+    connect(ui->pushButton_nextRound,SIGNAL(released()),this,SLOT(buttonPressedNextRound()));
+
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
 
-    initGame();
-
+    //initGame();
+  //  deinitGame();
 /*  TIMER
     QTimer *timer = new QTimer(this);
     timer->start(10000);
@@ -72,19 +77,53 @@ void Mojbroj::initGame()
 
 void Mojbroj::deinitGame()
 {
+    if(m_mojbroj->endGame())
+    {
+        return;    //end of the game
+    }
+
+    setNumbers();
+/*
     ui->pushButton_num1->setText("");
     ui->pushButton_num2->setText("");
     ui->pushButton_num3->setText("");
     ui->pushButton_num4->setText("");
     ui->pushButton_num5->setText("");
-    ui->pushButton_num6->setText("");
+    ui->pushButton_num6->setText("");   */
 
+    ui->lineEdit->setText("");
+    ui->lineEdit_result->setText("");
+    ui->lineEdit_2->setText("");
+    ui->lineEdit_result_2->setText("");
+    ui->lineEdit_2->hide();
+    ui->lineEdit_result_2->hide();
+
+    ui->pushButton_num1->setEnabled(true);
+    ui->pushButton_num2->setEnabled(true);
+    ui->pushButton_num3->setEnabled(true);
+    ui->pushButton_num4->setEnabled(true);
+    ui->pushButton_num5->setEnabled(true);
+    ui->pushButton_num6->setEnabled(true);
+    ui->pushButton_add->setEnabled(true);       //remove for operations
+    ui->pushButton_sub->setEnabled(true);
+    ui->pushButton_mul->setEnabled(true);
+    ui->pushButton_div->setEnabled(true);
+    ui->pushButton_leftBr->setEnabled(true);
+    ui->pushButton_rightBr->setEnabled(true);
+    ui->pushButton_del->setEnabled(true);
+    ui->pushButton_submit->setEnabled(true);
 }
 
 Mojbroj::~Mojbroj()
 {
     delete m_mojbroj;
     delete ui;
+}
+
+void Mojbroj::buttonPressedStart()
+{
+    ui->pushButton_startGame->hide();
+    initGame();
 }
 
 void Mojbroj::buttonPressedNum()
@@ -158,9 +197,26 @@ void Mojbroj::buttonPressedSubmit()
     int result = m_mojbroj->submitSolution(expression, indicator);
     ui->lineEdit_result->setText(QString::number(result));
 
+    QString round = ui->label_round->text();
+    if (round == "Round 1")
+    {
+        ui->pushButton_nextRound->show();
+    } else
+    {
+        ui->pushButton_nextGame->show();
+    }
 }
 // : 25+4*3***4+
 //0: 1 010100010
+
+void Mojbroj::buttonPressedNextRound()
+{
+    deinitGame();
+    ui->label_round->setText("Round 2");
+    ui->pushButton_nextRound->hide();
+}
+
+//FIXME
 void Mojbroj::del()
 {
     QString expression = ui->lineEdit->text();
@@ -174,7 +230,6 @@ void Mojbroj::del()
 
 void Mojbroj::setNumbers()
 {
-    // FIXME new generated numbers dont show up
     QVector<int> initialNumbers = m_mojbroj->availableNumbers;
     ui->pushButton_num1->setText(QString::number(initialNumbers[0]));
     ui->pushButton_num2->setText(QString::number(initialNumbers[1]));
@@ -186,14 +241,7 @@ void Mojbroj::setNumbers()
     //qDebug() << initialNumbers[5];
     int targetNumber = m_mojbroj->targetNumber;
 
-    QFrame *frame = ui->frame_targetNum;
-    QHBoxLayout *hb  = new QHBoxLayout(frame);
-    QLabel *l = new QLabel(QString::number(targetNumber), frame);
-    QFont font;
-    font.setPointSize(20);
-    l->setFont(font);
-    hb->addStretch();
-    hb->addWidget(l,0,Qt::AlignCenter);
-    hb->addStretch();
+    ui->textEdit->clear();
+    ui->textEdit->setText(QString::number(targetNumber));
+    ui->textEdit->setAlignment(Qt::AlignCenter);
 }
-

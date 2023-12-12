@@ -26,9 +26,11 @@ private:
 
 
 private slots:
+    void buttonPressedStart();
     void buttonPressedNum();
     void buttonPressedOp();
     void buttonPressedSubmit();
+    void buttonPressedNextRound();
     void del();
 };
 
