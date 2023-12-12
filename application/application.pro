@@ -33,7 +33,8 @@ SOURCES += \
     podrundaui.cpp \
     pocetniekran.cpp \
     recko.cpp \
-    reckoui.cpp
+    reckoui.cpp \
+    podrunda.cpp
 
 
 
@@ -49,7 +50,8 @@ HEADERS += \
     podrundaui.h \
     pocetniekran.h \
     recko.h \
-    reckoui.h
+    reckoui.h \
+    podrunda.h
 
 
 

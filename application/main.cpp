@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     mb.show();
 
 
-    podrundaui pr;
+    Podrundaui pr;
     pr.show();
 
     PocetniEkran pe;
