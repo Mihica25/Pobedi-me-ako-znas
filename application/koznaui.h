@@ -35,6 +35,9 @@ private:
     int ukupni_bodovi = 0;
 
     void displayAnswer();
+    void disableUi();
+    void enableUi();
+    void restartColor();
 
 
     QString getCorrectAnswer();

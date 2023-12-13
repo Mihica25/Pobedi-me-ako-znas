@@ -180,6 +180,9 @@
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButtonAns1">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>200</width>

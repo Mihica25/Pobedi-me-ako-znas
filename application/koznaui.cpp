@@ -19,6 +19,7 @@ KoZnaui::KoZnaui(QWidget *parent)
     this->setPalette(palette);
 
 
+
     connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1);
     connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2);
     connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3);
@@ -73,6 +74,8 @@ QVector<QString> KoZnaui::getQuestion(int numberOfQuestion)
 
 void KoZnaui::displayQuestion(int questionNumber)
 {
+    enableUi();
+    restartColor();
 
     QVector<QString> questions = this->getQuestion(questionNumber);
 
@@ -92,16 +95,22 @@ void KoZnaui::displayQuestion(int questionNumber)
 
 void KoZnaui::on_pushButtonAns1(){
 
+    disableUi();
+
     QString answer = ui->pushButtonAns1->text();
     if (guess(answer)){
         ui->pushButtonAns1->setStyleSheet("background-color: green");
       }
     else{
         ui->pushButtonAns1->setStyleSheet("background-color: red");
+        displayAnswer();
        };
+    time = 2;
 }
 
 void KoZnaui::on_pushButtonAns2(){
+
+    disableUi();
 
     QString answer = ui->pushButtonAns2->text();
     if (guess(answer)){
@@ -109,29 +118,44 @@ void KoZnaui::on_pushButtonAns2(){
       }
     else{
         ui->pushButtonAns2->setStyleSheet("background-color: red");
+        displayAnswer();
        };
+    time = 2;
 }
 
 void KoZnaui::on_pushButtonAns3(){
+    disableUi();
 
     QString answer = ui->pushButtonAns3->text();
     if (guess(answer)){
         ui->pushButtonAns3->setStyleSheet("background-color: green");
       }
     else{
-        ui->pushButtonAns4->setStyleSheet("background-color: red");
+        ui->pushButtonAns3->setStyleSheet("background-color: red");
+        displayAnswer();
        };
+    time = 2;
 }
 
 void KoZnaui::on_pushButtonAns4(){
 
+    disableUi();
+
     QString answer = ui->pushButtonAns4->text();
     if (guess(answer)){
         ui->pushButtonAns4->setStyleSheet("background-color: green");
+
+
       }
     else{
         ui->pushButtonAns4->setStyleSheet("background-color: red");
+        displayAnswer();
        };
+    time = 2;
+
+
+
+
 }
 
 bool KoZnaui::guess(QString answer)
@@ -156,14 +180,36 @@ bool KoZnaui::guess(QString answer)
 
 void KoZnaui::displayAnswer()
 {
+    QString answer = getCorrectAnswer();
+
+    if(ui->pushButtonAns1->text() == answer){
+        ui->pushButtonAns1->setStyleSheet("background-color: green");
+
+    }
+
+    if(ui->pushButtonAns2->text() == answer){
+        ui->pushButtonAns2->setStyleSheet("background-color: green");
+
+    }
+    if(ui->pushButtonAns3->text() == answer){
+        ui->pushButtonAns3->setStyleSheet("background-color: green");
+
+    }
+    if(ui->pushButtonAns4->text() == answer){
+        ui->pushButtonAns4->setStyleSheet("background-color: green");
+
+    }
+
+
+
 
 }
 
 
 QString KoZnaui::getCorrectAnswer()
 {
-    QVector<QString> questions = this->getQuestion(1);
-    QString correctAns = questions[4];
+    QVector<QString> questions = this->getQuestion(numberOfQuestion);
+    QString correctAns = questions[5];
 
     return correctAns;
 
@@ -207,6 +253,38 @@ void KoZnaui::updateTime()
 
     }
 }
+
+
+void KoZnaui::disableUi()
+{
+    ui->pushButtonAns1->setDisabled(true);
+    ui->pushButtonAns2->setDisabled(true);
+    ui->pushButtonAns3->setDisabled(true);
+    ui->pushButtonAns4->setDisabled(true);
+
+}
+
+
+void KoZnaui::enableUi()
+{
+    ui->pushButtonAns1->setEnabled(true);
+    ui->pushButtonAns2->setEnabled(true);
+    ui->pushButtonAns3->setEnabled(true);
+    ui->pushButtonAns4->setEnabled(true);
+
+
+}
+
+void KoZnaui::restartColor()
+{
+    ui->pushButtonAns1->setStyleSheet("background-color: white");
+    ui->pushButtonAns2->setStyleSheet("background-color: white");
+    ui->pushButtonAns3->setStyleSheet("background-color: white");
+    ui->pushButtonAns4->setStyleSheet("background-color: white");
+
+
+}
+
 
 
 
