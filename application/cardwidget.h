@@ -9,14 +9,14 @@ class CardWidget : public QWidget{
     Q_OBJECT
 
 public:
-    explicit CardWidget(int id, QWidget *parent = nullptr);
+    explicit CardWidget(int id, int idR,QWidget *parent = nullptr);
 
     int getId() const;
     void reset();
     void hide();
 
 signals:
-    void clicked(int cardId);
+    void clicked(int idR);
 
 public slots:
     void reveal();
@@ -30,6 +30,7 @@ private:
     int cardId;
     QPixmap cardImage;
     bool isRevealed;
+    int idReveal;
 };
 
 #endif // CARDWIDGET_H

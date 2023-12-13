@@ -1,7 +1,11 @@
 #include "memorija.h"
 #include "ui_memorija.h"
-#include <QGridLayout>
+#include <QWidget>
 #include <QMessageBox>
+#include <QObject>
+#include <QString>
+#include <QDebug>
+#include <random>
 
 Memorija::Memorija(QWidget *parent) :
     QWidget(parent),
@@ -10,7 +14,6 @@ Memorija::Memorija(QWidget *parent) :
     ui->setupUi(this);
 
     hideTimer = new QTimer(this);
-    connect(hideTimer,&QTimer::timeout,this, &Memorija::onHideTimerTimeout);
 
     QPixmap bkgnd("/home/user/Desktop/pobedi-me-ako-znas/application/resources/igra_memorije.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -18,13 +21,6 @@ Memorija::Memorija(QWidget *parent) :
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 
-    QWidget *layoutWidget = ui->layoutWidget;
-
-    //Create a new QGridLayout
-    QGridLayout *gridLayout = new QGridLayout(layoutWidget);
-    layoutWidget->setLayout(gridLayout);
-
-    //Set uo the game board()
     initializeGame();
 }
 
@@ -33,23 +29,42 @@ Memorija::~Memorija()
     delete ui;
 }
 
-void Memorija::initializeGame(){
+
+void Memorija::initializeGame()
+{
 
     cardIds = generateCardIds();
-    int index = 0;
+    int indeks = 0;
 
-    // Create and add CardWidget instances to the grid layout
-    for (int row = 0; row < numRows; ++row){
-        for (int col = 0; col < numCols; ++col){
-            CardWidget *card = new CardWidget(cardIds[index]);
-            cardWidgets.push_back(card);
-            cardIdToWidget.insert(index,card);
-            connect(card, &CardWidget::clicked, this, &Memorija::onCardClicked);
-            ui->gridLayout->addWidget(card,row,col);
-            ++index;
+    QGridLayout *gridLayout = ui->gridLayout;
+
+    // Create instances of your CardWidget class and populate the grid
+    for (int row = 0; row < numRows; ++row) {
+        for (int col = 0; col < numCols; ++col) {
+
+            // Access the existing placeholder widget directly from the UI
+            QWidget *placeholder = gridLayout->itemAtPosition(row, col)->widget();
+
+            // Create an instance of your CardWidget class
+            int cardId = cardIds[indeks];
+            CardWidget *cardWidget = new CardWidget(cardId,indeks, placeholder);
+
+            // Connect the cardClicked signal to the onCardClicked slot
+            connect(cardWidget, &CardWidget::clicked, this, &Memorija::onCardClicked);
+
+            // Map cardId to the corresponding CardWidget
+            cardIdToWidget[indeks] = cardWidget;
+            indeks++;
         }
     }
 }
+
+void Memorija::shuffleQVector(QVector<int> &vector){
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(vector.begin(),vector.end(),g);
+};
 
 QVector<int> Memorija::generateCardIds(){
     QVector<int> ids;
@@ -59,54 +74,58 @@ QVector<int> Memorija::generateCardIds(){
         ids.append(i);
     }
 
-    std::random_shuffle(ids.begin(),ids.end());
+    shuffleQVector(ids);
     return ids;
 }
 
-void Memorija::onCardClicked(int cardId){
-    if(turnedCards.size() < 2){
-        CardWidget* card = cardIdToWidget.value(cardId);
+void Memorija::onCardClicked(int idReveal){
+    if (turnedCards.size() >= 2 || turnedCards.contains(idReveal)){
+        return;
+    }
 
-        if(card){
-            turnedCards.push_back(cardId);
+    CardWidget *clickedCard = cardIdToWidget.value(idReveal,nullptr);
 
-            if(turnedCards.size() == 2){
-                if(checkForMatch()){
-                    turnedCards.clear();
-                }else{
-                   resetTurnedCards();
-                }
-            }
+    if(!clickedCard){
+        return;
+    }
+
+    clickedCard->reveal();
+
+    turnedCards.append(idReveal);
+
+    if(turnedCards.size() == 2){
+        if(checkForMatch()){
+            ++pairsFound;
+        }else{
+            hideUnmatchedCards();
+        }
+        resetTurnedCards();
+
+        if(pairsFound == totalPairs){
+            //TODO
         }
     }
 }
 
 void Memorija::hideUnmatchedCards(){
     hideTimer->start(1000);
+
+    connect(hideTimer, &QTimer::timeout, this,[this](){
+        for(int idReveale : turnedCards){
+            cardIdToWidget.value(idReveale,nullptr)->hide();
+        }
+        hideTimer->stop();
+    });
 }
 
-void Memorija::onHideTimerTimeout(){
-    hideTimer->stop();
-}
 bool Memorija::checkForMatch(){
-   int card1 = turnedCards[0];
-   int card2 = turnedCards[1];
+   int card1 =  cardIdToWidget.value(turnedCards[0],nullptr)->getId();
+   int card2 = cardIdToWidget.value(turnedCards[1],nullptr)->getId();
 
    return (card1 == card2);
 }
 
 
 void Memorija::resetTurnedCards(){
-    int cardId1 = turnedCards[0];
-    int cardId2 = turnedCards[1];
-
-    CardWidget *card1 = cardIdToWidget.value(cardId1);
-    CardWidget *card2 = cardIdToWidget.value(cardId2);
-
-    if(card1 && card2){
-        card1->hideWithDelay(1000);
-        card2->hideWithDelay(1000);
-    }
-
-    hideTimer->start(1000);
+    turnedCards.clear();
 }

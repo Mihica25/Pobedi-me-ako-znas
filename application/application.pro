@@ -24,10 +24,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    cardwidget.cpp \
     game.cpp \
         main.cpp \
         mainwindow.cpp \
     kozna.cpp \
+    memorija.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
     podrundaui.cpp \
@@ -41,9 +43,11 @@ SOURCES += \
 
 
 HEADERS += \
+    cardwidget.h \
     game.h \
     kozna.h \
         mainwindow.h \
+    memorija.h \
     mojbroj.h \
     mojbrojlogic.hpp\
     podrundaui.h \
@@ -55,6 +59,7 @@ HEADERS += \
 
 FORMS += \
         mainwindow.ui \
+    memorija.ui \
     reckoui.ui \
     kozna.ui \
     mojbroj.ui \

@@ -21,7 +21,6 @@ public:
 
 private slots:
     void onCardClicked(int cardId);
-    void onHideTimerTimeout();
 
 private:
     Ui::Memorija *ui;
@@ -41,7 +40,7 @@ private:
     void hideUnmatchedCards();
     bool checkForMatch();
     void resetTurnedCards();
-   // void newTurn();
+    void shuffleQVector(QVector<int> &vector);
 };
 
 #endif // MEMORIJA_H
