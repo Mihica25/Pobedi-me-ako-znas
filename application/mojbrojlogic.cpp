@@ -1,15 +1,4 @@
 #include "mojbrojlogic.h"
-#include <iostream>
-#include <cstdlib>  // For rand() function
-#include <vector>
-#include <regex>
-#include <string>
-#include <cstdlib>
-#include <sstream>
-#include <numeric>
-#include <algorithm>
-#include <stack>
-#include <cctype>
 
 #include <QRandomGenerator>
 #include <QRegularExpression>
@@ -33,9 +22,6 @@ MojBrojLogic::MojBrojLogic()
 // FIXME srand - do not need it here
 void MojBrojLogic::startGame()
 {
-    // Initialize random seed
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
-
     targetNumber = generateTargetNumber();
     availableNumbers = generateInitialNumbers();
 

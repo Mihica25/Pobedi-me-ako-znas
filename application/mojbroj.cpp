@@ -32,8 +32,8 @@ Mojbroj::Mojbroj(QWidget *parent) :
     connect(this, &Mojbroj::timesUp, this, &Mojbroj::on_timesUp);
     connect(this, &Mojbroj::gameEnd, this, &Mojbroj::on_gameEnd);
 
-    timer->start(1000);
-    qDebug() << "POCETAK IGRE";
+    ui->label_round->hide();
+    ui->label_time->hide();
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -50,10 +50,8 @@ Mojbroj::Mojbroj(QWidget *parent) :
     ui->lineEdit_2->hide();
     ui->lineEdit_result_2->hide();
 
-    ui->pushButton_nextRound->hide();
     ui->pushButton_nextGame->hide();
 
-    ui->textEdit_startGame->hide(); //remove if there is no blur effect
 /*    QTextEdit *start= ui->textEdit_startGame;
     start->setText("START GAME");
     start->append("\t\t(press enter)");
@@ -82,7 +80,7 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
 
-    initGame();
+    //initGame();
   //  deinitGame();
 /*  TIMER
     QTimer *timer = new QTimer(this);
@@ -93,6 +91,12 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
 void Mojbroj::initGame()
 {
+    timer->start(1000);
+    qDebug() << "POCETAK IGRE";
+
+    ui->label_round->show();
+    ui->label_time->show();
+
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
     m_mojbroj->startGame();
@@ -151,7 +155,7 @@ void Mojbroj::buttonPressedNum()
         QString lastElement = currentExpression.back();
 
         bool isInt;
-        int intValue = lastElement.toInt(&isInt);
+        lastElement.toInt(&isInt);
 
         if (isInt)
         {
@@ -219,9 +223,17 @@ void Mojbroj::buttonPressedSubmit()
 
 void Mojbroj::buttonPressedNextRound()
 {
-    deinitGame();
-    ui->pushButton_nextRound->hide();
+    QPushButton *newRound = ui->pushButton_nextRound;
+    if (newRound->text() == "ZAPOCNI IGRU")
+    {
+        newRound->hide();
+        newRound->setText("NOVA RUNDA");
+        initGame();
+        return;
+    }
 
+    deinitGame();
+    newRound->hide();
     time = 30;
     ui->label_time->setText(QString::number(time));
     timer->start();
