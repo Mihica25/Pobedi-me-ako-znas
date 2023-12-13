@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QString>
+#include <QPair>
 
 enum class GamePhase
 {
@@ -21,8 +22,8 @@ public:
     bool endGame();
     void chooseNumber(int number);
     void chooseOperation(const QString& operation);
-    void deleteLastInput();
     int submitSolution(const QString& solution, const QString& indicator);
+    QPair<QString,QString> deleteLastInput();
 
     void test();
 

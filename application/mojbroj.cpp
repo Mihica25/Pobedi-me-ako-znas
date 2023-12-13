@@ -3,6 +3,7 @@
 #include "mojbrojlogic.h"
 
 #include <QDebug>
+#include <QHBoxLayout>
 #include <QFont>
 #include <QTimer>
 
@@ -208,16 +209,32 @@ void Mojbroj::buttonPressedNextRound()
     ui->label_round->setText("Round 2");
 }
 
-//FIXME
 void Mojbroj::del()
 {
+    QPair<QString,QString> pair = m_mojbroj->deleteLastInput();
+    qDebug() << "OBRISANO: " << pair.second;
+    ui->lineEdit->setText(pair.first);
+
+    QHBoxLayout *horizontalLayout = ui->horizontalLayout_numbers;
+    for (int i = 0; i < horizontalLayout->count(); i++)
+    {
+        QPushButton *button = qobject_cast<QPushButton*>(horizontalLayout->itemAt(i)->widget());
+        if (button && !button->isEnabled() && button->text()==pair.second)
+        {
+            qDebug() << "VRACEN BROJ: " << pair.second;
+            button->setEnabled(true);
+        }
+    }
+    //iteracija krox Hlayout za dugmice
+    /*
+    QVector<QString> expression = m_mojbroj->currentExpression;
     QString expression = ui->lineEdit->text();
 
     if(!expression.isEmpty())
     {
         expression.chop(1);
         ui->lineEdit->setText(expression);
-    }
+    } */
 }
 
 void Mojbroj::setNumbers()

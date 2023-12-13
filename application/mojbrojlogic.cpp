@@ -19,13 +19,10 @@ MojBrojLogic::MojBrojLogic()
 }
 
 //Done
-// FIXME srand - do not need it here
 void MojBrojLogic::startGame()
 {
     targetNumber = generateTargetNumber();
     availableNumbers = generateInitialNumbers();
-
-    // TODO: Implement your timer logic here
 
     // Test
     //test();
@@ -109,11 +106,12 @@ void MojBrojLogic::chooseOperation(const QString& operation)
 }
 
 //Done - .back not .at
-void MojBrojLogic::deleteLastInput()
+QPair<QString,QString> MojBrojLogic::deleteLastInput()
 {
     if (!currentExpression.isEmpty())
     {
         QString lastElement = currentExpression.back();
+        currentExpression.removeLast();
 
         bool isInt;
         int intValue = lastElement.toInt(&isInt);
@@ -123,9 +121,13 @@ void MojBrojLogic::deleteLastInput()
             availableNumbers.append(intValue);
         }
 
-        currentExpression.removeLast();
+        QPair<QString, QString> pair(vectorToString(currentExpression),lastElement);
+        return pair;
 
     }
+
+    QPair<QString, QString> pair(vectorToString(currentExpression),"");
+    return pair;
 }
 
 // Done - changed method
@@ -139,12 +141,7 @@ QString MojBrojLogic::vectorToString(const QVector<QString>& vec)
 
     return result;
 }
-
-
-
-
-
-
+\
 //Done - QRegularExpression and QStack
 bool MojBrojLogic::validateExpression(const QString& expression) const
 {

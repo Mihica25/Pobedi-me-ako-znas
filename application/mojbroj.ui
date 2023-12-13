@@ -128,7 +128,7 @@
      </spacer>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_numbers">
       <item>
        <spacer name="horizontalSpacer_13">
         <property name="orientation">
