@@ -6,6 +6,7 @@
 #include <QKeyEvent>
 #include <QPushButton>
 #include <QGraphicsBlurEffect>
+#include <QTimer>
 
 namespace Ui {
 class Mojbroj;
@@ -22,26 +23,37 @@ public:
 private:
     Ui::Mojbroj *ui;
     MojBrojLogic *m_mojbroj;
+    QTimer *timer;
+    int time;
 
     void initGame();
     void deinitGame();
     void setNumbers();
     void setButtonStatus(bool enabled);
 
+    //QGraphicsBlurEffect *blurEffect;
+   // bool enterEventEnabled;
 
 private slots:
-    void pressedStart();
+    //void pressedStart();
     void buttonPressedNum();
     void buttonPressedOp();
     void buttonPressedSubmit();
     void buttonPressedNextRound();
     void del();
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
+//protected:
+  //  bool eventFilter(QObject *watched, QEvent *event) override;
 
- private:
-    QGraphicsBlurEffect *blurEffect;
+public slots:
+    void on_timesUp();
+    void on_gameEnd();
+    void updateTime();
+
+signals:
+    void timesUp();
+    void gameEnd();
+
 };
 
 #endif // MOJBROJ_H

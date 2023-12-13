@@ -9,7 +9,8 @@
 
 Mojbroj::Mojbroj(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Mojbroj)
+    ui(new Ui::Mojbroj),
+    timer(new QTimer(this))
 {
     ui->setupUi(this);
 
@@ -19,9 +20,20 @@ Mojbroj::Mojbroj(QWidget *parent) :
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 
-    blurEffect = new QGraphicsBlurEffect(this);
+ /*   blurEffect = new QGraphicsBlurEffect(this);
     blurEffect->setBlurRadius(5);
     setGraphicsEffect(blurEffect);
+*/
+    //TIMER
+    time = 30;
+    ui->label_time->setText(QString::number(time));
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(this, &Mojbroj::timesUp, this, &Mojbroj::on_timesUp);
+    connect(this, &Mojbroj::gameEnd, this, &Mojbroj::on_gameEnd);
+
+    timer->start(1000);
+    qDebug() << "POCETAK IGRE";
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -41,14 +53,15 @@ Mojbroj::Mojbroj(QWidget *parent) :
     ui->pushButton_nextRound->hide();
     ui->pushButton_nextGame->hide();
 
-    QTextEdit *start= ui->textEdit_startGame;
+    ui->textEdit_startGame->hide(); //remove if there is no blur effect
+/*    QTextEdit *start= ui->textEdit_startGame;
     start->setText("START GAME");
     start->append("\t\t(press enter)");
     start->setReadOnly(true);
     start->setAlignment(Qt::AlignCenter);
 
     qApp->installEventFilter(this);
-
+*/
     connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num3,SIGNAL(released()),this,SLOT(buttonPressedNum()));
@@ -69,7 +82,7 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
 
-    //initGame();
+    initGame();
   //  deinitGame();
 /*  TIMER
     QTimer *timer = new QTimer(this);
@@ -80,6 +93,7 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
 void Mojbroj::initGame()
 {
+    setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
     m_mojbroj->startGame();
     setNumbers();
@@ -117,6 +131,7 @@ Mojbroj::~Mojbroj()
     delete ui;
 }
 
+/*
 void Mojbroj::pressedStart()
 {
 
@@ -126,7 +141,7 @@ void Mojbroj::pressedStart()
     ui->textEdit_startGame->hide();
     initGame();
 }
-
+*/
 void Mojbroj::buttonPressedNum()
 {
 
@@ -168,6 +183,9 @@ void Mojbroj::buttonPressedOp()
 
 void Mojbroj::buttonPressedSubmit()
 {
+    timer->stop();
+    qDebug() << "TAJMER SE ZAUSTAVIO";
+
     setButtonStatus(false);
 
     // Connect with opponent
@@ -189,9 +207,11 @@ void Mojbroj::buttonPressedSubmit()
     if (round == "Round 1")
     {
         ui->pushButton_nextRound->show();
+        //bodovi1
     } else
     {
         ui->pushButton_nextGame->show();
+        //bodovi2
     }
 }
 // : 25+4*3***4+
@@ -200,8 +220,13 @@ void Mojbroj::buttonPressedSubmit()
 void Mojbroj::buttonPressedNextRound()
 {
     deinitGame();
-    ui->label_round->setText("Round 2");
     ui->pushButton_nextRound->hide();
+
+    time = 30;
+    ui->label_time->setText(QString::number(time));
+    timer->start();
+
+    ui->label_round->setText("Round 2");
 }
 
 //FIXME
@@ -234,22 +259,24 @@ void Mojbroj::setNumbers()
     ui->textEdit->setAlignment(Qt::AlignCenter);
 }
 
+/*
 bool Mojbroj::eventFilter(QObject *watched, QEvent *event)
 {
-    if(event->type() == QEvent::KeyPress)
+    if(enterEventEnabled && event->type() == QEvent::KeyPress)
     {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
 
-        qDebug() << "OVDE2222";
         if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
         {
-            qDebug() << "ENTER";
             pressedStart();
+            enterEventEnabled = false;
+            return true;
         }
     }
 
     return QObject::eventFilter(watched,event);
 }
+*/
 
 void Mojbroj::setButtonStatus(bool enabled)
 {
@@ -267,4 +294,43 @@ void Mojbroj::setButtonStatus(bool enabled)
     ui->pushButton_rightBr->setEnabled(enabled);
     ui->pushButton_del->setEnabled(enabled);
     ui->pushButton_submit->setEnabled(enabled);
+}
+
+//TIMER
+void Mojbroj::on_timesUp()
+{
+    qDebug() << "ISTEKLO VREME poziv na 2.rundu";
+    buttonPressedSubmit();
+
+    //bodovi1 u buttonPressedSubmit?
+}
+
+void Mojbroj::on_gameEnd()
+{
+    buttonPressedSubmit();
+    //bodovi2 u buttonPressedSubmit?
+    //ukupna dodela? (na server?)
+    qDebug() << "on_gameEnd kraj 2.runde i cele igre";
+}
+
+void Mojbroj::updateTime()
+{
+    if (time >= 0)
+    {
+        ui->label_time->setText(QString::number(time));
+    }
+
+    if (time-- == 0)
+    {
+        qDebug() << ui->label_round->text();
+        if(ui->label_round->text() == "Round 2")
+        {
+            qDebug() << "poziv za on_gameEnd";
+            emit gameEnd();
+        } else
+        {
+            qDebug() << "poziv za on_timesUp";
+            emit timesUp();
+        }
+    }
 }

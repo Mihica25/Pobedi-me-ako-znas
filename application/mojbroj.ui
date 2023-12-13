@@ -895,6 +895,19 @@ p, li { white-space: pre-wrap; }
     <set>Qt::NoTextInteraction</set>
    </property>
   </widget>
+  <widget class="QLabel" name="label_time">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>67</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
