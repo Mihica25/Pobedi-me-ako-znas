@@ -4,7 +4,6 @@
 
 #include <QDebug>
 #include <QFont>
-#include <QGraphicsBlurEffect>
 #include <QTimer>
 
 Mojbroj::Mojbroj(QWidget *parent) :
@@ -20,10 +19,6 @@ Mojbroj::Mojbroj(QWidget *parent) :
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 
- /*   blurEffect = new QGraphicsBlurEffect(this);
-    blurEffect->setBlurRadius(5);
-    setGraphicsEffect(blurEffect);
-*/
     //TIMER
     time = 30;
     ui->label_time->setText(QString::number(time));
@@ -52,14 +47,6 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     ui->pushButton_nextGame->hide();
 
-/*    QTextEdit *start= ui->textEdit_startGame;
-    start->setText("START GAME");
-    start->append("\t\t(press enter)");
-    start->setReadOnly(true);
-    start->setAlignment(Qt::AlignCenter);
-
-    qApp->installEventFilter(this);
-*/
     connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num3,SIGNAL(released()),this,SLOT(buttonPressedNum()));
@@ -80,13 +67,6 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
 
-    //initGame();
-  //  deinitGame();
-/*  TIMER
-    QTimer *timer = new QTimer(this);
-    timer->start(10000);
-    connect(timer, &QTimer::timeout, this, &Mojbroj::deinitGame);
-*/
 }
 
 void Mojbroj::initGame()
@@ -135,17 +115,6 @@ Mojbroj::~Mojbroj()
     delete ui;
 }
 
-/*
-void Mojbroj::pressedStart()
-{
-
-    setButtonStatus(true);
-
-    blurEffect->setEnabled(false);
-    ui->textEdit_startGame->hide();
-    initGame();
-}
-*/
 void Mojbroj::buttonPressedNum()
 {
 
@@ -218,8 +187,6 @@ void Mojbroj::buttonPressedSubmit()
         //bodovi2
     }
 }
-// : 25+4*3***4+
-//0: 1 010100010
 
 void Mojbroj::buttonPressedNextRound()
 {
@@ -262,33 +229,13 @@ void Mojbroj::setNumbers()
     ui->pushButton_num4->setText(QString::number(initialNumbers[3]));
     ui->pushButton_num5->setText(QString::number(initialNumbers[4]));
     ui->pushButton_num6->setText(QString::number(initialNumbers[5]));
-    //qDebug() << initialNumbers[0];
-    //qDebug() << initialNumbers[5];
+
     int targetNumber = m_mojbroj->targetNumber;
 
     ui->textEdit->clear();
     ui->textEdit->setText(QString::number(targetNumber));
     ui->textEdit->setAlignment(Qt::AlignCenter);
 }
-
-/*
-bool Mojbroj::eventFilter(QObject *watched, QEvent *event)
-{
-    if(enterEventEnabled && event->type() == QEvent::KeyPress)
-    {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-        if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
-        {
-            pressedStart();
-            enterEventEnabled = false;
-            return true;
-        }
-    }
-
-    return QObject::eventFilter(watched,event);
-}
-*/
 
 void Mojbroj::setButtonStatus(bool enabled)
 {

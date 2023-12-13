@@ -31,19 +31,12 @@ private:
     void setNumbers();
     void setButtonStatus(bool enabled);
 
-    //QGraphicsBlurEffect *blurEffect;
-   // bool enterEventEnabled;
-
 private slots:
-    //void pressedStart();
     void buttonPressedNum();
     void buttonPressedOp();
     void buttonPressedSubmit();
     void buttonPressedNextRound();
     void del();
-
-//protected:
-  //  bool eventFilter(QObject *watched, QEvent *event) override;
 
 public slots:
     void on_timesUp();
