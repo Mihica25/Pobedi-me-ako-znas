@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QFont>
+#include <QGraphicsBlurEffect>
 #include <QTimer>
 
 Mojbroj::Mojbroj(QWidget *parent) :
@@ -17,6 +18,10 @@ Mojbroj::Mojbroj(QWidget *parent) :
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
+    blurEffect = new QGraphicsBlurEffect(this);
+    blurEffect->setBlurRadius(5);
+    setGraphicsEffect(blurEffect);
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -36,8 +41,13 @@ Mojbroj::Mojbroj(QWidget *parent) :
     ui->pushButton_nextRound->hide();
     ui->pushButton_nextGame->hide();
 
+    QTextEdit *start= ui->textEdit_startGame;
+    start->setText("START GAME");
+    start->append("\t\t(press enter)");
+    start->setReadOnly(true);
+    start->setAlignment(Qt::AlignCenter);
 
-    connect(ui->pushButton_startGame,SIGNAL(released()),this,SLOT(buttonPressedStart()));
+    qApp->installEventFilter(this);
 
     connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
     connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
@@ -98,20 +108,7 @@ void Mojbroj::deinitGame()
     ui->lineEdit_2->hide();
     ui->lineEdit_result_2->hide();
 
-    ui->pushButton_num1->setEnabled(true);
-    ui->pushButton_num2->setEnabled(true);
-    ui->pushButton_num3->setEnabled(true);
-    ui->pushButton_num4->setEnabled(true);
-    ui->pushButton_num5->setEnabled(true);
-    ui->pushButton_num6->setEnabled(true);
-    ui->pushButton_add->setEnabled(true);       //remove for operations
-    ui->pushButton_sub->setEnabled(true);
-    ui->pushButton_mul->setEnabled(true);
-    ui->pushButton_div->setEnabled(true);
-    ui->pushButton_leftBr->setEnabled(true);
-    ui->pushButton_rightBr->setEnabled(true);
-    ui->pushButton_del->setEnabled(true);
-    ui->pushButton_submit->setEnabled(true);
+    setButtonStatus(true);
 }
 
 Mojbroj::~Mojbroj()
@@ -120,9 +117,13 @@ Mojbroj::~Mojbroj()
     delete ui;
 }
 
-void Mojbroj::buttonPressedStart()
+void Mojbroj::pressedStart()
 {
-    ui->pushButton_startGame->hide();
+
+    setButtonStatus(true);
+
+    blurEffect->setEnabled(false);
+    ui->textEdit_startGame->hide();
     initGame();
 }
 
@@ -167,20 +168,7 @@ void Mojbroj::buttonPressedOp()
 
 void Mojbroj::buttonPressedSubmit()
 {
-    ui->pushButton_num1->setEnabled(false);
-    ui->pushButton_num2->setEnabled(false);
-    ui->pushButton_num3->setEnabled(false);
-    ui->pushButton_num4->setEnabled(false);
-    ui->pushButton_num5->setEnabled(false);
-    ui->pushButton_num6->setEnabled(false);
-    ui->pushButton_add->setEnabled(false);
-    ui->pushButton_sub->setEnabled(false);
-    ui->pushButton_mul->setEnabled(false);
-    ui->pushButton_div->setEnabled(false);
-    ui->pushButton_leftBr->setEnabled(false);
-    ui->pushButton_rightBr->setEnabled(false);
-    ui->pushButton_del->setEnabled(false);
-    ui->pushButton_submit->setEnabled(false);
+    setButtonStatus(false);
 
     // Connect with opponent
     ui->lineEdit_2->show();
@@ -244,4 +232,39 @@ void Mojbroj::setNumbers()
     ui->textEdit->clear();
     ui->textEdit->setText(QString::number(targetNumber));
     ui->textEdit->setAlignment(Qt::AlignCenter);
+}
+
+bool Mojbroj::eventFilter(QObject *watched, QEvent *event)
+{
+    if(event->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+        qDebug() << "OVDE2222";
+        if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+        {
+            qDebug() << "ENTER";
+            pressedStart();
+        }
+    }
+
+    return QObject::eventFilter(watched,event);
+}
+
+void Mojbroj::setButtonStatus(bool enabled)
+{
+    ui->pushButton_num1->setEnabled(enabled);
+    ui->pushButton_num2->setEnabled(enabled);
+    ui->pushButton_num3->setEnabled(enabled);
+    ui->pushButton_num4->setEnabled(enabled);
+    ui->pushButton_num5->setEnabled(enabled);
+    ui->pushButton_num6->setEnabled(enabled);
+    ui->pushButton_add->setEnabled(enabled);
+    ui->pushButton_sub->setEnabled(enabled);
+    ui->pushButton_mul->setEnabled(enabled);
+    ui->pushButton_div->setEnabled(enabled);
+    ui->pushButton_leftBr->setEnabled(enabled);
+    ui->pushButton_rightBr->setEnabled(enabled);
+    ui->pushButton_del->setEnabled(enabled);
+    ui->pushButton_submit->setEnabled(enabled);
 }

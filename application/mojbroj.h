@@ -3,6 +3,9 @@
 
 #include "mojbrojlogic.h"
 #include <QWidget>
+#include <QKeyEvent>
+#include <QPushButton>
+#include <QGraphicsBlurEffect>
 
 namespace Ui {
 class Mojbroj;
@@ -23,15 +26,22 @@ private:
     void initGame();
     void deinitGame();
     void setNumbers();
+    void setButtonStatus(bool enabled);
 
 
 private slots:
-    void buttonPressedStart();
+    void pressedStart();
     void buttonPressedNum();
     void buttonPressedOp();
     void buttonPressedSubmit();
     void buttonPressedNextRound();
     void del();
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+ private:
+    QGraphicsBlurEffect *blurEffect;
 };
 
 #endif // MOJBROJ_H
