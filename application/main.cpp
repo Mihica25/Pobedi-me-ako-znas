@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "wordlewindow.h"
 #include "kozna.h"
 #include "mojbroj.h"
 #include "podrundaui.h"
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
 
     KoZna kz;
     kz.show();
+
 
     Mojbroj mb;
     mb.show();
