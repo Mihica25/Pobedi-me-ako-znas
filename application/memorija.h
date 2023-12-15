@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QVector>
 #include <QMap>
-#include <QTimer>
 #include "cardwidget.h"
 
 namespace Ui {
@@ -29,11 +28,8 @@ private:
     const int totalPairs = 10;
     int pairsFound=0;
     QVector<int> cardIds;
-    QVector<CardWidget*> cardWidgets;
     QVector<int> turnedCards;
     QMap<int, CardWidget*> cardIdToWidget;
-
-    QTimer* hideTimer;
 
     void initializeGame();
     QVector<int> generateCardIds();

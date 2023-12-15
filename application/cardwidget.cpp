@@ -11,16 +11,11 @@ CardWidget::CardWidget(int id,int idR, QWidget *parent):
     QString imagePath = "/home/user/Desktop/pobedi-me-ako-znas/application/resources/kartice_memorija/image" + QString::number(id) + ".jpg";
     cardImage = QPixmap(imagePath);
 
-    //set size
+    setFixedSize(150,150);
 }
 
 int CardWidget::getId() const {
     return cardId;
-}
-
-void CardWidget::hideWithDelay(int delay){
-    isRevealed = false;
-    QTimer::singleShot(delay, this, &CardWidget::hide);
 }
 
 void CardWidget::hide(){
@@ -47,7 +42,8 @@ void CardWidget::paintEvent(QPaintEvent *event){
     if (isRevealed){
         painter.drawPixmap(0,0,width(),height(),cardImage);
     } else {
-        painter.fillRect(0,0,width(),height(),Qt::green);
+        QColor color = QColor("limegreen");
+        painter.fillRect(0,0,width(),height(),color);
     }
 
     QWidget::paintEvent(event);

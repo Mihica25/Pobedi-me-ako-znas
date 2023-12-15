@@ -12,15 +12,13 @@ public:
     explicit CardWidget(int id, int idR,QWidget *parent = nullptr);
 
     int getId() const;
-    void reset();
-    void hide();
 
 signals:
     void clicked(int idR);
 
 public slots:
     void reveal();
-    void hideWithDelay(int delay);
+    void hide();
 
 protected:
     void mousePressEvent(QMouseEvent *event) override;

@@ -4,8 +4,8 @@
 #include <QMessageBox>
 #include <QObject>
 #include <QString>
-#include <QDebug>
 #include <random>
+#include <unistd.h>
 
 Memorija::Memorija(QWidget *parent) :
     QWidget(parent),
@@ -13,9 +13,7 @@ Memorija::Memorija(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    hideTimer = new QTimer(this);
-
-    QPixmap bkgnd("/home/user/Desktop/pobedi-me-ako-znas/application/resources/igra_memorije.png");
+    QPixmap bkgnd(":background/resources/igra_memorije.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
@@ -64,7 +62,7 @@ void Memorija::shuffleQVector(QVector<int> &vector){
     std::mt19937 g(rd());
 
     std::shuffle(vector.begin(),vector.end(),g);
-};
+}
 
 QVector<int> Memorija::generateCardIds(){
     QVector<int> ids;
@@ -108,14 +106,11 @@ void Memorija::onCardClicked(int idReveal){
 }
 
 void Memorija::hideUnmatchedCards(){
-    hideTimer->start(1000);
 
-    connect(hideTimer, &QTimer::timeout, this,[this](){
-        for(int idReveale : turnedCards){
-            cardIdToWidget.value(idReveale,nullptr)->hide();
-        }
-        hideTimer->stop();
-    });
+    sleep(1);
+    for(int idReveale : turnedCards){
+        cardIdToWidget.value(idReveale,nullptr)->hide();
+    }
 }
 
 bool Memorija::checkForMatch(){
