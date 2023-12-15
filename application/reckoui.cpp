@@ -33,7 +33,7 @@ ReckoUI::~ReckoUI()
 }
 
 void ReckoUI::setUpBackground(){
-    QPixmap background("/home/user/Desktop/pobedi-me-ako-znas/application/resources/recko.png");
+    QPixmap background(":background/resources/recko.png");
     background.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, background);

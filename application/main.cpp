@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include "wordlewindow.h"
 #include "kozna.h"
 #include "mojbroj.h"
 #include "podrundaui.h"
