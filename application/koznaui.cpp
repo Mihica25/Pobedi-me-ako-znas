@@ -62,8 +62,12 @@ QVector<QString> KoZnaui::getQuestion(int numberOfQuestion)
     question1 << "Koji mesece ima tacno 28 dana?" << "Janaur" << "Februar" << "Mart" << "April" << "Februar";
     questions.append(question1);
     QVector<QString> question2;
-    question2 << "Neutralna boja?" << "Bela" << "Plava" << "Crvena" << "Zelena" << "Crvena";
+    question2 << "Neutralna boja?" << "Bela" << "Plava" << "Crvena" << "Zelena" << "Bela";
     questions.append(question2);
+    QVector<QString> question3;
+    question3 << "Ko je rekorder evrolige po broju asistencija?" << "Markus Vilijams" << "Stefan Jovic" << "Milos Teodosic" << "Nik Kalates" << "Stefan Jovic";
+    questions.append(question3);
+
 
 
 
@@ -243,7 +247,7 @@ void KoZnaui::updateTime()
     }
 
     if(time--==0){
-        if(numberOfQuestion == 10)
+        if(numberOfQuestion == 2)
             emit gameEnds();
         else {
 
