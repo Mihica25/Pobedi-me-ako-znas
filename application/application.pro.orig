@@ -1,0 +1,86 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2023-11-25T12:00:15
+#
+#-------------------------------------------------
+
+QT       += core gui network
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = application
+TEMPLATE = app
+
+# The following define makes your compiler emit warnings if you use
+# any feature of Qt which has been marked as deprecated (the exact warnings
+# depend on your compiler). Please consult the documentation of the
+# deprecated API in order to know how to port your code away from it.
+DEFINES += QT_DEPRECATED_WARNINGS
+
+# You can also make your code fail to compile if you use deprecated APIs.
+# In order to do so, uncomment the following line.
+# You can also select to disable deprecated APIs only up to a certain version of Qt.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+
+SOURCES += \
+    game.cpp \
+<<<<<<< HEAD
+    kozna.cpp \
+    koznaui.cpp \
+        main.cpp \
+        mainwindow.cpp \
+=======
+    logindialog.cpp \
+    main.cpp \
+    mainwindow.cpp \
+    kozna.cpp \
+>>>>>>> c853558ac8bf3199a2b2df54efcf0b14a36105b0
+    mojbroj.cpp \
+    mojbrojlogic.cpp \
+    podrundaui.cpp \
+    pocetniekran.cpp \
+    recko.cpp \
+    reckoui.cpp \
+    podrunda.cpp \
+    pogodista.cpp \
+    pogodistaui.cpp
+
+
+
+HEADERS += \
+    game.h \
+    kozna.h \
+<<<<<<< HEAD
+    koznaui.h \
+        mainwindow.h \
+=======
+    logindialog.h \
+    mainwindow.h \
+>>>>>>> c853558ac8bf3199a2b2df54efcf0b14a36105b0
+    mojbroj.h \
+    mojbrojlogic.hpp\
+    podrundaui.h \
+    pocetniekran.h \
+    recko.h \
+    reckoui.h \
+    podrunda.h \
+    pogodista.h \
+    pogodistaui.h
+
+
+
+FORMS += \
+    logindialog.ui \
+    mainwindow.ui \
+    pogodistaui.ui \
+    reckoui.ui \
+    kozna.ui \
+    mojbroj.ui \
+    podrundaui.ui \
+    pocetniekran.ui
+
+RESOURCES += \
+    resources.qrc
+
+

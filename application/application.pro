@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,19 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     game.cpp \
+    logindialog.cpp \
+    main.cpp \
+    mainwindow.cpp \
     kozna.cpp \
     koznaui.cpp \
-        main.cpp \
-        mainwindow.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
     podrundaui.cpp \
     pocetniekran.cpp \
     recko.cpp \
-    reckoui.cpp
+    reckoui.cpp \
+    podrunda.cpp \
+    pogodista.cpp \
+    pogodistaui.cpp
 
-
-
+   
 
 
 
@@ -45,18 +48,24 @@ HEADERS += \
     game.h \
     kozna.h \
     koznaui.h \
-        mainwindow.h \
+    logindialog.h \
+    mainwindow.h \
     mojbroj.h \
     mojbrojlogic.hpp\
     podrundaui.h \
     pocetniekran.h \
     recko.h \
-    reckoui.h
+    reckoui.h \
+    podrunda.h \
+    pogodista.h \
+    pogodistaui.h
 
 
 
 FORMS += \
-        mainwindow.ui \
+    logindialog.ui \
+    mainwindow.ui \
+    pogodistaui.ui \
     reckoui.ui \
     kozna.ui \
     mojbroj.ui \

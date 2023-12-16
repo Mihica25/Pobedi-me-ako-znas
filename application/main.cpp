@@ -5,6 +5,7 @@
 #include "podrundaui.h"
 #include "pocetniekran.h"
 #include "reckoui.h"
+#include "pogodistaui.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,15 +18,18 @@ int main(int argc, char *argv[])
     KoZnaui kz;
     kz.show();
 
+
     Mojbroj mb;
     mb.show();
 
-
-    podrundaui pr;
+    Podrundaui pr;
     pr.show();
 
     PocetniEkran pe;
     pe.show();
+
+    PogodiStaUI ps;
+    ps.show();
 
 
     return a.exec();
