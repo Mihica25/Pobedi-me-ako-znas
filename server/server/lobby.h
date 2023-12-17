@@ -5,6 +5,7 @@
 #include "player.h"
 #include <QDebug>
 #include <algorithm>
+#include "session.h"
 
 class Lobby : public QObject
 {

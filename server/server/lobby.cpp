@@ -15,14 +15,23 @@ Lobby::~Lobby()
     players.clear();  // Očistite listu
 }
 
-void Lobby::addPlayer(Player *player)
-{
-    // Dodajte novog igrača u lobi
+
+void Lobby::addPlayer(Player* player) {
+    // Dodajemo novog igrača u lobi
     players.append(player);
-
-    // Ovde trebamo kreirati sesije svaki put kada ima dovoljan broj igraca koji cekaju u lobiju
-
     qDebug() << "Dodat je novi igrac u Lobby. Sada ih ima: " << getPlayersCount();
+
+    // Proveramo da li imamo dovoljan broj igrača za sesiju
+    if (getPlayersCount() >= 2) {
+        // Kreiranje sesije sa prva dva igrača iz liste
+        Session* session = new Session(players[0], players[1]);
+        delete session;
+
+        // Uklanjamo igrače iz liste
+        players.removeFirst();  // Uklanjamo prvog igrača
+        players.removeFirst();  // Uklanjamo drugog igrača
+        qDebug() << "Uklonili smo igrace iz Lobby-ja nakon zavrsetka igre. Sada ih ima: " << getPlayersCount();
+    }
 }
 
 const QList<Player*>& Lobby::getPlayers() const {

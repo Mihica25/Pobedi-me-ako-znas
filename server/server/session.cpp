@@ -1,4 +1,7 @@
 #include "session.h"
+#include <thread>
+#include <chrono>
+
 
 Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
@@ -12,6 +15,9 @@ Session::~Session()
 {
     disconnect(player1->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
     disconnect(player2->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
+
+    delete player1;
+    delete player2;
 }
 
 void Session::sendMessageToPlayer1(const QString &message)
@@ -50,7 +56,9 @@ void Session::player2ReadyRead()
 void Session::startGame(){
 
     // Ovde cemo implementirati svu logiku, bilo bi dobro da izgleda nalik ovome
-
+    qDebug() << "Igra je pocela :)";
+    std::this_thread::sleep_for(std::chrono::seconds(10));
+    qDebug() << "Igra se zavrsila :(";
 //    startWordle();
 //    startPogodiSta();
 //    startKoZnaZna();

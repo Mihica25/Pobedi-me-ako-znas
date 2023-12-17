@@ -52,12 +52,14 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../application/game.cpp \
+SOURCES       = ../application/cardwidget.cpp \
+		../application/game.cpp \
 		../application/logindialog.cpp \
 		../application/main.cpp \
 		../application/mainwindow.cpp \
 		../application/kozna.cpp \
 		../application/koznaui.cpp \
+		../application/memorija.cpp \
 		../application/mojbroj.cpp \
 		../application/mojbrojlogic.cpp \
 		../application/podrundaui.cpp \
@@ -67,9 +69,11 @@ SOURCES       = ../application/game.cpp \
 		../application/podrunda.cpp \
 		../application/pogodista.cpp \
 		../application/pogodistaui.cpp qrc_resources.cpp \
+		moc_cardwidget.cpp \
 		moc_koznaui.cpp \
 		moc_logindialog.cpp \
 		moc_mainwindow.cpp \
+		moc_memorija.cpp \
 		moc_mojbroj.cpp \
 		moc_podrundaui.cpp \
 		moc_pocetniekran.cpp \
@@ -77,12 +81,14 @@ SOURCES       = ../application/game.cpp \
 		moc_podrunda.cpp \
 		moc_pogodista.cpp \
 		moc_pogodistaui.cpp
-OBJECTS       = game.o \
+OBJECTS       = cardwidget.o \
+		game.o \
 		logindialog.o \
 		main.o \
 		mainwindow.o \
 		kozna.o \
 		koznaui.o \
+		memorija.o \
 		mojbroj.o \
 		mojbrojlogic.o \
 		podrundaui.o \
@@ -93,9 +99,11 @@ OBJECTS       = game.o \
 		pogodista.o \
 		pogodistaui.o \
 		qrc_resources.o \
+		moc_cardwidget.o \
 		moc_koznaui.o \
 		moc_logindialog.o \
 		moc_mainwindow.o \
+		moc_memorija.o \
 		moc_mojbroj.o \
 		moc_podrundaui.o \
 		moc_pocetniekran.o \
@@ -179,11 +187,13 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		../application/application.pro ../application/game.h \
+		../application/application.pro ../application/cardwidget.h \
+		../application/game.h \
 		../application/kozna.h \
 		../application/koznaui.h \
 		../application/logindialog.h \
 		../application/mainwindow.h \
+		../application/memorija.h \
 		../application/mojbroj.h \
 		mojbrojlogic.hpp \
 		../application/podrundaui.h \
@@ -192,12 +202,14 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../application/reckoui.h \
 		../application/podrunda.h \
 		../application/pogodista.h \
-		../application/pogodistaui.h ../application/game.cpp \
+		../application/pogodistaui.h ../application/cardwidget.cpp \
+		../application/game.cpp \
 		../application/logindialog.cpp \
 		../application/main.cpp \
 		../application/mainwindow.cpp \
 		../application/kozna.cpp \
 		../application/koznaui.cpp \
+		../application/memorija.cpp \
 		../application/mojbroj.cpp \
 		../application/mojbrojlogic.cpp \
 		../application/podrundaui.cpp \
@@ -215,7 +227,7 @@ TARGET        = application
 first: all
 ####### Build rules
 
-application: ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h $(OBJECTS)  
+application: ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_memorija.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../application/application.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -391,9 +403,9 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/game.h ../application/kozna.h ../application/koznaui.h ../application/logindialog.h ../application/mainwindow.h ../application/mojbroj.h mojbrojlogic.hpp ../application/podrundaui.h ../application/pocetniekran.h ../application/recko.h ../application/reckoui.h ../application/podrunda.h ../application/pogodista.h ../application/pogodistaui.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/game.cpp ../application/logindialog.cpp ../application/main.cpp ../application/mainwindow.cpp ../application/kozna.cpp ../application/koznaui.cpp ../application/mojbroj.cpp ../application/mojbrojlogic.cpp ../application/podrundaui.cpp ../application/pocetniekran.cpp ../application/recko.cpp ../application/reckoui.cpp ../application/podrunda.cpp ../application/pogodista.cpp ../application/pogodistaui.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/logindialog.ui ../application/mainwindow.ui ../application/pogodistaui.ui ../application/reckoui.ui ../application/kozna.ui ../application/mojbroj.ui ../application/podrundaui.ui ../application/pocetniekran.ui $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/cardwidget.h ../application/game.h ../application/kozna.h ../application/koznaui.h ../application/logindialog.h ../application/mainwindow.h ../application/memorija.h ../application/mojbroj.h mojbrojlogic.hpp ../application/podrundaui.h ../application/pocetniekran.h ../application/recko.h ../application/reckoui.h ../application/podrunda.h ../application/pogodista.h ../application/pogodistaui.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/cardwidget.cpp ../application/game.cpp ../application/logindialog.cpp ../application/main.cpp ../application/mainwindow.cpp ../application/kozna.cpp ../application/koznaui.cpp ../application/memorija.cpp ../application/mojbroj.cpp ../application/mojbrojlogic.cpp ../application/podrundaui.cpp ../application/pocetniekran.cpp ../application/recko.cpp ../application/reckoui.cpp ../application/podrunda.cpp ../application/pogodista.cpp ../application/pogodistaui.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/logindialog.ui ../application/mainwindow.ui ../application/pogodistaui.ui ../application/memorija.ui ../application/reckoui.ui ../application/kozna.ui ../application/mojbroj.ui ../application/podrundaui.ui ../application/pocetniekran.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -440,9 +452,14 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_koznaui.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_podrundaui.cpp moc_pocetniekran.cpp moc_reckoui.cpp moc_podrunda.cpp moc_pogodista.cpp moc_pogodistaui.cpp
+compiler_moc_header_make_all: moc_cardwidget.cpp moc_koznaui.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_memorija.cpp moc_mojbroj.cpp moc_podrundaui.cpp moc_pocetniekran.cpp moc_reckoui.cpp moc_podrunda.cpp moc_pogodista.cpp moc_pogodistaui.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_koznaui.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_mojbroj.cpp moc_podrundaui.cpp moc_pocetniekran.cpp moc_reckoui.cpp moc_podrunda.cpp moc_pogodista.cpp moc_pogodistaui.cpp
+	-$(DEL_FILE) moc_cardwidget.cpp moc_koznaui.cpp moc_logindialog.cpp moc_mainwindow.cpp moc_memorija.cpp moc_mojbroj.cpp moc_podrundaui.cpp moc_pocetniekran.cpp moc_reckoui.cpp moc_podrunda.cpp moc_pogodista.cpp moc_pogodistaui.cpp
+moc_cardwidget.cpp: ../application/cardwidget.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/Desktop/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/cardwidget.h -o moc_cardwidget.cpp
+
 moc_koznaui.cpp: ../application/koznaui.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -457,6 +474,12 @@ moc_mainwindow.cpp: ../application/mainwindow.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/Desktop/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/mainwindow.h -o moc_mainwindow.cpp
+
+moc_memorija.cpp: ../application/memorija.h \
+		../application/cardwidget.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/Desktop/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/memorija.h -o moc_memorija.cpp
 
 moc_mojbroj.cpp: ../application/mojbroj.h \
 		../application/mojbrojlogic.h \
@@ -502,9 +525,9 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h
+compiler_uic_make_all: ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_memorija.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h
+	-$(DEL_FILE) ui_logindialog.h ui_mainwindow.h ui_pogodistaui.h ui_memorija.h ui_reckoui.h ui_kozna.h ui_mojbroj.h ui_podrundaui.h ui_pocetniekran.h
 ui_logindialog.h: ../application/logindialog.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../application/logindialog.ui -o ui_logindialog.h
@@ -516,6 +539,10 @@ ui_mainwindow.h: ../application/mainwindow.ui \
 ui_pogodistaui.h: ../application/pogodistaui.ui \
 		/usr/lib/qt5/bin/uic
 	/usr/lib/qt5/bin/uic ../application/pogodistaui.ui -o ui_pogodistaui.h
+
+ui_memorija.h: ../application/memorija.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic ../application/memorija.ui -o ui_memorija.h
 
 ui_reckoui.h: ../application/reckoui.ui \
 		/usr/lib/qt5/bin/uic
@@ -547,6 +574,9 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 
 ####### Compile
 
+cardwidget.o: ../application/cardwidget.cpp ../application/cardwidget.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cardwidget.o ../application/cardwidget.cpp
+
 game.o: ../application/game.cpp ../application/game.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../application/game.cpp
 
@@ -565,7 +595,9 @@ main.o: ../application/main.cpp ../application/mainwindow.h \
 		../application/reckoui.h \
 		../application/recko.h \
 		../application/pogodistaui.h \
-		../application/pogodista.h
+		../application/pogodista.h \
+		../application/memorija.h \
+		../application/cardwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../application/main.cpp
 
 mainwindow.o: ../application/mainwindow.cpp ../application/mainwindow.h \
@@ -578,6 +610,11 @@ kozna.o: ../application/kozna.cpp ../application/kozna.h
 koznaui.o: ../application/koznaui.cpp ../application/koznaui.h \
 		ui_kozna.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o koznaui.o ../application/koznaui.cpp
+
+memorija.o: ../application/memorija.cpp ../application/memorija.h \
+		../application/cardwidget.h \
+		ui_memorija.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o memorija.o ../application/memorija.cpp
 
 mojbroj.o: ../application/mojbroj.cpp ../application/mojbroj.h \
 		../application/mojbrojlogic.h \
@@ -619,6 +656,9 @@ pogodistaui.o: ../application/pogodistaui.cpp ../application/pogodistaui.h \
 qrc_resources.o: qrc_resources.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_resources.o qrc_resources.cpp
 
+moc_cardwidget.o: moc_cardwidget.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_cardwidget.o moc_cardwidget.cpp
+
 moc_koznaui.o: moc_koznaui.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_koznaui.o moc_koznaui.cpp
 
@@ -627,6 +667,9 @@ moc_logindialog.o: moc_logindialog.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+
+moc_memorija.o: moc_memorija.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_memorija.o moc_memorija.cpp
 
 moc_mojbroj.o: moc_mojbroj.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mojbroj.o moc_mojbroj.cpp
