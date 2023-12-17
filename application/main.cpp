@@ -6,6 +6,7 @@
 #include "pocetniekran.h"
 #include "reckoui.h"
 #include "pogodistaui.h"
+#include "memorija.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +32,8 @@ int main(int argc, char *argv[])
     PogodiStaUI ps;
     ps.show();
 
+    Memorija m;
+    m.show();
 
     return a.exec();
 }
