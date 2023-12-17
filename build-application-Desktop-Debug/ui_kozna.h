@@ -24,40 +24,48 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_KoZna
+class Ui_KoZnaui
 {
 public:
     QWidget *widget;
     QVBoxLayout *verticalLayout_2;
+    QLabel *labelTimer;
     QSpacerItem *verticalSpacer_3;
     QVBoxLayout *verticalLayout;
     QFrame *frame;
-    QLabel *label;
+    QLabel *labQuestion;
     QSpacerItem *verticalSpacer;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_4;
+    QPushButton *pushButtonAns4;
     QSpacerItem *verticalSpacer_4;
     QSpacerItem *horizontalSpacer_3;
-    QPushButton *pushButton_3;
-    QPushButton *pushButton_2;
-    QPushButton *pushButton;
+    QPushButton *pushButtonAns3;
+    QPushButton *pushButtonAns2;
+    QPushButton *pushButtonAns1;
     QSpacerItem *horizontalSpacer_4;
     QSpacerItem *horizontalSpacer_5;
     QSpacerItem *verticalSpacer_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *KoZna)
+    void setupUi(QMainWindow *KoZnaui)
     {
-        if (KoZna->objectName().isEmpty())
-            KoZna->setObjectName(QString::fromUtf8("KoZna"));
-        KoZna->resize(800, 800);
-        KoZna->setMinimumSize(QSize(800, 800));
-        KoZna->setMaximumSize(QSize(800, 800));
-        widget = new QWidget(KoZna);
+        if (KoZnaui->objectName().isEmpty())
+            KoZnaui->setObjectName(QString::fromUtf8("KoZnaui"));
+        KoZnaui->resize(800, 800);
+        KoZnaui->setMinimumSize(QSize(800, 800));
+        KoZnaui->setMaximumSize(QSize(800, 800));
+        widget = new QWidget(KoZnaui);
         widget->setObjectName(QString::fromUtf8("widget"));
         verticalLayout_2 = new QVBoxLayout(widget);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        labelTimer = new QLabel(widget);
+        labelTimer->setObjectName(QString::fromUtf8("labelTimer"));
+        labelTimer->setMinimumSize(QSize(100, 100));
+        labelTimer->setMaximumSize(QSize(100, 100));
+
+        verticalLayout_2->addWidget(labelTimer);
+
         verticalSpacer_3 = new QSpacerItem(20, 220, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_3);
@@ -70,10 +78,10 @@ public:
         frame->setStyleSheet(QString::fromUtf8(""));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        label = new QLabel(frame);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(36, 10, 711, 31));
-        label->setStyleSheet(QString::fromUtf8("background-color: white;"));
+        labQuestion = new QLabel(frame);
+        labQuestion->setObjectName(QString::fromUtf8("labQuestion"));
+        labQuestion->setGeometry(QRect(36, 10, 711, 31));
+        labQuestion->setStyleSheet(QString::fromUtf8("background-color: white;"));
 
         verticalLayout->addWidget(frame);
 
@@ -86,11 +94,11 @@ public:
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        pushButton_4 = new QPushButton(widget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setMinimumSize(QSize(200, 50));
+        pushButtonAns4 = new QPushButton(widget);
+        pushButtonAns4->setObjectName(QString::fromUtf8("pushButtonAns4"));
+        pushButtonAns4->setMinimumSize(QSize(200, 50));
 
-        gridLayout->addWidget(pushButton_4, 2, 3, 1, 1);
+        gridLayout->addWidget(pushButtonAns4, 2, 3, 1, 1);
 
         verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -100,23 +108,24 @@ public:
 
         gridLayout->addItem(horizontalSpacer_3, 0, 0, 1, 1);
 
-        pushButton_3 = new QPushButton(widget);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setMinimumSize(QSize(200, 50));
+        pushButtonAns3 = new QPushButton(widget);
+        pushButtonAns3->setObjectName(QString::fromUtf8("pushButtonAns3"));
+        pushButtonAns3->setMinimumSize(QSize(200, 50));
 
-        gridLayout->addWidget(pushButton_3, 2, 1, 1, 1);
+        gridLayout->addWidget(pushButtonAns3, 2, 1, 1, 1);
 
-        pushButton_2 = new QPushButton(widget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setMinimumSize(QSize(200, 50));
+        pushButtonAns2 = new QPushButton(widget);
+        pushButtonAns2->setObjectName(QString::fromUtf8("pushButtonAns2"));
+        pushButtonAns2->setMinimumSize(QSize(200, 50));
 
-        gridLayout->addWidget(pushButton_2, 0, 3, 1, 1);
+        gridLayout->addWidget(pushButtonAns2, 0, 3, 1, 1);
 
-        pushButton = new QPushButton(widget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setMinimumSize(QSize(200, 50));
+        pushButtonAns1 = new QPushButton(widget);
+        pushButtonAns1->setObjectName(QString::fromUtf8("pushButtonAns1"));
+        pushButtonAns1->setEnabled(true);
+        pushButtonAns1->setMinimumSize(QSize(200, 50));
 
-        gridLayout->addWidget(pushButton, 0, 1, 1, 1);
+        gridLayout->addWidget(pushButtonAns1, 0, 1, 1, 1);
 
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -133,34 +142,35 @@ public:
 
         verticalLayout_2->addItem(verticalSpacer_2);
 
-        KoZna->setCentralWidget(widget);
-        menubar = new QMenuBar(KoZna);
+        KoZnaui->setCentralWidget(widget);
+        menubar = new QMenuBar(KoZnaui);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 800, 29));
-        KoZna->setMenuBar(menubar);
-        statusbar = new QStatusBar(KoZna);
+        KoZnaui->setMenuBar(menubar);
+        statusbar = new QStatusBar(KoZnaui);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        KoZna->setStatusBar(statusbar);
+        KoZnaui->setStatusBar(statusbar);
 
-        retranslateUi(KoZna);
+        retranslateUi(KoZnaui);
 
-        QMetaObject::connectSlotsByName(KoZna);
+        QMetaObject::connectSlotsByName(KoZnaui);
     } // setupUi
 
-    void retranslateUi(QMainWindow *KoZna)
+    void retranslateUi(QMainWindow *KoZnaui)
     {
-        KoZna->setWindowTitle(QApplication::translate("KoZna", "KoZna", nullptr));
-        label->setText(QString());
-        pushButton_4->setText(QString());
-        pushButton_3->setText(QString());
-        pushButton_2->setText(QString());
-        pushButton->setText(QString());
+        KoZnaui->setWindowTitle(QApplication::translate("KoZnaui", "KoZnaui", nullptr));
+        labelTimer->setText(QString());
+        labQuestion->setText(QString());
+        pushButtonAns4->setText(QString());
+        pushButtonAns3->setText(QString());
+        pushButtonAns2->setText(QString());
+        pushButtonAns1->setText(QString());
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class KoZna: public Ui_KoZna {};
+    class KoZnaui: public Ui_KoZnaui {};
 } // namespace Ui
 
 QT_END_NAMESPACE

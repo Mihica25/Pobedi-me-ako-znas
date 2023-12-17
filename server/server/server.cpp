@@ -11,7 +11,6 @@ Server::Server(QObject *parent) : QObject(parent), tcpServer(nullptr), lobby(nul
 
 Server::~Server()
 {
-    // Osigurajte da se resursi oslobode prilikom uništavanja objekta
     if (tcpServer->isListening()) {
         tcpServer->close();
     }
@@ -31,19 +30,26 @@ void Server::startServer(int port)
 
 void Server::newClientConnection()
 {
-    // Čekaj na novu konekciju
+    // Čekamo na novu konekciju
     QTcpSocket* clientSocket = tcpServer->nextPendingConnection();
 
     if (clientSocket) {
-        qDebug() << "New client connected.";
+        // Ovo moramo pomeriti kada krenemo implementirati logiku, sada je ovde cisto radi testiranja
         sendMessage(clientSocket, "Welcome :)");
-        // Kreiraj instancu Player-a
-        Player* newPlayer = new Player(clientSocket, this);
 
-        // Dodaj novog igrača u lobi
+        clientSocket->waitForReadyRead();
+        QString username = clientSocket->readAll();
+
+        qDebug() << "New client connected." << " Username: " << username;
+
+        // Kreiramo instancu Player-a
+        Player* newPlayer = new Player(clientSocket, username, this);
+
+        // Dodajemo novog igrača u lobi
         lobby->addPlayer(newPlayer);
     }
 }
+
 
 void Server::sendMessage(QTcpSocket* socket,QString msg)
 {

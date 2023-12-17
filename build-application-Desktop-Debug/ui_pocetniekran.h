@@ -83,7 +83,7 @@ public:
         pokreniIgruButton->setObjectName(QString::fromUtf8("pokreniIgruButton"));
         pokreniIgruButton->setMinimumSize(QSize(300, 55));
         pokreniIgruButton->setMaximumSize(QSize(300, 55));
-        pokreniIgruButton->setStyleSheet(QString::fromUtf8("background-color:  #800020"));
+        pokreniIgruButton->setStyleSheet(QString::fromUtf8("background-color:  #741515"));
 
         gridLayout->addWidget(pokreniIgruButton, 0, 0, 1, 1);
 

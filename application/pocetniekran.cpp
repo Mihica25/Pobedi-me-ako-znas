@@ -35,6 +35,7 @@ void PocetniEkran::on_startGameButton_clicked()
         if (connectToServer(playerName)) {
             // Uspesna konekcija
             qDebug() << "Uspesno povezivanje sa serverom!";
+            ui->pokreniIgruButton->setText("Ceka se protivnik");
         } else {
             // Neuspesna konekcija
             qDebug() << "Neuspesna konekcija sa serverom!";
@@ -60,9 +61,9 @@ bool PocetniEkran::connectToServer(const QString &playerName)
     // Nisam napisao logiku sa serverske strane koja bi trebalo da prihvati ime igraca
     // i kreira instancu klase Player. U klasi Player trebam dodati polje player_name i
     // izbrisati logiku sa player_id (ili mozda ne, moramo razmisliti da li nam je potreban)
-//        QString message = playerName;
-//        tcpSocket.write(message.toUtf8());
-//        tcpSocket.flush();
+        QString message = playerName;
+        tcpSocket.write(message.toUtf8());
+        tcpSocket.flush();
 
         return true;  // Uspesna konekcija
     } else {

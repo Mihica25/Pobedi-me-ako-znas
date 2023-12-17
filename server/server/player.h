@@ -3,27 +3,24 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include <QString>
 
 class Player : public QObject
 {
     Q_OBJECT
 
 public:
-    Player(QTcpSocket *socket, QObject *parent = nullptr);
+    Player(QTcpSocket *socket, const QString& username, QObject *parent = nullptr);
     ~Player();
 
-    int getPlayerId() const;
+    QString getPlayerUsername() const;
     int getPoints() const;
     QTcpSocket* getTcpSocket();
 
 private:
     QTcpSocket* tcpSocket;
-    int playerId;
+    QString username;
     int points;
-
-
-    void generatePlayerId();
-
 };
 
 #endif // PLAYER_H
