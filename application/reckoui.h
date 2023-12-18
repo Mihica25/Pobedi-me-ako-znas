@@ -62,6 +62,7 @@ private:
     void disableSolution();
     void showSolution();
     void sendMessage(QTcpSocket* socket, QString msg);
+    void startGame();
 };
 
 #endif // RECKOUI_H

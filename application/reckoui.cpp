@@ -23,7 +23,6 @@ ReckoUI::ReckoUI(QWidget *parent) :
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_timesUp);
     connect(this, &ReckoUI::gameEnds, this, &ReckoUI::on_gameEnds);
-    sendMessage(server, "Radi li soket :)");
     tajmer->start(1000);
 }
 
@@ -58,6 +57,8 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
     connect(this, &ReckoUI::gameEnds, this, &ReckoUI::on_gameEnds);
 
     tajmer->start(1000);
+
+    startGame();
 }
 
 ReckoUI::~ReckoUI()
@@ -296,4 +297,8 @@ void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)
     socket->write(msg.toUtf8());
     socket->flush();
 
+}
+
+void ReckoUI::startGame(){
+    sendMessage(server, "Radi li soket :)");
 }

@@ -54,6 +54,8 @@ void Session::player2ReadyRead()
 
 
 void Session::startGame(){
+//    player1->tcpSocket->waitForReadyRead(-1);
+//    qDebug() << (QString::fromUtf8(player1->tcpSocket->readAll())) << endl;
 
     // Ovde cemo implementirati svu logiku, bilo bi dobro da izgleda nalik ovome
     sendMessageToPlayer1("OPPONENT USERNAME: " + player2->getPlayerUsername());

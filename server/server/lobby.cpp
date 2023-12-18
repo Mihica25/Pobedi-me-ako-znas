@@ -25,7 +25,7 @@ void Lobby::addPlayer(Player* player) {
     if (getPlayersCount() >= 2) {
         // Kreiranje sesije sa prva dva igrača iz liste
         Session* session = new Session(players[0], players[1]);
-        delete session;
+//        delete session;
 
         // Uklanjamo igrače iz liste
         players.removeFirst();  // Uklanjamo prvog igrača
