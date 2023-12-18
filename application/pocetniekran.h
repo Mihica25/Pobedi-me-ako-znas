@@ -5,6 +5,8 @@
 #include "logindialog.h"
 #include <QDebug>
 #include <QTcpSocket>
+#include "reckoui.h"
+#include <QString>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }
@@ -20,10 +22,19 @@ public:
 
 public slots:
     void on_startGameButton_clicked();
+    void on_reckoEnds();
 
 private:
     Ui::PocetniEkran *ui;
+    QTcpSocket* tcpSocket;
+    QString playerName = "";
+    QString opponentName = "";
+    bool turn = false;
+    int player1Points = 0;
+    int player2Points = 0;
 
-    bool connectToServer(const QString &playerName);
+    void initConntroler();
+
+    bool connectToServer();
 };
 #endif // POCETNIEKRAN_H

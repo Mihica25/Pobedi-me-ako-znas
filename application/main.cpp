@@ -16,24 +16,24 @@ int main(int argc, char *argv[])
   //  ReckoUI wordlewindow;
   //  wordlewindow.show();
 
-    KoZnaui kz;
-    kz.show();
+//    KoZnaui kz;
+//    kz.show();
 
 
-    Mojbroj mb;
-    mb.show();
+//    Mojbroj mb;
+//    mb.show();
 
-    Podrundaui pr;
-    pr.show();
+//    Podrundaui pr;
+//    pr.show();
 
     PocetniEkran pe;
     pe.show();
 
-    PogodiStaUI ps;
-    ps.show();
+//    PogodiStaUI ps;
+//    ps.show();
 
-    Memorija m;
-    m.show();
+//    Memorija m;
+//    m.show();
 
     return a.exec();
 }

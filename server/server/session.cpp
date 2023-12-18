@@ -5,16 +5,16 @@
 
 Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
-    connect(player1->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
-    connect(player2->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
+    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     startGame();
 }
 
 Session::~Session()
 {
-    disconnect(player1->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
-    disconnect(player2->getTcpSocket(), &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     delete player1;
     delete player2;
@@ -23,15 +23,15 @@ Session::~Session()
 void Session::sendMessageToPlayer1(const QString &message)
 {
     // Slanje poruke prvom igraču
-    player1->getTcpSocket()->write(message.toUtf8());
-    player1->getTcpSocket()->flush();
+    player1->tcpSocket->write(message.toUtf8());
+    player1->tcpSocket->flush();
 }
 
 void Session::sendMessageToPlayer2(const QString &message)
 {
     // Slanje poruke drugom igraču
-    player2->getTcpSocket()->write(message.toUtf8());
-    player2->getTcpSocket()->flush();
+    player2->tcpSocket->write(message.toUtf8());
+    player2->tcpSocket->flush();
 }
 
 void Session::sendMessageToBothPlayers(const QString &message)
@@ -43,22 +43,23 @@ void Session::sendMessageToBothPlayers(const QString &message)
 void Session::player1ReadyRead()
 {
     // Obrada podataka koji stižu od prvog igrača
-    qDebug() << "Data received from Player 1: " << player1->getTcpSocket()->readAll();
+    qDebug() << "Data received from Player 1: " << player1->tcpSocket->readAll();
 }
 
 void Session::player2ReadyRead()
 {
     // Obrada podataka koji stižu od drugog igrača
-    qDebug() << "Data received from Player 2: " << player2->getTcpSocket()->readAll();
+    qDebug() << "Data received from Player 2: " << player2->tcpSocket->readAll();
 }
 
 
 void Session::startGame(){
 
     // Ovde cemo implementirati svu logiku, bilo bi dobro da izgleda nalik ovome
-    qDebug() << "Igra je pocela :)";
-    std::this_thread::sleep_for(std::chrono::seconds(10));
-    qDebug() << "Igra se zavrsila :(";
+    sendMessageToPlayer1("OPPONENT USERNAME: " + player2->getPlayerUsername());
+    sendMessageToPlayer2("OPPONENT USERNAME: " + player1->getPlayerUsername());
+    sendMessageToPlayer1("TURN: true");
+    sendMessageToPlayer2("TURN: false");
 //    startWordle();
 //    startPogodiSta();
 //    startKoZnaZna();

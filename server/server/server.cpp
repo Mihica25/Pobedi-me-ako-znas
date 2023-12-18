@@ -34,8 +34,6 @@ void Server::newClientConnection()
     QTcpSocket* clientSocket = tcpServer->nextPendingConnection();
 
     if (clientSocket) {
-        // Ovo moramo pomeriti kada krenemo implementirati logiku, sada je ovde cisto radi testiranja
-        sendMessage(clientSocket, "Welcome :)");
 
         clientSocket->waitForReadyRead();
         QString username = clientSocket->readAll();
@@ -51,7 +49,7 @@ void Server::newClientConnection()
 }
 
 
-void Server::sendMessage(QTcpSocket* socket,QString msg)
+void Server::sendMessage(QTcpSocket* socket, QString msg)
 {
     qDebug() << "Sending msg: " << msg;
     socket->write(msg.toUtf8());

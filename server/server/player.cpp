@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(QTcpSocket *socket, const QString& username, QObject *parent) : QObject(parent), tcpSocket(socket), username(username), points(0)
+Player::Player(QTcpSocket* socket, const QString& username, QObject *parent) : QObject(parent), tcpSocket(socket), username(username), points(0)
 {
     qDebug() << "Kreiran je igrac: " << username;
 }
@@ -22,6 +22,3 @@ int Player::getPoints() const
     return points;
 }
 
-QTcpSocket* Player::getTcpSocket(){
-    return tcpSocket;
-}
