@@ -27,28 +27,25 @@ ReckoUI::ReckoUI(QWidget *parent) :
 }
 
 ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
-                 QString player1, QString player2, bool turn,
+                 QString player1, QString player2, bool red,
                  int player1Points, int player2Points):
     QMainWindow(parent),
     ui(new Ui::ReckoUI),
+    recko(new Recko()),
     tajmer(new QTimer(this))
 {
     server = tcpSocket;
     multiplayer = true;
     player1 = player1;
     player2 = player2;
-    turn = turn;
+    turn = red;
+    playerNo = turn;
     player1Points = player1Points;
     player2Points = player2Points;
-    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+//    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     ui->setupUi(this);
     setUpBackground();
     setUpRows();
-    connect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1);
-    connect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2);
-    connect(ui->pbPotvrdi3 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi3);
-    connect(ui->pbPotvrdi4 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi4);
-    connect(ui->pbPotvrdi5 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi5);
     time = 60;
     ui->leTimer->setText(QString::number(time));
 
@@ -56,9 +53,21 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
     connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_timesUp);
     connect(this, &ReckoUI::gameEnds, this, &ReckoUI::on_gameEnds);
 
-    tajmer->start(1000);
-
     startGame();
+}
+
+void ReckoUI::startGame(){
+    if(turn){
+        connect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
+        connect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2Multiplayer);
+        connect(ui->pbPotvrdi3 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi3Multiplayer);
+        connect(ui->pbPotvrdi4 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi4Multiplayer);
+        connect(ui->pbPotvrdi5 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi5Multiplayer);
+    } else {
+        disableRow(0);
+    }
+    tajmer->start(1000);
+    return;
 }
 
 ReckoUI::~ReckoUI()
@@ -72,6 +81,152 @@ void ReckoUI::setUpBackground(){
     QPalette palette;
     palette.setBrush(QPalette::Background, background);
     this->setPalette(palette);
+}
+
+void ReckoUI::on_pbPotvrdi1Multiplayer(){
+    QString word = getWord();
+    sendMessage(server, word.toUtf8());
+    if(server->waitForReadyRead(10000)){
+        QString result = QString::fromUtf8(server->readAll());
+
+        if(result == "GGGGG"){
+            if(server->waitForReadyRead(10000)){
+                QByteArray rawData = server->readAll();
+                int points;
+                QDataStream stream(rawData);
+                stream >> points;
+                if(playerNo){
+                    player1Points += points;
+                } else {
+                    player2Points += points;
+                }
+            }
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+
+        } else {
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+            disableRow(recko->getCurrentRow(), false);
+            recko->incrementRow();
+        }
+    }
+}
+void ReckoUI::on_pbPotvrdi2Multiplayer(){
+    QString word = getWord();
+    sendMessage(server, word.toUtf8());
+    if(server->waitForReadyRead(10000)){
+        QString result = QString::fromUtf8(server->readAll());
+
+        if(result == "GGGGG"){
+            if(server->waitForReadyRead(10000)){
+                QByteArray rawData = server->readAll();
+                int points;
+                QDataStream stream(rawData);
+                stream >> points;
+                if(playerNo){
+                    player1Points += points;
+                } else {
+                    player2Points += points;
+                }
+            }
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+
+        } else {
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+            disableRow(recko->getCurrentRow(), false);
+            recko->incrementRow();
+        }
+    }
+}
+void ReckoUI::on_pbPotvrdi3Multiplayer(){
+    QString word = getWord();
+    sendMessage(server, word.toUtf8());
+    if(server->waitForReadyRead(10000)){
+        QString result = QString::fromUtf8(server->readAll());
+
+        if(result == "GGGGG"){
+            if(server->waitForReadyRead(10000)){
+                QByteArray rawData = server->readAll();
+                int points;
+                QDataStream stream(rawData);
+                stream >> points;
+                if(playerNo){
+                    player1Points += points;
+                } else {
+                    player2Points += points;
+                }
+            }
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+
+        } else {
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+            disableRow(recko->getCurrentRow(), false);
+            recko->incrementRow();
+        }
+    }
+}
+void ReckoUI::on_pbPotvrdi4Multiplayer(){
+    QString word = getWord();
+    sendMessage(server, word.toUtf8());
+    if(server->waitForReadyRead(10000)){
+        QString result = QString::fromUtf8(server->readAll());
+
+        if(result == "GGGGG"){
+            if(server->waitForReadyRead(10000)){
+                QByteArray rawData = server->readAll();
+                int points;
+                QDataStream stream(rawData);
+                stream >> points;
+                if(playerNo){
+                    player1Points += points;
+                } else {
+                    player2Points += points;
+                }
+            }
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+
+        } else {
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+            disableRow(recko->getCurrentRow(), false);
+            recko->incrementRow();
+        }
+    }
+}
+void ReckoUI::on_pbPotvrdi5Multiplayer(){
+    QString word = getWord();
+    sendMessage(server, word.toUtf8());
+    if(server->waitForReadyRead(10000)){
+        QString result = QString::fromUtf8(server->readAll());
+
+        if(result == "GGGGG"){
+            if(server->waitForReadyRead(10000)){
+                QByteArray rawData = server->readAll();
+                int points;
+                QDataStream stream(rawData);
+                stream >> points;
+                if(playerNo){
+                    player1Points += points;
+                } else {
+                    player2Points += points;
+                }
+            }
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+
+        } else {
+            colorRow(result);
+            disableRow(recko->getCurrentRow() - 1);
+//            disableRow(recko->getCurrentRow(), false);
+//            recko->incrementRow();
+        }
+    }
 }
 
 void ReckoUI::on_pbPotvrdi1(){
@@ -175,6 +330,43 @@ bool ReckoUI::quess(){
     return false;
 }
 
+void ReckoUI::colorRow(QString result){
+    QHBoxLayout* horizontalLayout =
+            qobject_cast<QHBoxLayout*>(ui->verticalLayout->
+                                       itemAt(recko->getCurrentRow() - 1)->
+                                       layout()->itemAt(0)->layout());
+
+    for (int j = 0; j < horizontalLayout->count(); ++j){
+        QLineEdit* lineEdit = qobject_cast<QLineEdit*>(horizontalLayout->itemAt(j)->widget());
+
+        if (lineEdit) {
+            if(result.at(j) == "G"){
+                lineEdit->setStyleSheet("background-color: green;");
+            } else if(result.at(j) == "Y"){
+                lineEdit->setStyleSheet("background-color: yellow;");
+            }
+        }
+    }
+}
+
+QString ReckoUI::getWord(){
+    QHBoxLayout* horizontalLayout =
+            qobject_cast<QHBoxLayout*>(ui->verticalLayout->
+                                       itemAt(recko->getCurrentRow() - 1)->
+                                       layout()->itemAt(0)->layout());
+    QString word = "";
+    for (int j = 0; j < horizontalLayout->count(); ++j){
+        QLineEdit* lineEdit = qobject_cast<QLineEdit*>(horizontalLayout->itemAt(j)->widget());
+
+        if (lineEdit) {
+            QString userInput = lineEdit->text();
+            word.append(userInput);
+        }
+    }
+    qDebug() << word << endl;
+    return word.toUpper();
+}
+
 void ReckoUI::disableRow(int index, bool disable){
     QHBoxLayout* Row =
             qobject_cast<QHBoxLayout*>(ui->verticalLayout->
@@ -263,33 +455,25 @@ void ReckoUI::showSolution(){
 
 }
 
-void ReckoUI::onReadyRead() {
-    QByteArray data = server->readAll();
-    QString message = QString::fromUtf8(data);
+//void ReckoUI::onReadyRead() {
+//    QByteArray data = server->readAll();
+//    QString message = QString::fromUtf8(data);
 
-    // Razlikovanje poruka na osnovu prefiksa
-    if (message.startsWith("TURN:")) {
-        QString turnMessage = message.mid(5);
-        turn = (turnMessage == "true");
-        qDebug() << turnMessage << endl;
-    } else if (message.startsWith("OPPONENT USERNAME:")) {
-        QString opponentUsernameMessage = message.mid(19);
-        player2 = opponentUsernameMessage;
-        qDebug() << player2 << endl;
-    } else if (message.startsWith("ADD POINTS TO PLAYER1:")) {
-        // Obrada poruke sa prefiksom "ADD POINTS TO PLAYER1:"
-        QString addPointsToPlayer1Message = message.mid(23);  // Uzimanje dela poruke nakon prefiksa
-        player1Points += addPointsToPlayer1Message.toInt();
-        // Dalja obrada poruke "ADD POINTS TO PLAYER1:"
-    } else if (message.startsWith("ADD POINTS TO PLAYER2:")) {
-        // Obrada poruke sa prefiksom "ADD POINTS TO PLAYER2:"
-        QString addPointsToPlayer2Message = message.mid(23);  // Uzimanje dela poruke nakon prefiksa
-        player2Points += addPointsToPlayer2Message.toInt();
-        // Dalja obrada poruke "ADD POINTS TO PLAYER2:"
-    } else {
-        return;
-    }
-}
+//    // Razlikovanje poruka na osnovu prefiksa
+//    if (message.startsWith("ADD POINTS TO PLAYER1:")) {
+//        // Obrada poruke sa prefiksom "ADD POINTS TO PLAYER1:"
+//        QString addPointsToPlayer1Message = message.mid(23);  // Uzimanje dela poruke nakon prefiksa
+//        player1Points += addPointsToPlayer1Message.toInt();
+//        // Dalja obrada poruke "ADD POINTS TO PLAYER1:"
+//    } else if (message.startsWith("ADD POINTS TO PLAYER2:")) {
+//        // Obrada poruke sa prefiksom "ADD POINTS TO PLAYER2:"
+//        QString addPointsToPlayer2Message = message.mid(23);  // Uzimanje dela poruke nakon prefiksa
+//        player2Points += addPointsToPlayer2Message.toInt();
+//        // Dalja obrada poruke "ADD POINTS TO PLAYER2:"
+//    } else {
+//        return;
+//    }
+//}
 
 void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)
 {
@@ -299,6 +483,4 @@ void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)
 
 }
 
-void ReckoUI::startGame(){
-    sendMessage(server, "Radi li soket :)");
-}
+

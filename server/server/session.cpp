@@ -8,6 +8,8 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
+    recko = "HOUSE";
+
     startGame();
 }
 
@@ -54,14 +56,159 @@ void Session::player2ReadyRead()
 
 
 void Session::startGame(){
-//    player1->tcpSocket->waitForReadyRead(-1);
-//    qDebug() << (QString::fromUtf8(player1->tcpSocket->readAll())) << endl;
 
-    // Ovde cemo implementirati svu logiku, bilo bi dobro da izgleda nalik ovome
-    sendMessageToPlayer1("OPPONENT USERNAME: " + player2->getPlayerUsername());
-    sendMessageToPlayer2("OPPONENT USERNAME: " + player1->getPlayerUsername());
-    sendMessageToPlayer1("TURN: true");
-    sendMessageToPlayer2("TURN: false");
+    sendMessageToPlayer1(player2->getPlayerUsername());
+    if(player1->tcpSocket->waitForReadyRead(10000)){
+        qDebug() << (QString::fromUtf8(player1->tcpSocket->readAll())) << endl;
+    }
+    sendMessageToPlayer2(player1->getPlayerUsername());
+    if(player2->tcpSocket->waitForReadyRead(10000)){
+        qDebug() << (QString::fromUtf8(player2->tcpSocket->readAll())) << endl;
+    }
+
+    sendMessageToPlayer1("true");
+    if(player1->tcpSocket->waitForReadyRead(10000)){
+        qDebug() << (QString::fromUtf8(player1->tcpSocket->readAll())) << endl;
+    }
+    sendMessageToPlayer2("false");
+    if(player2->tcpSocket->waitForReadyRead(10000)){
+        qDebug() << (QString::fromUtf8(player2->tcpSocket->readAll())) << endl;
+    }
+    QString result = "";
+    if(player1->tcpSocket->waitForReadyRead(60000)){
+        QString word = QString::fromUtf8(player1->tcpSocket->readAll());
+        qDebug() << word << endl;
+        qDebug() << recko << endl;
+        QString result = "";
+        if(recko.size() >=4 && word.size() >=4){
+            for(unsigned i = 0; i<5; i++){
+                QString slovo = word.at(i);
+                if(recko.contains(slovo)){
+                    break;
+                }
+                qDebug() << "Ispis" << endl;
+                if(word.at(i) == recko.at(i)){
+                    result += "G";
+                    qDebug() << "at" << endl;
+                }
+                else if (recko.contains(word.at(i))) {
+                    result += "Y";
+                    qDebug() << "contains ili upper" << endl;
+                } else {
+                    result += "R";
+                }
+            }
+        }
+//        for(unsigned i = 0; i<5; i++){
+//            QString slovo = word.at(i);
+//            if(recko.contains(slovo)){
+//                break;
+//            }
+//            qDebug() << "Ispis" << endl;
+//            if(word.at(i) == recko.at(i)){
+//                result += "G";
+//                qDebug() << "at" << endl;
+//            }
+//            else if (recko.contains(word.at(i))) {
+//                result += "Y";
+//                qDebug() << "contains ili upper" << endl;
+//            } else {
+//                result += "R";
+//            }
+//        }
+    }
+    sendMessageToPlayer1(result);
+    if(result == "GGGGG"){
+        sendMessageToPlayer1("10");
+    }
+    result = "";
+    if(player1->tcpSocket->waitForReadyRead(60000)){
+        QString word = QString::fromUtf8(player1->tcpSocket->readAll());
+        qDebug() << word << endl;
+        QString result = "";
+        for(int i = 0; i<5; i++){
+            qDebug() << "Ispis" << endl;
+            if(word.at(i) == recko.at(i)){
+                result += "G";
+                qDebug() << "at" << endl;
+            }
+            else if (recko.contains(word.at(i))) {
+                result += "Y";
+                qDebug() << "contains ili upper" << endl;
+            } else {
+                result += "R";
+            }
+        }
+    }
+    sendMessageToPlayer1(result);
+    if(result == "GGGGG"){
+        sendMessageToPlayer1("10");
+    }
+    result = "";
+    if(player1->tcpSocket->waitForReadyRead(60000)){
+        QString word = QString::fromUtf8(player1->tcpSocket->readAll());
+        qDebug() << word << endl;
+        QString result = "";
+        for(int i = 0; i<5; i++){
+            if(word.at(i) == recko.at(i)){
+                result += "G";
+            }
+            else if (recko.contains(word.at(i).toUpper())) {
+                result += "Y";
+            } else {
+                result += "R";
+            }
+        }
+    }
+    sendMessageToPlayer1(result);
+    if(result == "GGGGG"){
+        sendMessageToPlayer1("10");
+    }
+    result = "";
+    if(player1->tcpSocket->waitForReadyRead(60000)){
+        QString word = QString::fromUtf8(player1->tcpSocket->readAll());
+        qDebug() << word << endl;
+        QString result = "";
+        for(int i = 0; i<5; i++){
+            if(word.at(i) == recko.at(i)){
+                result += "G";
+            }
+            else if (recko.contains(word.at(i).toUpper())) {
+                result += "Y";
+            } else {
+                result += "R";
+            }
+        }
+    }
+    sendMessageToPlayer1(result);
+    if(result == "GGGGG"){
+        sendMessageToPlayer1("10");
+    }
+    result = "";
+    if(player1->tcpSocket->waitForReadyRead(60000)){
+        QString word = QString::fromUtf8(player1->tcpSocket->readAll());
+        qDebug() << word << endl;
+        QString result = "";
+        for(int i = 0; i<5; i++){
+            if(word.at(i) == recko.at(i)){
+                result += "G";
+            }
+            else if (recko.contains(word.at(i).toUpper())) {
+                result += "Y";
+            } else {
+                result += "R";
+            }
+        }
+    }
+    sendMessageToPlayer1(result);
+    if(result == "GGGGG"){
+        sendMessageToPlayer1("10");
+    }
+    result = "";
+
+
+
+
 //    startWordle();
 //    startPogodiSta();
 //    startKoZnaZna();

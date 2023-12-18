@@ -4,6 +4,11 @@
 #include <QTcpServer>
 #include <QDebug>
 #include "player.h"
+#include <string>
+#include <QDir>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QString>
 
 class Session : public QObject
 {
@@ -24,6 +29,7 @@ private slots:
 private:
     Player *player1;
     Player *player2;
+    QString recko;
 
     void startGame();
 

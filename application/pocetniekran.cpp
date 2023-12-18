@@ -72,15 +72,22 @@ bool PocetniEkran::connectToServer()
 }
 
 void PocetniEkran::initConntroler(){
-//    if (tcpSocket && tcpSocket->state() == QAbstractSocket::ConnectedState){
-//        qDebug() << "Dobar je soket";
-//    }
-////    tcpSocket->waitForReadyRead(-1);
-////    opponentName = QString::fromUtf8(tcpSocket->readAll());
-////    tcpSocket->waitForReadyRead(-1);
-////    turn = (QString::fromUtf8(tcpSocket->readAll()) == "true");
 
-    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, "true", 0, 0);
+    if(tcpSocket->waitForReadyRead(10000)){
+        opponentName = QString::fromUtf8(tcpSocket->readAll());
+        QString msg = "ACK";
+        tcpSocket->write(msg.toUtf8());
+        tcpSocket->flush();
+    }
+    if(tcpSocket->waitForReadyRead(10000)){
+        turn = (QString::fromUtf8(tcpSocket->readAll()) == "true");
+        qDebug() << turn << endl;
+        QString msg = "ACK";
+        tcpSocket->write(msg.toUtf8());
+        tcpSocket->flush();
+    }
+
+    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
     this->close();
     recko->show();
     connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
@@ -89,3 +96,4 @@ void PocetniEkran::initConntroler(){
 void PocetniEkran::on_reckoEnds(){
     return;
 }
+

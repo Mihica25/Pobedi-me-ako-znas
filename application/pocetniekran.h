@@ -29,7 +29,7 @@ private:
     QTcpSocket* tcpSocket;
     QString playerName = "";
     QString opponentName = "";
-    bool turn = false;
+    bool turn;
     int player1Points = 0;
     int player2Points = 0;
 
