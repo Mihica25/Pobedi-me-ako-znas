@@ -18,13 +18,15 @@ public:
     Session(Player *player1, Player *player2, QObject *parent = nullptr);
     ~Session();
 
-    void sendMessageToPlayer1(const QString &message);
-    void sendMessageToPlayer2(const QString &message);
-    void sendMessageToBothPlayers(const QString &message);
+    void sendMessageToPlayer1(QString message);
+    void sendMessageToPlayer2(QString message);
+    void sendMessageToBothPlayers(QString message);
 
 private slots:
-    void player1ReadyRead();
-    void player2ReadyRead();
+    void player1ReadyReadRecko();
+    void player2ReadyReadRecko();
+//    void player1ReadyRead();
+//    void player2ReadyRead();
 
 private:
     Player *player1;
@@ -32,6 +34,10 @@ private:
     QString recko;
 
     void startGame();
+    void startRecko();
+
+    void processReckoMessage(const QString& msg);
+    QString checkReckoSolution(const QString& word);
 
 };
 

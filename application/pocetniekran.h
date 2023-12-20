@@ -23,6 +23,7 @@ public:
 public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();
+    void onReadyRead();
 
 private:
     Ui::PocetniEkran *ui;
@@ -36,5 +37,6 @@ private:
     void initConntroler();
 
     bool connectToServer();
+    void processServerMessage(const QString& serverMessage);
 };
 #endif // POCETNIEKRAN_H

@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Session_t {
     QByteArrayData data[4];
-    char stringdata0[43];
+    char stringdata0[53];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,12 +32,13 @@ struct qt_meta_stringdata_Session_t {
 static const qt_meta_stringdata_Session_t qt_meta_stringdata_Session = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "Session"
-QT_MOC_LITERAL(1, 8, 16), // "player1ReadyRead"
-QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 16) // "player2ReadyRead"
+QT_MOC_LITERAL(1, 8, 21), // "player1ReadyReadRecko"
+QT_MOC_LITERAL(2, 30, 0), // ""
+QT_MOC_LITERAL(3, 31, 21) // "player2ReadyReadRecko"
 
     },
-    "Session\0player1ReadyRead\0\0player2ReadyRead"
+    "Session\0player1ReadyReadRecko\0\0"
+    "player2ReadyReadRecko"
 };
 #undef QT_MOC_LITERAL
 
@@ -71,8 +72,8 @@ void Session::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         auto *_t = static_cast<Session *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->player1ReadyRead(); break;
-        case 1: _t->player2ReadyRead(); break;
+        case 0: _t->player1ReadyReadRecko(); break;
+        case 1: _t->player2ReadyReadRecko(); break;
         default: ;
         }
     }

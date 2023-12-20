@@ -23,6 +23,7 @@ public:
 
     void setUpBackground();
     bool quess();
+    void startGame();
 
 signals:
     void timesUp();
@@ -32,7 +33,8 @@ public slots :
     void on_timesUp();
     void updateTime();
     void on_gameEnds();
-//    void onReadyRead();
+    void waitMyTurn();
+    void onReadyRead();
 
 
 private:
@@ -69,9 +71,12 @@ private:
     void disableSolution();
     void showSolution();
     void sendMessage(QTcpSocket* socket, QString msg);
-    void startGame();
+//    void startGame();
     QString getWord();
     void colorRow(QString result);
+//    void waitMyTurn();
+    void processServerMessage(QString serverMessage);
+    void writeWord(QString word);
 };
 
 #endif // RECKOUI_H

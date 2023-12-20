@@ -37,7 +37,7 @@ void PocetniEkran::on_startGameButton_clicked()
             qDebug() << "Uspesno povezivanje sa serverom!";
             ui->pokreniIgruButton->setText("Ceka se protivnik");
             qDebug() << "Namestili smo tekst";
-            initConntroler();
+            connect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
         } else {
             // Neuspesna konekcija
             qDebug() << "Neuspesna konekcija sa serverom!";
@@ -71,21 +71,36 @@ bool PocetniEkran::connectToServer()
     }
 }
 
-void PocetniEkran::initConntroler(){
+void PocetniEkran::onReadyRead(){
+    QByteArray data = tcpSocket->readAll();
+    QString msg = QString::fromUtf8(data);
 
-    if(tcpSocket->waitForReadyRead(10000)){
-        opponentName = QString::fromUtf8(tcpSocket->readAll());
-        QString msg = "ACK";
-        tcpSocket->write(msg.toUtf8());
-        tcpSocket->flush();
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processServerMessage(receivedMessage);
+        }
     }
-    if(tcpSocket->waitForReadyRead(10000)){
-        turn = (QString::fromUtf8(tcpSocket->readAll()) == "true");
-        qDebug() << turn << endl;
-        QString msg = "ACK";
-        tcpSocket->write(msg.toUtf8());
-        tcpSocket->flush();
-    }
+}
+
+void PocetniEkran::processServerMessage(const QString& serverMessage) {
+        if (serverMessage.startsWith("OP_NAME:")) {
+            opponentName = serverMessage.mid(8);
+            qDebug() << "Received opponent name: " << opponentName;
+        } else if (serverMessage.startsWith("TURN:")) {
+            turn = (serverMessage.mid(5) == "true");
+            qDebug() << "Received turn message: " << serverMessage.mid(5);
+        } else if (serverMessage.startsWith("START")){
+            disconnect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
+            initConntroler();
+        }
+        else {
+            qDebug() << "Unknown server message: " << serverMessage;
+        }
+}
+
+void PocetniEkran::initConntroler(){
 
     ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
     this->close();
