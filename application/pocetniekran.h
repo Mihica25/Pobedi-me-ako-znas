@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include "reckoui.h"
+#include "koznaui.h"
 #include <QString>
 
 QT_BEGIN_NAMESPACE

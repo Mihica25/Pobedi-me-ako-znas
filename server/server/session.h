@@ -25,6 +25,8 @@ public:
 private slots:
     void player1ReadyReadRecko();
     void player2ReadyReadRecko();
+    void player1ReadyReadKoZna();
+    void player2ReadyReadKoZna();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -33,11 +35,15 @@ private:
     Player *player2;
     QString recko;
 
+
     void startGame();
     void startRecko();
+    void startKoZna();
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
+    void processKoZnaMessage(const QString& msg);
+    QString checkKoZnaSolution(const QString& word);
 
 };
 

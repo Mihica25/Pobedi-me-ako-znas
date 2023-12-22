@@ -102,10 +102,15 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 
 void PocetniEkran::initConntroler(){
 
-    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+  //  ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+  // this->close();
+  //  recko->show();
+  //  connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
+
+    KoZnaui* kozna = new KoZnaui(nullptr,tcpSocket,playerName, opponentName, turn, 0, 0);
     this->close();
-    recko->show();
-    connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
+    kozna->show();
+    connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
 }
 
 void PocetniEkran::on_reckoEnds(){

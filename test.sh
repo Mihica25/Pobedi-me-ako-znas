@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Postavke
-SERVER_DIR="/home/user/Desktop/pobedi-me-ako-znas/server/build-server-Desktop-Debug"
-APPLICATION_DIR="/home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug"
+SERVER_DIR="/home/user/pobedi-me-ako-znas/server/build-server-Desktop-Debug"
+APPLICATION_DIR="/home/user/pobedi-me-ako-znas/build-application-Desktop-Debug"
 
 # Kompajliranje i pokretanje servera
 cd "$SERVER_DIR" || exit

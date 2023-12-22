@@ -49,6 +49,50 @@ KoZnaui::KoZnaui(QWidget *parent)
 
 }
 
+
+KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
+                 QString player1, QString player2, bool red,
+                 int player1Points, int player2Points):
+    QMainWindow(parent),
+    ui(new Ui::KoZnaui),
+    tajmer(new QTimer(this))
+{
+    server = tcpSocket;
+    multiplayer = true;
+    player1 = player1;
+    player2 = player2;
+    turn = red;
+    qDebug() << red << endl;
+    playerNo = turn;
+    player1Points = player1Points;
+    player2Points = player2Points;
+    ui->setupUi(this);
+
+    QPixmap bkgnd(":/background/resources/ko_zna.png");
+    bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
+
+    connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1);
+    connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2);
+    connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3);
+    connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4);
+
+    numberOfQuestion = 0;
+
+    time = 45;
+    ui->labelTimer->setText(QString::number(time));
+
+    connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
+    connect(this, &KoZnaui::gameEnds, this, &KoZnaui::on_gameEnds);
+
+    tajmer->start(1000);
+
+}
+
 KoZnaui::~KoZnaui()
 {
     delete ui;
@@ -286,6 +330,50 @@ void KoZnaui::restartColor()
     ui->pushButtonAns3->setStyleSheet("background-color: white");
     ui->pushButtonAns4->setStyleSheet("background-color: white");
 
+
+}
+
+
+
+void KoZnaui::startGame(){
+    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    tajmer->start(1000);
+    if(turn){
+        connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1);
+        connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2);
+        connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3);
+        connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4);
+    }
+
+
+    return;
+}
+
+
+void KoZnaui::processServerMessage(QString serverMessage){
+}
+
+
+
+void KoZnaui::onReadyRead() {
+    QByteArray data = server->readAll();
+    QString msg = QString::fromUtf8(data);
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processServerMessage(receivedMessage);
+        }
+    }
+}
+
+
+void KoZnaui::sendMessage(QTcpSocket* socket, QString msg)
+{
+    qDebug() << "Sending msg: " << msg;
+    socket->write(msg.toUtf8());
+    socket->flush();
 
 }
 
