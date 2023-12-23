@@ -9,6 +9,9 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
+    targetNumber = "192";
+
+    //generator brojeva
 
     startGame();
 }
@@ -68,7 +71,10 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-    startRecko();
+    //startRecko();
+
+    startMojBroj();
+
 
 //    startWordle();
 //    startPogodiSta();
@@ -85,6 +91,12 @@ void Session::startGame(){
 void Session::startRecko(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+}
+
+//isto ovako
+void Session::startMojBroj(){
+    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMojBroj);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMojBroj);
 }
 
 void Session::player1ReadyReadRecko()
@@ -117,6 +129,38 @@ void Session::player2ReadyReadRecko()
     }
 }
 
+void Session::player1ReadyReadMojBroj()
+{
+    // Obrada podataka koji stižu od prvog igrača
+    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    qDebug() << "Data received from Player 1: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMojBrojMessage(receivedMessage);
+        }
+    }
+}
+
+void Session::player2ReadyReadMojBroj()
+{
+    // Obrada podataka koji stižu od drugog igrača
+    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    qDebug() << "Data received from Player 2: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMojBrojMessage(receivedMessage);
+        }
+    }
+}
+
+//isto ovakve
+
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
             QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
@@ -145,3 +189,69 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
+
+void Session::processMojBrojMessage(const QString& msg){
+    if(msg.startsWith("NUMBER:")) {
+            QString word = msg.mid(7);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
+            word = word.toUpper();
+            QString result = checkReckoSolution(word);
+
+            sendMessageToBothPlayers("OP_NUMBER:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
+
+            //poredjenje
+//            if(result == "GGGGG"){
+//                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
+//            } else {
+//                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+//            }
+    }
+
+
+    // Ako pocinje sa NUMBER I U PITANJU JE GENERATE ONDA POZOVI GENERISANJE brojeva i posalji igracima
+    if(msg.startsWith("GENERATE:"))
+    {
+        QString originality = msg.mid(9);
+
+        if (originality == "original")
+        {
+            //generisi brojeve
+
+
+            //saljemo brojeve
+            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-75\n");
+        } else
+        {
+            //uzmi kopiju
+
+
+            //saljemo brojeve
+            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-75\n");
+        }
+
+    } else if(msg.startsWith("START GAME:"))
+    {
+        QString player = msg.mid(11);
+        qDebug() << "SIGNAL I ZA START NJEGOV" << player;
+
+        if (player == player1->getPlayerUsername())
+        {
+            qDebug() << "player111111111111111";
+            sendMessageToPlayer1("START GAME");
+        } else
+        {
+            qDebug() << "player222222222222222";
+            sendMessageToPlayer2("START GAME");
+        }
+    }
+}
+
+QString Session::checkMojBrojSolution(const QString& word){
+    QString result = "101";
+    qDebug() << word << endl;
+    qDebug() << targetNumber << endl;
+
+    //rastojanje
+
+    return result;
+}
+

@@ -1,4 +1,4 @@
-#include "mojbroj.h"
+﻿#include "mojbroj.h"
 #include "ui_mojbroj.h"
 #include "mojbrojlogic.h"
 
@@ -70,6 +70,90 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
 }
 
+Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
+                 QString player1_, QString player2_, bool red,
+                 int player1Points_, int player2Points_):
+    QWidget(parent),
+    ui(new Ui::Mojbroj),
+    timer(new QTimer(this))
+{
+    server = tcpSocket;
+    multiplayer = true;
+    player1 = player1_;
+    player2 = player2_;
+    qDebug() << "PLAYER1 "<<player1;
+    qDebug() << "PLAYER2 "<<player2;
+    turn = red;
+    qDebug() << red << endl;
+    playerNo = turn;
+    player1Points = player1Points;
+    player2Points = player2Points;
+    ui->setupUi(this);
+
+
+    QPixmap bkgnd(":background/resources/moj_broj.png");
+    bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette palette;
+    palette.setBrush(QPalette::Background, bkgnd);
+    this->setPalette(palette);
+
+    //TIMER
+    time = 30;
+    ui->label_time->setText(QString::number(time));
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    connect(this, &Mojbroj::timesUp, this, &Mojbroj::on_timesUp);
+    connect(this, &Mojbroj::gameEnd, this, &Mojbroj::on_gameEnd);
+
+    ui->label_round->hide();
+    ui->label_time->hide();
+
+    ui->lineEdit->setReadOnly(true);
+    ui->lineEdit_result->setReadOnly(true);
+    ui->lineEdit_2->setReadOnly(true);
+    ui->lineEdit_result_2->setReadOnly(true);
+
+    QFont font;
+    font.setPointSize(14);
+    ui->lineEdit_result->setFont(font);
+    ui->lineEdit_result->setStyleSheet("color : red");
+    ui->lineEdit_result_2->setFont(font);
+    ui->lineEdit_result_2->setStyleSheet("color : red");
+
+    ui->lineEdit_2->hide();
+    ui->lineEdit_result_2->hide();
+
+    ui->pushButton_nextGame->hide();
+
+    connect(ui->pushButton_num1,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+    connect(ui->pushButton_num2,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+    connect(ui->pushButton_num3,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+    connect(ui->pushButton_num4,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+    connect(ui->pushButton_num5,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+    connect(ui->pushButton_num6,SIGNAL(released()),this,SLOT(buttonPressedNum()));
+
+    connect(ui->pushButton_add,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+    connect(ui->pushButton_sub,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+    connect(ui->pushButton_mul,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+    connect(ui->pushButton_div,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+    connect(ui->pushButton_leftBr,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+    connect(ui->pushButton_rightBr,SIGNAL(released()),this,SLOT(buttonPressedOp()));
+
+    connect(ui->pushButton_submit,SIGNAL(released()),this,SLOT(buttonPressedSubmit()));
+
+    connect(ui->pushButton_nextRound,SIGNAL(released()),this,SLOT(buttonPressedNextRound()));
+
+    if(!turn)
+    {
+        ui->pushButton_nextRound->setEnabled(false);
+    }
+
+    connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
+
+    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+}
+
+
 void Mojbroj::initGame()
 {
     timer->start(1000);
@@ -81,7 +165,17 @@ void Mojbroj::initGame()
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
     m_mojbroj->startGame();
-    setNumbers();
+
+    // Ako sam ja zapoceo salji poruku da se Generisu novi
+    if (turn)
+    {
+        // salje poruku serveru da generise brojeve
+        sendMessage(server, "GENERATE: original");
+
+    } else      //inace uzizmam iste
+    {
+        sendMessage(server, "GENERATE: copy");
+    }
 }
 
 void Mojbroj::deinitGame()
@@ -177,6 +271,8 @@ void Mojbroj::buttonPressedSubmit()
     int result = m_mojbroj->submitSolution(expression, indicator);
     ui->lineEdit_result->setText(QString::number(result));
 
+    sendMessage(server, "NUMBER:" + QString::number(result) + "\n");
+
     QString round = ui->label_round->text();
     if (round == "Round 1")
     {
@@ -191,9 +287,18 @@ void Mojbroj::buttonPressedSubmit()
 
 void Mojbroj::buttonPressedNextRound()
 {
+
+
     QPushButton *newRound = ui->pushButton_nextRound;
     if (newRound->text() == "ZAPOCNI IGRU")
     {
+        // Ako sam ja zapoceo, salji poruku serveru da obavesti drugog igraca da i on poziva buttonPressedNextRound
+        if(turn)
+        {
+
+            sendMessage(server, "START GAME:" + this->player2.toUtf8());
+        }
+
         newRound->hide();
         newRound->setText("NOVA RUNDA");
         initGame();
@@ -239,7 +344,9 @@ void Mojbroj::del()
 
 void Mojbroj::setNumbers()
 {
+    //od servera primi brojeve sve i target i available
     QVector<int> initialNumbers = m_mojbroj->availableNumbers;
+
     ui->pushButton_num1->setText(QString::number(initialNumbers[0]));
     ui->pushButton_num2->setText(QString::number(initialNumbers[1]));
     ui->pushButton_num3->setText(QString::number(initialNumbers[2]));
@@ -309,4 +416,94 @@ void Mojbroj::updateTime()
             emit timesUp();
         }
     }
+}
+
+
+//SERVER
+//proccessServerMessage
+//onReadyRead ->svima isto
+//sendMessage ->svima isto
+
+void Mojbroj::onReadyRead() {
+    QByteArray data = server->readAll();
+    QString msg = QString::fromUtf8(data);
+
+    qDebug() << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processServerMessage(receivedMessage);
+        }
+    }
+}
+
+void Mojbroj::processServerMessage(QString serverMessage){
+
+    //ako zapocinje sa generate poslati su brojevi i pozovi setnumbers
+    qDebug() << "PORUKICA OD SERVERCICA " << serverMessage;
+    if (serverMessage.startsWith("GENERATE:")) {
+        qDebug()<<"PRIMIOOOOOOOOOOOOOOOOOO";
+        QString result = serverMessage.mid(9);
+        qDebug() << "Received result: " << result;
+
+        //PRIMILI SMO BROJEVE SADA IH OBRADIMO I SALJEMO U SETNUMBERS
+        QStringList lines = result.split("-");
+        int lines_size = lines.size();
+
+        m_mojbroj->targetNumber = lines[0].toInt();
+        qDebug() << "TARGER NUMBER: " << lines[0];
+
+        QVector<int> availableNumbers;
+        for (int i=1; i<lines_size; i++)
+        {
+            availableNumbers.append(lines[i].toInt());
+            qDebug() << "current number: " << lines[i];
+        }
+        m_mojbroj->availableNumbers = availableNumbers;
+
+        setNumbers();
+
+//        colorRow(result);
+//        disableRow(recko->getCurrentRow() - 1);
+//        if(result != "GGGGG"){
+//            if(turn){
+//                disableRow(recko->getCurrentRow(), false);
+//            }
+//            recko->incrementRow();
+//        }
+    } else if (serverMessage.startsWith("START GAME"))
+    {
+        //pozovi mu start
+        buttonPressedNextRound();
+
+    } else if (serverMessage.startsWith("POINTS:"))
+    {
+//        QString pointsString = serverMessage.mid(7);
+//        bool conversionSuccess = false;
+//        int points = pointsString.toInt(&conversionSuccess);
+
+//        if (conversionSuccess) {
+//            qDebug() << "Received points: " << points;
+//            if(turn){
+//                player1Points += points;
+//            } else {
+//                player2Points += points;
+//            }
+//        }
+     } else if(serverMessage.startsWith("OP_NUMBER:")){
+            QString opWord = serverMessage.mid(10);
+//            writeWord(opWord);
+
+     } else {
+        qDebug() << "Unknown server message: " << serverMessage;
+    }
+}
+
+void Mojbroj::sendMessage(QTcpSocket* socket, QString msg)
+{
+    qDebug() << "Sending msg: " << msg;
+    socket->write(msg.toUtf8());
+    socket->flush();
 }

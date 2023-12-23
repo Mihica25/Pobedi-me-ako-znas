@@ -354,7 +354,6 @@ void ReckoUI::on_pbPotvrdi1(){
         recko->incrementRow();
     };
 }
-
 void ReckoUI::on_pbPotvrdi2(){
     if (quess()){
         disableRow(recko->getCurrentRow() - 1);
@@ -368,7 +367,6 @@ void ReckoUI::on_pbPotvrdi2(){
         recko->incrementRow();
     };
 }
-
 void ReckoUI::on_pbPotvrdi3(){
     if (quess()){
         disableRow(recko->getCurrentRow() - 1);
@@ -382,7 +380,6 @@ void ReckoUI::on_pbPotvrdi3(){
         recko->incrementRow();
     };
 }
-
 void ReckoUI::on_pbPotvrdi4(){
     if (quess()){
         disableRow(recko->getCurrentRow() - 1);
@@ -396,7 +393,6 @@ void ReckoUI::on_pbPotvrdi4(){
         recko->incrementRow();
     };
 }
-
 void ReckoUI::on_pbPotvrdi5(){
     if (quess()){
         disableRow(recko->getCurrentRow() - 1);
@@ -514,7 +510,6 @@ void ReckoUI::disableRow(int index, bool disable){
 
     Button->setDisabled(disable);
 }
-
 void ReckoUI::setUpRows(){
 
     for(unsigned i = 1; i < 5; i++){
@@ -522,7 +517,6 @@ void ReckoUI::setUpRows(){
     }
     disableSolution();
 }
-
 void ReckoUI::updateTime()
 {
     if (time >= 0){
@@ -535,14 +529,12 @@ void ReckoUI::updateTime()
 
 
 }
-
 void ReckoUI::on_timesUp()
 {
     bodovi = 0;
     qDebug() << "Isteklo vreme";
     emit gameEnds();
 }
-
 void ReckoUI::on_gameEnds(){
     tajmer->stop();
     ukupni_bodovi += bodovi;
@@ -551,7 +543,6 @@ void ReckoUI::on_gameEnds(){
     qDebug() << "Game ends";
 
 }
-
 void ReckoUI::disableSolution(){
     QHBoxLayout* Row =
             qobject_cast<QHBoxLayout*>(ui->resenje->layout());
@@ -566,7 +557,6 @@ void ReckoUI::disableSolution(){
     }
 
 }
-
 void ReckoUI::showSolution(){
     QHBoxLayout* Row =
             qobject_cast<QHBoxLayout*>(ui->resenje->layout());

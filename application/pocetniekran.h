@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include "reckoui.h"
+#include "mojbroj.h"
 #include <QString>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +24,7 @@ public:
 public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();
+    void on_mojbrojEnds();
     void onReadyRead();
 
 private:
