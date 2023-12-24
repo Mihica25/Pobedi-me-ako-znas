@@ -24,6 +24,7 @@ public:
 public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();
+    void on_koZnaEnds();
     void onReadyRead();
 
 private:

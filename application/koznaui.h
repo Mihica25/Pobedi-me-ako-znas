@@ -6,6 +6,8 @@
 #include <QString>
 #include <QTimer>
 #include <QTcpSocket>
+#include <QStringList>
+#include <QVector>
 
 
 QT_BEGIN_NAMESPACE
@@ -22,11 +24,21 @@ public:
     ~KoZnaui();
     QVector<QString> getQuestion(int numberOfQuestion);
     void displayQuestion(int questionNumber);
+    void generisiPitanja(QString pitanje);
 
 public slots:
     void on_timesUp();
     void on_gameEnds();
     void updateTime();
+    void onReadyRead();
+    void on_pushButtonAns1();
+    void on_pushButtonAns2();
+    void on_pushButtonAns3();
+    void on_pushButtonAns4();
+    void on_pushButtonAns1Multiplayer();
+    void on_pushButtonAns2Multiplayer();
+    void on_pushButtonAns3Multiplayer();
+    void on_pushButtonAns4Multiplayer();
 
 private:
     Ui::KoZnaui *ui;
@@ -34,15 +46,17 @@ private:
     int numberOfQuestion;
     int time;
     int bodovi = 0;
+    int brojPitanja = 0;
     int ukupni_bodovi = 0;
     bool multiplayer = false;
     QTcpSocket* server = nullptr;
     QString player1 = "";
     QString player2 = "";
-    bool turn = false;
+    bool playerId = false;
     bool playerNo = false;
     int player1Points = 0;
     int player2Points = 0;
+    QVector<QStringList> pitanja;
 
     void displayAnswer();
     void disableUi();
@@ -51,17 +65,17 @@ private:
     void startGame();
     void sendMessage(QTcpSocket* socket, QString msg);
     void processServerMessage(QString serverMessage);
-    void onReadyRead();
+
 
 
 
     QString getCorrectAnswer();
     bool guess(QString answer);
 
-    void on_pushButtonAns1();
-    void on_pushButtonAns2();
-    void on_pushButtonAns3();
-    void on_pushButtonAns4();
+
+
+
+
 
 
 

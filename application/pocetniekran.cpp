@@ -110,10 +110,14 @@ void PocetniEkran::initConntroler(){
     KoZnaui* kozna = new KoZnaui(nullptr,tcpSocket,playerName, opponentName, turn, 0, 0);
     this->close();
     kozna->show();
-    connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
+    connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
 }
 
 void PocetniEkran::on_reckoEnds(){
+    return;
+}
+
+void PocetniEkran::on_koZnaEnds(){
     return;
 }
 

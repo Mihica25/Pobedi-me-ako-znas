@@ -34,6 +34,11 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
+    QString pitanje;
+    QString answer1;
+    QString answer2;
+    int points1;
+    int points2;
 
 
     void startGame();
@@ -42,7 +47,7 @@ private:
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
-    void processKoZnaMessage(const QString& msg);
+    void processKoZnaMessage(const QString& msg, int num);
     QString checkKoZnaSolution(const QString& word);
 
 };

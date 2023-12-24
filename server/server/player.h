@@ -15,6 +15,7 @@ public:
 
     QString getPlayerUsername() const;
     int getPoints() const;
+    int pointsKoZna;
 
     QTcpSocket* tcpSocket;
 private:

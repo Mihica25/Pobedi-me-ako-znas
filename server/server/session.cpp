@@ -10,10 +10,12 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 
     recko = "HOUSE";
 
+
+
     //ovo mora da se sredi, ovde samo radi testiranja
     QVector<QVector<QString>> questions;
     QVector<QString> question1;
-    question1 << "Koji mesece ima tacno 28 dana?" << "Janaur" << "Februar" << "Mart" << "April" << "Februar";
+    question1 << "Koji mesece ima tacno 28 dana?" "Janaur""Februar" << "Mart" << "April" << "Februar";
     questions.append(question1);
     QVector<QString> question2;
     question2 << "Neutralna boja?" << "Bela" << "Plava" << "Crvena" << "Zelena" << "Bela";
@@ -21,6 +23,20 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     QVector<QString> question3;
     question3 << "Ko je rekorder evrolige po broju asistencija?" << "Markus Vilijams" << "Stefan Jovic" << "Milos Teodosic" << "Nik Kalates" << "Stefan Jovic";
     questions.append(question3);
+
+    QString answer1 = "";
+    QString answer2 = "";
+
+    int points1 = 0;
+    int points2 = 0;
+
+
+
+
+
+   pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
+
+    qDebug()<<"velicina:"<<pitanje.size();
 
 
     startGame();
@@ -151,7 +167,7 @@ void Session::player1ReadyReadKoZna()
 
     for (const QString& receivedMessage : receivedMessages) {
         if (!receivedMessage.isEmpty()) {
-            processReckoMessage(receivedMessage);
+            processKoZnaMessage(receivedMessage, 1);
         }
     }
 }
@@ -159,42 +175,75 @@ void Session::player1ReadyReadKoZna()
 void Session::player2ReadyReadKoZna()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
 
     for (const QString& receivedMessage : receivedMessages) {
         if (!receivedMessage.isEmpty()) {
-            processReckoMessage(receivedMessage);
+            processKoZnaMessage(receivedMessage, 2);
         }
     }
 }
 
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
-            QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
-            word = word.toUpper();
-            QString result = checkReckoSolution(word);
+            QString result = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
+
+            //QString result = checkReckoSolution(word);
             if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
+                //sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
             } else {
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+                //sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
             }
     }
 }
 
-void Session::processKoZnaMessage(const QString& msg){
-    if(msg.startsWith("WORD:")) {
-            QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
-            word = word.toUpper();
-            QString result = checkReckoSolution(word);
-            if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
-            } else {
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
-            }
+void Session::processKoZnaMessage(const QString& msg, int num){
+
+    if(msg.startsWith("SEND")){
+
+        sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
     }
+    if(msg.startsWith("ANSWER:") and num == 1) {
+             answer1 = msg.mid(7);
+            sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
+    }
+
+    if(msg.startsWith("ANSWER:") and num == 2) {
+             answer2 = msg.mid(7);
+            sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
+    }
+
+    if(answer1 != "" and answer2 != ""){
+        sendMessageToBothPlayers("PREBACI\n");
+        answer1 = "";
+        answer2 = "";
+
+      if(msg.startsWith("POINTS:") and num == 1){
+          int poeni = msg.mid(7).toInt();
+          points1 += poeni;
+          sendMessageToBothPlayers("POENI1:" + QString::number(points1) + "\n");
+      }
+
+
+      if(msg.startsWith("POINTS:") and num == 2){
+         int  poeni = msg.mid(7).toInt();
+           points2 += poeni;
+          sendMessageToBothPlayers("POENI2:" + QString::number(points2) + "\n");
+      }
+
+
+
+    }
+
+
+
+
+
+
+
 }
 
 
@@ -213,6 +262,9 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
+
+
+
 
 
 QString Session::checkKoZnaSolution(const QString& word){

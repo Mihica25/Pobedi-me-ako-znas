@@ -3,6 +3,9 @@
 Player::Player(QTcpSocket* socket, const QString& username, QObject *parent) : QObject(parent), tcpSocket(socket), username(username), points(0)
 {
     qDebug() << "Kreiran je igrac: " << username;
+
+    int pointsKoZna = 0;
+
 }
 
 Player::~Player()
