@@ -86,8 +86,8 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
     turn = red;
     qDebug() << red << endl;
     playerNo = turn;
-    player1Points = player1Points;
-    player2Points = player2Points;
+    player1Points = player1Points_;
+    player2Points = player2Points_;
     ui->setupUi(this);
 
 
@@ -165,7 +165,7 @@ void Mojbroj::initGame()
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
 
-    // Ako sam ja zapoceo salji poruku da se Generisu novi
+        // Ako sam ja zapoceo salji poruku da se Generisu novi
     if (turn)
     {
         // salje poruku serveru da generise brojeve
@@ -275,9 +275,9 @@ void Mojbroj::buttonPressedSubmit()
     int result = m_mojbroj->submitSolution(expression, indicator);
     ui->lineEdit_result->setText(QString::number(result));
 
-    sendMessage(server, "NUMBER:" + QString::number(result) + "\n");
+    sendMessage(server, "EXPRESSION:" + player1 + "%" + expression + "%" + QString::number(result) + "\n");
 
-    sendMessage(server, "EXPRESSION:" + player1 + "%" + expression + "%" + QString::number(result));
+    sendMessage(server, "RESULT:"+ player1 + "%" + QString::number(result) + "\n");
 
     QString round = ui->label_round->text();
     if (round == "Round 1")
@@ -513,7 +513,14 @@ void Mojbroj::processServerMessage(QString serverMessage){
 
     } else if (serverMessage.startsWith("POINTS:"))
     {
-//        QString pointsString = serverMessage.mid(7);
+        QStringList points = serverMessage.mid(7);
+        int index = points.indexOf("%");
+
+        player1Points += points.left(index).toInt();
+        player2Points += points.mid(index+1).toInt();
+        qDebug() << player1 << " points: " << player1Points;
+        qDebug() << player2 << " points: " << player2Points;
+
 //        bool conversionSuccess = false;
 //        int points = pointsString.toInt(&conversionSuccess);
 

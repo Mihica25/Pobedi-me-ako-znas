@@ -194,6 +194,7 @@ void Session::processMojBrojMessage(const QString& msg){
     // Ako pocinje sa NUMBER I U PITANJU JE GENERATE ONDA POZOVI GENERISANJE brojeva i posalji igracima
     if(msg.startsWith("GENERATE:"))
     {
+        //NE DIRATI GENERISANJE BROJEVA - FUNKCIONISE!
         QString originality = msg.mid(9);
         qDebug() << "OVOOOO jE; " << originality;
         if (originality == "original")
@@ -236,19 +237,52 @@ void Session::processMojBrojMessage(const QString& msg){
     {
         QString expression = msg.mid(11);
         if (expression.startsWith(player1->getPlayerUsername()))
-            sendMessageToPlayer2("EXPRESSION:" + expression.mid(player1->getPlayerUsername().length()+1));
+            sendMessageToPlayer2("EXPRESSION:" + expression.mid(player1->getPlayerUsername().length()+1) + "\n");
         else
-            sendMessageToPlayer1("EXPRESSION:" + expression.mid(player2->getPlayerUsername().length()+1));
+            sendMessageToPlayer1("EXPRESSION:" + expression.mid(player2->getPlayerUsername().length()+1) + "\n");
 
+    } else if(msg.startsWith("RESULT:"))
+    {
+        QString result = msg.mid(7);
+        qDebug() << "RESULT: " << result;
+
+        int index = result.indexOf('%');
+        if (result.left(index) == player1->getPlayerUsername())
+        {
+            player1_res = result.mid(index+1);
+            qDebug() << "PLAYER1 RESULT: " << player1_res;
+        } else
+        {
+            player2_res = result.mid(index+1);
+            qDebug() << "PLAYER2 RESULT: " << player2_res;
+        }
+
+        checkMojBrojSolution(player1_res,player2_res);
     }
 }
 
-QString Session::checkMojBrojSolution(const QString& word){
-    QString result = word;
+void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
+{
+    if (pt1 == "" || pt2 == "")
+        return;
 
-    //rastojanje
+    int res1 = pt1.toInt();
+    int res2 = pt2.toInt();
+    int res  = targetNumber.toInt();
+    qDebug() << pt1 << pt2 << targetNumber;
 
-    return result;
+    if (qAbs(res-res1) < qAbs(res-res2))
+    {
+        sendMessageToPlayer1("POINTS:10%0");
+        sendMessageToPlayer2("POINTS:0%10");
+    } else if (qAbs(res-res1) > qAbs(res-res2))
+    {
+        sendMessageToPlayer1("POINTS:0%10");
+        sendMessageToPlayer2("POINTS:10%0");
+    } else {
+        //obraditi preko turn-a
+    }
+
 }
 
 QString Session::generateTargetNumber()

@@ -37,6 +37,8 @@ private:
     QString recko;
     QString targetNumber;
     QString initialNumbers;
+    QString player1_res;
+    QString player2_res;
 
     void startGame();
     void startRecko();
@@ -45,7 +47,7 @@ private:
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
     void processMojBrojMessage(const QString& msg);
-    QString checkMojBrojSolution(const QString& word);
+    void checkMojBrojSolution(const QString& pt1, const QString& pt2);
 
     QString generateTargetNumber();
     QString generateInitialNumbers();
