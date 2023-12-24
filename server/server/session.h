@@ -25,6 +25,9 @@ public:
 private slots:
     void player1ReadyReadRecko();
     void player2ReadyReadRecko();
+
+    void player1ReadyReadPodrunda();
+    void player2ReadyReadPodrunda();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -35,9 +38,14 @@ private:
 
     void startGame();
     void startRecko();
+    void startPodrunda();
 
     void processReckoMessage(const QString& msg);
+    void processPodrundaMessage(const QString& msg, const int num);
     QString checkReckoSolution(const QString& word);
+    int checkPodrundaWinner();
+
+    //int podrunda_resenje;
 
 };
 
