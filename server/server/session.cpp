@@ -9,6 +9,8 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
+    gameNo = 1;
+    points = 12;
 
     startGame();
 }
@@ -105,7 +107,7 @@ void Session::player1ReadyReadRecko()
 void Session::player2ReadyReadRecko()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
@@ -123,10 +125,22 @@ void Session::processReckoMessage(const QString& msg){
             word = word.toUpper();
             QString result = checkReckoSolution(word);
             if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
+                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:") + QString::number(points) + "\n" + "GAME" + QString::number(gameNo) + "_ENDED\n");
+                if(gameNo == 1){
+                    player1->addPoints(points);
+                } else {
+                    player2->addPoints(points);
+                }
+                points = 12;
+                gameNo++;
             } else {
                 sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+                points -= 2;
             }
+    } else if(msg.startsWith("TIMES_UP")){
+        sendMessageToBothPlayers("CORRECT_WORD:" + recko + "\nGAME" + QString::number(gameNo) + "_ENDED\n");
+        points = 12;
+        gameNo++;
     }
 }
 

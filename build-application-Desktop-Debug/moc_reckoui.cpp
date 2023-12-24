@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ReckoUI_t {
     QByteArrayData data[9];
-    char stringdata0[83];
+    char stringdata0[84];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,13 +38,13 @@ QT_MOC_LITERAL(3, 17, 8), // "gameEnds"
 QT_MOC_LITERAL(4, 26, 10), // "on_timesUp"
 QT_MOC_LITERAL(5, 37, 10), // "updateTime"
 QT_MOC_LITERAL(6, 48, 11), // "on_gameEnds"
-QT_MOC_LITERAL(7, 60, 10), // "waitMyTurn"
-QT_MOC_LITERAL(8, 71, 11) // "onReadyRead"
+QT_MOC_LITERAL(7, 60, 11), // "onReadyRead"
+QT_MOC_LITERAL(8, 72, 11) // "on_mTimesUp"
 
     },
     "ReckoUI\0timesUp\0\0gameEnds\0on_timesUp\0"
-    "updateTime\0on_gameEnds\0waitMyTurn\0"
-    "onReadyRead"
+    "updateTime\0on_gameEnds\0onReadyRead\0"
+    "on_mTimesUp"
 };
 #undef QT_MOC_LITERAL
 
@@ -97,8 +97,8 @@ void ReckoUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 2: _t->on_timesUp(); break;
         case 3: _t->updateTime(); break;
         case 4: _t->on_gameEnds(); break;
-        case 5: _t->waitMyTurn(); break;
-        case 6: _t->onReadyRead(); break;
+        case 5: _t->onReadyRead(); break;
+        case 6: _t->on_mTimesUp(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

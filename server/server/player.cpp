@@ -22,3 +22,7 @@ int Player::getPoints() const
     return points;
 }
 
+void Player::addPoints(int p){
+    points += p;
+}
+

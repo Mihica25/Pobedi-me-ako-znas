@@ -18,7 +18,7 @@ class ReckoUI : public QMainWindow
 
 public:
     explicit ReckoUI(QWidget *parent = nullptr);
-    explicit ReckoUI(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString player1 = "", QString player2 = "", bool red = false, int player1Points = 0, int player2Points = 0);
+    explicit ReckoUI(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString p1Username = "", QString p2Username = "", bool red = false, int p1Points = 0, int p2Points = 0);
     ~ReckoUI();
 
     void setUpBackground();
@@ -33,8 +33,8 @@ public slots :
     void on_timesUp();
     void updateTime();
     void on_gameEnds();
-    void waitMyTurn();
     void onReadyRead();
+    void on_mTimesUp();
 
 
 private:
@@ -71,12 +71,16 @@ private:
     void disableSolution();
     void showSolution();
     void sendMessage(QTcpSocket* socket, QString msg);
-//    void startGame();
+    void restartGame();
     QString getWord();
     void colorRow(QString result);
 //    void waitMyTurn();
     void processServerMessage(QString serverMessage);
     void writeWord(QString word);
+    void clearAllRows();
+    void clearRow(int index);
+    void clearSolution();
+    void endGame();
 };
 
 #endif // RECKOUI_H
