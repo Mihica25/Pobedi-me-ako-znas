@@ -39,6 +39,7 @@ public slots:
     void on_pushButtonAns2Multiplayer();
     void on_pushButtonAns3Multiplayer();
     void on_pushButtonAns4Multiplayer();
+    void on_DALJE();
 
 private:
     Ui::KoZnaui *ui;

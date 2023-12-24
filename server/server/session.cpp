@@ -26,9 +26,9 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 
     QString answer1 = "";
     QString answer2 = "";
+    player1->pointsKoZna = 0;
+    player2->pointsKoZna = 0;
 
-    int points1 = 0;
-    int points2 = 0;
 
 
 
@@ -207,13 +207,49 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
     }
     if(msg.startsWith("ANSWER:") and num == 1) {
-             answer1 = msg.mid(7);
-            sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
-    }
+        QStringList odg = msg.mid(7).split(",");
+             //answer1 = msg.mid(7);
+        answer1 = odg.value(0);
+        qDebug()<< answer1 ;
+
+        qDebug() << odg.value(1).toInt() << "porukicaaaaa\n";
+        qDebug() << odg << "listaaa\n";
+        int poeni1 = odg.value(1).toInt();
+        if (poeni1 == 5)
+             player1->pointsKoZna -= poeni1;
+        else
+            player1->pointsKoZna += poeni1;
+
+
+        //if da se doda sa prefiksom da li je manje ili vece od nule
+        sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+        sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
+
+
+      }
 
     if(msg.startsWith("ANSWER:") and num == 2) {
-             answer2 = msg.mid(7);
-            sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
+            // answer2 = msg.mid(7);
+            //sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
+
+        QStringList odg = msg.mid(7).split(",");
+             //answer1 = msg.mid(7);
+        answer2 = odg.value(0);
+
+        qDebug()<<"sada"<< answer2 << endl;
+
+        qDebug() << odg.value(1) << "porukicaaaaa\n";
+        qDebug() << odg << "listaaa\n";
+        int poeni2 = odg.value(1).toInt();
+        if (poeni2 == 5)
+             player2->pointsKoZna -= poeni2;
+        else
+            player2->pointsKoZna += poeni2;
+
+
+        //da se doda
+        sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
+        sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
     }
 
     if(answer1 != "" and answer2 != ""){
@@ -222,16 +258,18 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         answer2 = "";
 
       if(msg.startsWith("POINTS:") and num == 1){
+          qDebug() << "serverrr" << player1->pointsKoZna << endl;
           int poeni = msg.mid(7).toInt();
-          points1 += poeni;
-          sendMessageToBothPlayers("POENI1:" + QString::number(points1) + "\n");
+          player1->pointsKoZna += poeni;
+          sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
       }
 
 
       if(msg.startsWith("POINTS:") and num == 2){
+          qDebug() << "serverrr" << player2->pointsKoZna << endl;
          int  poeni = msg.mid(7).toInt();
-           points2 += poeni;
-          sendMessageToBothPlayers("POENI2:" + QString::number(points2) + "\n");
+           player2->pointsKoZna += poeni;
+          sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
       }
 
 
