@@ -39,6 +39,7 @@ private:
     bool playerNo = false;
     int player1Points = 0;
     int player2Points = 0;
+    int submit = 0;
 
     void initGame();
     void deinitGame();

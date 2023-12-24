@@ -218,7 +218,6 @@ void Session::processMojBrojMessage(const QString& msg){
 
     } else if(msg.startsWith("START GAME:"))
     {
-
         targetNumber = generateTargetNumber();
         initialNumbers = generateInitialNumbers();
 

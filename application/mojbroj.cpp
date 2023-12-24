@@ -263,7 +263,7 @@ void Mojbroj::buttonPressedSubmit()
     qDebug() << "TAJMER SE ZAUSTAVIO";
 
     setButtonStatus(false);
-
+    submit++;
     // Connect with opponent
     ui->lineEdit_2->show();
     ui->lineEdit_result_2->show();
@@ -323,6 +323,8 @@ void Mojbroj::buttonPressedNextRound()
         return;
     } else if (turn)
     {
+        if (submit != 2)
+            return;
         qDebug()<< "--------------------------------------------------";
         sendMessage(server, "START GAME:" + this->player2.toUtf8() + "\n");
         qDebug()<< "+++++++++++++++++++++++++++++++++++++++++++++++++++";
@@ -514,6 +516,7 @@ void Mojbroj::processServerMessage(QString serverMessage){
         qDebug() << "REZ: " << right;
         ui->lineEdit_2->setText(left);
         ui->lineEdit_result_2->setText(right);
+        submit++;
 
     } else if (serverMessage.startsWith("POINTS:"))
     {
