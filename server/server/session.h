@@ -34,6 +34,7 @@ private:
     QString recko;
     int gameNo;
     int points;
+    int wordNo;
 
     void startGame();
     void startRecko();

@@ -53,10 +53,12 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
 }
 
 void ReckoUI::startGame(){
+    qDebug() << "U startGame smo" << endl;
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
     tajmer->start(1000);
+    qDebug() << "U startGame smo" << endl;
     if(turn){
         connect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
         connect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2Multiplayer);
@@ -66,10 +68,12 @@ void ReckoUI::startGame(){
     } else {
         disableRow(0);
     }
+    qDebug() << "U startGame smo" << endl;
     return;
 }
 
 void ReckoUI::restartGame(){
+    qDebug() << "U restartGame smo" << endl;
     disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     disconnect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     disconnect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
@@ -85,9 +89,14 @@ void ReckoUI::restartGame(){
     } else {
         disableRow(0, false);
     }
+    qDebug() << "U restartGame smo" << endl;
     setUpRows();
+    qDebug() << "U restartGame smo" << endl;
     clearAllRows();
+    qDebug() << "U restartGame smo" << endl;
     turn = !turn;
+    qDebug() << "U restartGame smo" << endl;
+    recko->setCurrentRow(1);
     startGame();
 
 }
@@ -106,6 +115,7 @@ void ReckoUI::setUpBackground(){
 }
 
 void ReckoUI::on_pbPotvrdi1Multiplayer(){
+    qDebug() << "U onBt1 smo" << endl;
     QString word = getWord();
     sendMessage(server, "WORD:" + word.toUtf8() + "\n");
 }
@@ -262,6 +272,7 @@ void ReckoUI::writeWord(QString word){
 }
 
 QString ReckoUI::getWord(){
+    qDebug() <<  (recko->getCurrentRow() - 1) << endl;
     QHBoxLayout* horizontalLayout =
             qobject_cast<QHBoxLayout*>(ui->verticalLayout->
                                        itemAt(recko->getCurrentRow() - 1)->
@@ -280,6 +291,9 @@ QString ReckoUI::getWord(){
 }
 
 void ReckoUI::disableRow(int index, bool disable){
+    if(index > 4){
+        return;
+    }
     QHBoxLayout* Row =
             qobject_cast<QHBoxLayout*>(ui->verticalLayout->
                                        itemAt(index)->
@@ -433,6 +447,7 @@ void ReckoUI::processServerMessage(QString serverMessage){
         disableRow(recko->getCurrentRow() - 1);
         if(result != "GGGGG"){
             if(turn){
+                qDebug() << QString::number(recko->getCurrentRow()) << endl;
                 disableRow(recko->getCurrentRow(), false);
             }
             recko->incrementRow();

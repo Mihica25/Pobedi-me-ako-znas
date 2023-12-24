@@ -11,6 +11,7 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     recko = "HOUSE";
     gameNo = 1;
     points = 12;
+    wordNo = 0;
 
     startGame();
 }
@@ -121,6 +122,7 @@ void Session::player2ReadyReadRecko()
 
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
+            wordNo++;
             QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
             word = word.toUpper();
             QString result = checkReckoSolution(word);
@@ -131,16 +133,25 @@ void Session::processReckoMessage(const QString& msg){
                 } else {
                     player2->addPoints(points);
                 }
+                wordNo = 0;
                 points = 12;
                 gameNo++;
             } else {
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
-                points -= 2;
+                if(wordNo < 5){
+                    sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+                    points -= 2;
+                } else {
+                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nGAME") + QString::number(gameNo) + "_ENDED\n");
+                     points = 12;
+                     wordNo = 0;
+                     gameNo++;
+                }
             }
     } else if(msg.startsWith("TIMES_UP")){
         sendMessageToBothPlayers("CORRECT_WORD:" + recko + "\nGAME" + QString::number(gameNo) + "_ENDED\n");
         points = 12;
         gameNo++;
+        wordNo = 0;
     }
 }
 
