@@ -53,12 +53,10 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
 }
 
 void ReckoUI::startGame(){
-    qDebug() << "U startGame smo" << endl;
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
     tajmer->start(1000);
-    qDebug() << "U startGame smo" << endl;
     if(turn){
         connect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
         connect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2Multiplayer);
@@ -68,12 +66,10 @@ void ReckoUI::startGame(){
     } else {
         disableRow(0);
     }
-    qDebug() << "U startGame smo" << endl;
     return;
 }
 
 void ReckoUI::restartGame(){
-    qDebug() << "U restartGame smo" << endl;
     disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     disconnect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     disconnect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
@@ -89,13 +85,9 @@ void ReckoUI::restartGame(){
     } else {
         disableRow(0, false);
     }
-    qDebug() << "U restartGame smo" << endl;
     setUpRows();
-    qDebug() << "U restartGame smo" << endl;
     clearAllRows();
-    qDebug() << "U restartGame smo" << endl;
     turn = !turn;
-    qDebug() << "U restartGame smo" << endl;
     recko->setCurrentRow(1);
     startGame();
 
@@ -492,7 +484,18 @@ void ReckoUI::processServerMessage(QString serverMessage){
 
 void ReckoUI::endGame(){
     qDebug() << "Game 2 has ended :(" << endl;
+    disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    disconnect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    disconnect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
+    if(turn){
+        disconnect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
+        disconnect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2Multiplayer);
+        disconnect(ui->pbPotvrdi3 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi3Multiplayer);
+        disconnect(ui->pbPotvrdi4 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi4Multiplayer);
+        disconnect(ui->pbPotvrdi5 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi5Multiplayer);
+    }
     this->close();
+    emit mGameEnds();
 }
 
 void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)

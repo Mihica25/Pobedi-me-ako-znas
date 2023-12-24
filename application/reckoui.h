@@ -28,6 +28,7 @@ public:
 signals:
     void timesUp();
     void gameEnds();
+    void mGameEnds();
 
 public slots :
     void on_timesUp();
