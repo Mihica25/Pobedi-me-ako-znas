@@ -35,10 +35,12 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
+
     QString targetNumber;
     QString initialNumbers;
     QString player1_res;
     QString player2_res;
+    int submit;
 
     void startGame();
     void startRecko();

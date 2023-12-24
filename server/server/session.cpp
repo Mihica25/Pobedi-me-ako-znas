@@ -9,6 +9,7 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
+    submit = 0;
 
     //generator brojeva
 
@@ -257,13 +258,14 @@ void Session::processMojBrojMessage(const QString& msg){
             qDebug() << "PLAYER2 RESULT: " << player2_res;
         }
 
+        submit++;
         checkMojBrojSolution(player1_res,player2_res);
     }
 }
 
 void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
 {
-    if (pt1 == "" || pt2 == "")
+    if (submit != 2 && submit != 4)
         return;
 
     int res1 = pt1.toInt();
@@ -280,7 +282,7 @@ void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
         sendMessageToPlayer1("POINTS:0%10");
         sendMessageToPlayer2("POINTS:10%0");
     } else {
-        //obraditi preko turn-a
+        sendMessageToBothPlayers("POINTS:5%5");
     }
 
 }

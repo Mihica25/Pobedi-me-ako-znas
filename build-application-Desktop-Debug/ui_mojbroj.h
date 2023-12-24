@@ -80,6 +80,8 @@ public:
     QSpacerItem *verticalSpacer_5;
     QLabel *label_round;
     QLabel *label_time;
+    QLabel *label_player1;
+    QLabel *label_player2;
 
     void setupUi(QWidget *Mojbroj)
     {
@@ -409,6 +411,12 @@ public:
         label_time = new QLabel(Mojbroj);
         label_time->setObjectName(QString::fromUtf8("label_time"));
         label_time->setGeometry(QRect(10, 40, 67, 17));
+        label_player1 = new QLabel(Mojbroj);
+        label_player1->setObjectName(QString::fromUtf8("label_player1"));
+        label_player1->setGeometry(QRect(10, 70, 67, 17));
+        label_player2 = new QLabel(Mojbroj);
+        label_player2->setObjectName(QString::fromUtf8("label_player2"));
+        label_player2->setGeometry(QRect(120, 70, 67, 17));
 
         retranslateUi(Mojbroj);
 
@@ -440,6 +448,8 @@ public:
         lineEdit_result_2->setText(QString());
         label_round->setText(QApplication::translate("Mojbroj", "Round 1", nullptr));
         label_time->setText(QString());
+        label_player1->setText(QApplication::translate("Mojbroj", "0", nullptr));
+        label_player2->setText(QApplication::translate("Mojbroj", "0", nullptr));
     } // retranslateUi
 
 };

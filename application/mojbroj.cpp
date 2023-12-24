@@ -107,6 +107,8 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
 
     ui->label_round->hide();
     ui->label_time->hide();
+    ui->label_player1->hide();
+    ui->label_player2->hide();
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -160,7 +162,9 @@ void Mojbroj::initGame()
     qDebug() << "POCETAK IGRE";
 
     ui->label_round->show();
-    ui->label_time->show();
+    ui->label_time->show();    
+    ui->label_player1->show();
+    ui->label_player2->show();
 
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
@@ -513,29 +517,25 @@ void Mojbroj::processServerMessage(QString serverMessage){
 
     } else if (serverMessage.startsWith("POINTS:"))
     {
-        QStringList points = serverMessage.mid(7);
+        QString points = serverMessage.mid(7);
         int index = points.indexOf("%");
+
+
 
         player1Points += points.left(index).toInt();
         player2Points += points.mid(index+1).toInt();
         qDebug() << player1 << " points: " << player1Points;
         qDebug() << player2 << " points: " << player2Points;
 
-//        bool conversionSuccess = false;
-//        int points = pointsString.toInt(&conversionSuccess);
-
-//        if (conversionSuccess) {
-//            qDebug() << "Received points: " << points;
-//            if(turn){
-//                player1Points += points;
-//            } else {
-//                player2Points += points;
-//            }
-//        }
-     } else if(serverMessage.startsWith("OP_NUMBER:")){
-            QString opWord = serverMessage.mid(10);
-//            writeWord(opWord);
-
+        if (playerNo)
+        {
+            ui->label_player1->setText(QString::number(player1Points));
+            ui->label_player2->setText(QString::number(player2Points));
+        } else
+        {
+            ui->label_player1->setText(QString::number(player2Points));
+            ui->label_player2->setText(QString::number(player1Points));
+        }
      } else {
         qDebug() << "Unknown server message: " << serverMessage;
     }
