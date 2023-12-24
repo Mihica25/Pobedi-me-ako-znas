@@ -170,12 +170,17 @@ void Mojbroj::initGame()
     if (turn)
     {
         // salje poruku serveru da generise brojeve
-        sendMessage(server, "GENERATE: original");
+        sendMessage(server, "GENERATE:original\n");
 
     } else      //inace uzizmam iste
     {
-        sendMessage(server, "GENERATE: copy");
+        sendMessage(server, "GENERATE:original\n");
     }
+
+    qDebug() << "2)PLAYER: " << player1;
+    qDebug() << "TURN: " << turn;
+    turn = !turn;
+    qDebug() << "TURN: " << turn;
 }
 
 void Mojbroj::deinitGame()
@@ -185,7 +190,7 @@ void Mojbroj::deinitGame()
         return;    //end of the game
     }
 
-    setNumbers();
+    //setNumbers();
 /*
     ui->pushButton_num1->setText("");
     ui->pushButton_num2->setText("");
@@ -273,10 +278,20 @@ void Mojbroj::buttonPressedSubmit()
 
     sendMessage(server, "NUMBER:" + QString::number(result) + "\n");
 
+    sendMessage(server, "EXPRESSION:" + player1 + "/" + expression + "/" + QString::number(result));
+
     QString round = ui->label_round->text();
     if (round == "Round 1")
     {
         ui->pushButton_nextRound->show();
+
+        if(!turn)
+        {
+            ui->pushButton_nextRound->setEnabled(false);
+        } else
+        {
+            ui->pushButton_nextRound->setEnabled(true);
+        }
         //bodovi1
     } else
     {
@@ -287,7 +302,8 @@ void Mojbroj::buttonPressedSubmit()
 
 void Mojbroj::buttonPressedNextRound()
 {
-
+    qDebug() << "1)PLAYER: " << player1;
+    qDebug() << "TURN: " << turn;
 
     QPushButton *newRound = ui->pushButton_nextRound;
     if (newRound->text() == "ZAPOCNI IGRU")
@@ -295,15 +311,25 @@ void Mojbroj::buttonPressedNextRound()
         // Ako sam ja zapoceo, salji poruku serveru da obavesti drugog igraca da i on poziva buttonPressedNextRound
         if(turn)
         {
-
-            sendMessage(server, "START GAME:" + this->player2.toUtf8());
+            sendMessage(server, "START GAME:" + this->player2.toUtf8() + "\n");
         }
 
         newRound->hide();
         newRound->setText("NOVA RUNDA");
         initGame();
         return;
+    } else if (turn)
+    {
+        qDebug()<< "--------------------------------------------------";
+        sendMessage(server, "START GAME:" + this->player2.toUtf8() + "\n");
+        qDebug()<< "+++++++++++++++++++++++++++++++++++++++++++++++++++";
+        sendMessage(server, "GENERATE:copy\n");
+    } else
+    {
+        qDebug() << "++++++++++++++++++++++++++++++++++++++++++++++++++";
+        sendMessage(server, "GENERATE:copy\n");
     }
+
 
     deinitGame();
     newRound->hide();
@@ -465,18 +491,24 @@ void Mojbroj::processServerMessage(QString serverMessage){
 
         setNumbers();
 
-//        colorRow(result);
-//        disableRow(recko->getCurrentRow() - 1);
-//        if(result != "GGGGG"){
-//            if(turn){
-//                disableRow(recko->getCurrentRow(), false);
-//            }
-//            recko->incrementRow();
-//        }
     } else if (serverMessage.startsWith("START GAME"))
     {
         //pozovi mu start
         buttonPressedNextRound();
+
+    } else if (serverMessage.startsWith("EXPRESSION:"))
+    {
+        QString expression = serverMessage.mid(11);
+        qDebug() << expression;
+
+        int index = expression.indexOf('/');
+        QString left = expression.left(index);
+        QString right = expression.mid(index+1);
+
+        qDebug() << "POSTUPAK: " <<  left;
+        qDebug() << "REZ: " << right;
+        ui->lineEdit_2->setText(left);
+        ui->lineEdit_result_2->setText(right);
 
     } else if (serverMessage.startsWith("POINTS:"))
     {

@@ -117,7 +117,7 @@ void Session::player1ReadyReadRecko()
 void Session::player2ReadyReadRecko()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
@@ -147,7 +147,7 @@ void Session::player1ReadyReadMojBroj()
 void Session::player2ReadyReadMojBroj()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
@@ -191,27 +191,12 @@ QString Session::checkReckoSolution(const QString& word){
 }
 
 void Session::processMojBrojMessage(const QString& msg){
-    if(msg.startsWith("NUMBER:")) {
-            QString word = msg.mid(7);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
-            word = word.toUpper();
-            QString result = checkReckoSolution(word);
-
-            sendMessageToBothPlayers("OP_NUMBER:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
-
-            //poredjenje
-//            if(result == "GGGGG"){
-//                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
-//            } else {
-//                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
-//            }
-    }
-
 
     // Ako pocinje sa NUMBER I U PITANJU JE GENERATE ONDA POZOVI GENERISANJE brojeva i posalji igracima
     if(msg.startsWith("GENERATE:"))
     {
         QString originality = msg.mid(9);
-
+        qDebug() << "OVOOOO jE; " << originality;
         if (originality == "original")
         {
             //generisi brojeve
@@ -225,7 +210,7 @@ void Session::processMojBrojMessage(const QString& msg){
 
 
             //saljemo brojeve
-            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-75\n");
+            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-77\n");
         }
 
     } else if(msg.startsWith("START GAME:"))
@@ -242,6 +227,14 @@ void Session::processMojBrojMessage(const QString& msg){
             qDebug() << "player222222222222222";
             sendMessageToPlayer2("START GAME");
         }
+    } else if(msg.startsWith("EXPRESSION:"))
+    {
+        QString expression = msg.mid(11);
+        if (expression.startsWith(player1->getPlayerUsername()))
+            sendMessageToPlayer2("EXPRESSION:" + expression.mid(player1->getPlayerUsername().length()+1));
+        else
+            sendMessageToPlayer1("EXPRESSION:" + expression.mid(player2->getPlayerUsername().length()+1));
+
     }
 }
 
