@@ -9,7 +9,6 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
-    targetNumber = "192";
 
     //generator brojeva
 
@@ -201,20 +200,26 @@ void Session::processMojBrojMessage(const QString& msg){
         {
             //generisi brojeve
 
-
             //saljemo brojeve
-            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-75\n");
+            sendMessageToBothPlayers("GENERATE:" + targetNumber + initialNumbers + "\n");
+
+            qDebug() << "SALJE SE ORIGINAL: " << "GENERATE:" + targetNumber + initialNumbers + "\n";
         } else
         {
             //uzmi kopiju
 
 
+            qDebug() << "SALJE SE KOPIJA: " << "GENERATE:" + targetNumber + initialNumbers + "\n";
             //saljemo brojeve
-            sendMessageToBothPlayers("GENERATE:326-1-2-3-4-15-77\n");
+            sendMessageToBothPlayers("GENERATE:" + targetNumber + initialNumbers + "\n");
         }
 
     } else if(msg.startsWith("START GAME:"))
     {
+
+        targetNumber = generateTargetNumber();
+        initialNumbers = generateInitialNumbers();
+
         QString player = msg.mid(11);
         qDebug() << "SIGNAL I ZA START NJEGOV" << player;
 
@@ -239,12 +244,36 @@ void Session::processMojBrojMessage(const QString& msg){
 }
 
 QString Session::checkMojBrojSolution(const QString& word){
-    QString result = "101";
-    qDebug() << word << endl;
-    qDebug() << targetNumber << endl;
+    QString result = word;
 
     //rastojanje
 
     return result;
 }
 
+QString Session::generateTargetNumber()
+{
+    return QString::number(QRandomGenerator::global()->bounded(1,1000));
+}
+
+//Done - added QRadnomGenerator
+QString Session::generateInitialNumbers()
+{
+    QString initialNumbers;
+
+    for (int i = 0; i < 4; ++i)
+    {
+        int randomNumber = QRandomGenerator::global()->bounded(1,10);
+        initialNumbers = initialNumbers + "-" + QString::number(randomNumber);
+    }
+
+    int fifthNumberOptions[] = {10, 15, 20};
+    int fifthNumber = QRandomGenerator::global()->bounded(3);
+    initialNumbers = initialNumbers + "-" + QString::number(fifthNumberOptions[fifthNumber]);
+
+    int sixthNumberOptions[] = {25, 50, 75, 100};
+    int sixthNumber = QRandomGenerator::global()->bounded(3);
+    initialNumbers = initialNumbers + "-" + QString::number(sixthNumberOptions[sixthNumber]);
+
+    return initialNumbers;
+}

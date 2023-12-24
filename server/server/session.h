@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QString>
+#include <QRandomGenerator>
 
 class Session : public QObject
 {
@@ -35,6 +36,7 @@ private:
     Player *player2;
     QString recko;
     QString targetNumber;
+    QString initialNumbers;
 
     void startGame();
     void startRecko();
@@ -44,6 +46,9 @@ private:
     QString checkReckoSolution(const QString& word);
     void processMojBrojMessage(const QString& msg);
     QString checkMojBrojSolution(const QString& word);
+
+    QString generateTargetNumber();
+    QString generateInitialNumbers();
 
 };
 

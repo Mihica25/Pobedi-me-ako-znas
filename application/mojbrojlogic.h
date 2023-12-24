@@ -18,7 +18,6 @@ public:
     MojBrojLogic();
     ~MojBrojLogic()=default;
 
-    void startGame();
     bool endGame();
     void chooseNumber(int number);
     void chooseOperation(const QString& operation);
@@ -34,9 +33,6 @@ public:
 private:
     QVector<QString> availableOperations;
     GamePhase currentRound;
-
-    int generateTargetNumber();
-    QVector<int> generateInitialNumbers();
 
     QString vectorToString(const QVector<QString>& vec);
     bool validateExpression(const QString& expression) const;

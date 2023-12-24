@@ -165,7 +165,7 @@ void Mojbroj::initGame()
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
 
-    // Ako sam ja zapoceo salji poruku da se Generisu novi
+        // Ako sam ja zapoceo salji poruku da se Generisu novi
     if (turn)
     {
         // salje poruku serveru da generise brojeve

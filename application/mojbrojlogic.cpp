@@ -19,16 +19,6 @@ MojBrojLogic::MojBrojLogic()
 }
 
 //Done
-void MojBrojLogic::startGame()
-{
-    targetNumber = generateTargetNumber();
-    availableNumbers = generateInitialNumbers();
-
-    // Test
-    //test();
-}
-
-//Done
 bool MojBrojLogic::endGame()
 {
     // TODO: Implement timer destruction logic
@@ -44,7 +34,6 @@ bool MojBrojLogic::endGame()
         case GamePhase::Round1:
             currentRound = GamePhase::Round2;
             qDebug() << "Kraj 1. runde";
-            startGame();
             return false;
         case GamePhase::Round2:
             currentRound = GamePhase::End;
@@ -56,34 +45,6 @@ bool MojBrojLogic::endGame()
     }
 
     return true;
-}
-
-//Done - added QRandomGenerator
-int MojBrojLogic::generateTargetNumber()
-{
-    return QRandomGenerator::global()->bounded(1,1000);
-}
-
-//Done - added QRadnomGenerator
-QVector<int> MojBrojLogic::generateInitialNumbers()
-{
-    QVector<int> initialNumbers;
-
-    for (int i = 0; i < 4; ++i)
-    {
-        int randomNumber = QRandomGenerator::global()->bounded(1,10);
-        initialNumbers.append(randomNumber);
-    }
-
-    int fifthNumberOptions[] = {10, 15, 20};
-    int fifthNumber = QRandomGenerator::global()->bounded(3);
-    initialNumbers.append(fifthNumberOptions[fifthNumber]);
-
-    int sixthNumberOptions[] = {25, 50, 75, 100};
-    int sixthNumber = QRandomGenerator::global()->bounded(3);
-    initialNumbers.append(sixthNumberOptions[sixthNumber]);
-
-    return initialNumbers;
 }
 
 //Done - changed method
