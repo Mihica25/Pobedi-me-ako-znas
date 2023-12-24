@@ -272,6 +272,19 @@ void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
     int res  = targetNumber.toInt();
     qDebug() << pt1 << pt2 << targetNumber;
 
+    if ( (res1 == -1179 || res1 == -1951) && (res2 != -1179 && res2 != -1951) )
+    {
+        sendMessageToPlayer1("POINTS:0%10");
+        sendMessageToPlayer2("POINTS:10%0");
+        return;
+    } else if ( (res2 == -1179 || res2 == -1951) && (res1 != -1179 && res1 != -1951) )
+    {
+        sendMessageToPlayer1("POINTS:10%0");
+        sendMessageToPlayer2("POINTS:0%10");
+        return;
+    } else if ( res1 == -1179 && res2 == -1951 || res1 == -1951 && res2 == -1179|| res1 == -1179 && res2 == -1179 || res1 == -1951 && res2 == -1951)
+        return;
+
     if (qAbs(res-res1) < qAbs(res-res2))
     {
         sendMessageToPlayer1("POINTS:10%0");

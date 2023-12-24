@@ -274,10 +274,14 @@ void Mojbroj::buttonPressedSubmit()
     QString indicator = "1";
     if (expression.isEmpty())
     {
-        indicator = "-179";
+        indicator = "-1179";
     }
     int result = m_mojbroj->submitSolution(expression, indicator);
-    ui->lineEdit_result->setText(QString::number(result));
+    qDebug()<<"+++++++++++++++++++++++++++++++++++++++++++++++++++++++"<<result;
+    if (result == -1179 || result == -1951)
+        ui->lineEdit_result->setText("x");
+    else
+        ui->lineEdit_result->setText(QString::number(result));
 
     sendMessage(server, "EXPRESSION:" + player1 + "%" + expression + "%" + QString::number(result) + "\n");
 
@@ -515,7 +519,10 @@ void Mojbroj::processServerMessage(QString serverMessage){
         qDebug() << "POSTUPAK: " <<  left;
         qDebug() << "REZ: " << right;
         ui->lineEdit_2->setText(left);
-        ui->lineEdit_result_2->setText(right);
+        if (right.toInt() == -1179 || right.toInt() == -1951)
+            ui->lineEdit_result_2->setText("x");
+        else
+            ui->lineEdit_result_2->setText(right);
         submit++;
 
     } else if (serverMessage.startsWith("POINTS:"))

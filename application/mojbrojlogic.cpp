@@ -242,19 +242,20 @@ int MojBrojLogic::evaluateExpression(const QString& expression) const
 //Done
 int MojBrojLogic::submitSolution(const QString& solution, const QString& indicator)
 {
-    if (indicator == "-179")
+    if (indicator == "-1179")
     {
         // TODO: player "X" -> points to opponent?
         qDebug() << "KORISNIK PREDAO PRAZAN POSTUPAK RESAVANJA";
         //endGame();
-        return -179;
-    } else if (indicator == "-219")
+        return -1179;
+    }
+    /* else if (indicator == "-219")
     {
         // TODO: player "X" -> points to opponent?
         qDebug() << "KORISNIK PREKINUO POSTUPAK RESAVANJA";
        // endGame();
         return -219;
-    }
+    } */
 
 
     int result = evaluateExpression(solution);
@@ -263,7 +264,7 @@ int MojBrojLogic::submitSolution(const QString& solution, const QString& indicat
     {
         // TODO: if solution can not be parsed -> points to opponent?
         //endGame();
-        return -1;
+        return -1951;
     }
 
     int difference = qAbs(result - targetNumber);
