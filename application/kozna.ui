@@ -322,9 +322,9 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="DALJE">
+     <widget class="QPushButton" name="DALJE1">
       <property name="text">
-       <string>DALJE</string>
+       <string>PushButton</string>
       </property>
      </widget>
     </item>

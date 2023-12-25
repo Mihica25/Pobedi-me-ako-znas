@@ -88,7 +88,7 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2Multiplayer);
     connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3Multiplayer);
     connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4Multiplayer);
-    connect(ui->DALJE, &QPushButton::clicked, this, &KoZnaui::on_DALJE);
+    connect(ui->DALJE1, &QPushButton::clicked, this, &KoZnaui::on_DALJE);
 
 
 
@@ -395,7 +395,7 @@ void KoZnaui::on_DALJE(){
 
     displayAnswer();
 
-    QString answer = ui->DALJE->text();
+    QString answer = ui->DALJE1->text();
    qDebug()<< answer << "\n";
         sendMessage(server, "ANSWER:answer,0,\n");
         //sendMessage(server, "POINTS:10\n");

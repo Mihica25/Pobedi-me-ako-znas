@@ -53,6 +53,7 @@ private:
     void processKoZnaMessage(const QString& msg, int num);
     QString checkKoZnaSolution(const QString& word);
     int checkPodrundaWinner();
+    void processPodrundaMessage(const QString& msg, const int num);
 
     //int podrunda_resenje;
 };
