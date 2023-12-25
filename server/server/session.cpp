@@ -9,9 +9,9 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
-    gameNo = 1;
-    points = 12;
-    wordNo = 0;
+    reckoGameNo = 1;
+    reckoPoints = 12;
+    reckoWordNo = 0;
 
     startGame();
 }
@@ -122,36 +122,36 @@ void Session::player2ReadyReadRecko()
 
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
-            wordNo++;
+            reckoWordNo++;
             QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
             word = word.toUpper();
             QString result = checkReckoSolution(word);
             if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:") + QString::number(points) + "\n" + "GAME" + QString::number(gameNo) + "_ENDED\n");
-                if(gameNo == 1){
-                    player1->addPoints(points);
+                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:") + QString::number(reckoPoints) + "\n" + "GAME" + QString::number(reckoGameNo) + "_ENDED\n");
+                if(reckoGameNo == 1){
+                    player1->addPoints(reckoPoints);
                 } else {
-                    player2->addPoints(points);
+                    player2->addPoints(reckoPoints);
                 }
-                wordNo = 0;
-                points = 12;
-                gameNo++;
+                reckoWordNo = 0;
+                reckoPoints = 12;
+                reckoGameNo++;
             } else {
-                if(wordNo < 5){
+                if(reckoWordNo < 5){
                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
-                    points -= 2;
+                    reckoPoints -= 2;
                 } else {
-                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nGAME") + QString::number(gameNo) + "_ENDED\n");
-                     points = 12;
-                     wordNo = 0;
-                     gameNo++;
+                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nGAME") + QString::number(reckoGameNo) + "_ENDED\n");
+                     reckoPoints = 12;
+                     reckoWordNo = 0;
+                     reckoGameNo++;
                 }
             }
     } else if(msg.startsWith("TIMES_UP")){
-        sendMessageToBothPlayers("CORRECT_WORD:" + recko + "\nGAME" + QString::number(gameNo) + "_ENDED\n");
-        points = 12;
-        gameNo++;
-        wordNo = 0;
+        sendMessageToBothPlayers("CORRECT_WORD:" + recko + "\nGAME" + QString::number(reckoGameNo) + "_ENDED\n");
+        reckoPoints = 12;
+        reckoGameNo++;
+        reckoWordNo = 0;
     }
 }
 

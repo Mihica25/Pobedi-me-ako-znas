@@ -32,9 +32,9 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
-    int gameNo;
-    int points;
-    int wordNo;
+    int reckoGameNo;
+    int reckoPoints;
+    int reckoWordNo;
 
     void startGame();
     void startRecko();
