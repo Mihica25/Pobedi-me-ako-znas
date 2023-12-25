@@ -96,6 +96,7 @@ void Session::stopRecko(){
     disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
 
     // Ovde trebamo pozvati funkciju koja ce pokrenuti MojBroj
+    startMojBroj();
 
     return;
 }
