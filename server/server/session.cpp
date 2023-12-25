@@ -90,6 +90,16 @@ void Session::startRecko(){
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
 }
 
+void Session::stopRecko(){
+    qDebug() << "Zavrsio se Recko, prelazimo na sledecu igru :)" << endl;
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+
+    // Ovde trebamo pozvati funkciju koja ce pokrenuti MojBroj
+
+    return;
+}
+
 void Session::player1ReadyReadRecko()
 {
     // Obrada podataka koji stižu od prvog igrača
@@ -136,6 +146,9 @@ void Session::processReckoMessage(const QString& msg){
                 reckoWordNo = 0;
                 reckoPoints = 12;
                 reckoGameNo++;
+                if(reckoGameNo > 2){
+                    stopRecko();
+                }
             } else {
                 if(reckoWordNo < 5){
                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
@@ -145,6 +158,9 @@ void Session::processReckoMessage(const QString& msg){
                      reckoPoints = 12;
                      reckoWordNo = 0;
                      reckoGameNo++;
+                     if(reckoGameNo > 2){
+                         stopRecko();
+                     }
                 }
             }
     } else if(msg.startsWith("TIMES_UP")){
@@ -152,6 +168,9 @@ void Session::processReckoMessage(const QString& msg){
         reckoPoints = 12;
         reckoGameNo++;
         reckoWordNo = 0;
+        if(reckoGameNo > 2){
+            stopRecko();
+        }
     }
 }
 

@@ -38,6 +38,7 @@ private:
 
     void startGame();
     void startRecko();
+    void stopRecko();
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
