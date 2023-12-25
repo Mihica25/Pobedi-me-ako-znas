@@ -19,6 +19,11 @@ public:
 
 
     QTcpSocket* tcpSocket;
+
+    int podrunda_time;
+    int podrunda_guess;
+    int podrunda_resenje;
+
 private:
     QString username;
     int points;

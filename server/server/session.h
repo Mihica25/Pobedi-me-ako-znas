@@ -27,6 +27,8 @@ private slots:
     void player2ReadyReadRecko();
     void player1ReadyReadKoZna();
     void player2ReadyReadKoZna();
+    void player1ReadyReadPodrunda();
+    void player2ReadyReadPodrunda();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -44,12 +46,15 @@ private:
     void startGame();
     void startRecko();
     void startKoZna();
+    void startPodrunda();
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
     void processKoZnaMessage(const QString& msg, int num);
     QString checkKoZnaSolution(const QString& word);
+    int checkPodrundaWinner();
 
+    //int podrunda_resenje;
 };
 
 #endif // SESSION_H

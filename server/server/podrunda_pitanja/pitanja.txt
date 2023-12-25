@@ -1,0 +1,6 @@
+Koliko slova ima azbuka?,30
+Koje godine je poceo 1. svetski rat?,1914
+Koliko meseci ima godina?,12
+Koliko postoji svetskih cuda?,7
+Koliko dana ima prestupna godina?,366
+

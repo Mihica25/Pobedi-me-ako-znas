@@ -8,6 +8,7 @@
 #include "reckoui.h"
 #include "koznaui.h"
 #include <QString>
+#include "podrundaui.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }
@@ -25,6 +26,7 @@ public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();
     void on_koZnaEnds();
+    void on_podrundaEnded();
     void onReadyRead();
 
 private:
