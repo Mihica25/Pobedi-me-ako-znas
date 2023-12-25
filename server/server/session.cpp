@@ -262,6 +262,7 @@ void Session::processMojBrojMessage(const QString& msg){
     }
 }
 
+//DODATI POENE U SERVER
 void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
 {
     if (submit != 2 && submit != 4)
