@@ -29,6 +29,7 @@ private:
     QPixmap cardImage;
     bool isRevealed;
     int idReveal;
+
 };
 
 #endif // CARDWIDGET_H

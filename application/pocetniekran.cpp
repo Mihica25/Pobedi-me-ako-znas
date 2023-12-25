@@ -101,14 +101,24 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 }
 
 void PocetniEkran::initConntroler(){
-
+   /*
     ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
     this->close();
     recko->show();
     connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
+    */
+
+    Memorija* memorija = new Memorija(nullptr, tcpSocket, playerName, opponentName, turn, 0,0);
+    this->close();
+    memorija->show();
+    connect(memorija, &Memorija::gameEnd, this, &PocetniEkran::on_memorijaEnds, Qt::UniqueConnection);
 }
 
 void PocetniEkran::on_reckoEnds(){
+    return;
+}
+
+void PocetniEkran::on_memorijaEnds(){
     return;
 }
 

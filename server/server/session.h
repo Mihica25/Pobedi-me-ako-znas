@@ -9,6 +9,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QString>
+#include <QVector>
 
 class Session : public QObject
 {
@@ -25,6 +26,8 @@ public:
 private slots:
     void player1ReadyReadRecko();
     void player2ReadyReadRecko();
+    void player1ReadyReadMemorija();
+    void player2ReadyReadMemorija();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -32,10 +35,15 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
+    QVector<int> cardIdssss;
 
     void startGame();
     void startRecko();
+    void startMemorija();
 
+    void shuffleQVector(QVector<int> &vector);
+    QVector<int> generateCardIds();
+    void processMemorijaMessage(const QString& request);
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
 

@@ -1,6 +1,8 @@
 #include "session.h"
 #include <thread>
 #include <chrono>
+#include <random>
+#include <QDebug>
 
 
 Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(parent), player1(player1), player2(player2)
@@ -8,8 +10,7 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
-    recko = "HOUSE";
-
+    cardIdssss = generateCardIds();
     startGame();
 }
 
@@ -68,18 +69,122 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-    startRecko();
+//    startRecko();
 
 //    startWordle();
 //    startPogodiSta();
 //    startKoZnaZna();
-//    startMemorija();
+    startMemorija();
 //    startMojBroj();
 
     // Svako implemenitra komunikaciju izmedju servera i klijenta za svoju igru
     // Takodje moramo razmisliti gde implementirati komunikaciju na klijentskoj strani
 
     return;
+}
+
+void Session::startMemorija(){
+    connect(player1->tcpSocket, &QTcpSocket::readyRead,this,&Session::player1ReadyReadMemorija);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
+
+}
+
+
+void Session::player1ReadyReadMemorija()
+{
+    // Obrada podataka koji stižu od prvog igrača
+    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    qDebug() << "Data received from Player 1: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMemorijaMessage(receivedMessage);
+        }
+    }
+}
+
+void Session::player2ReadyReadMemorija()
+{
+    // Obrada podataka koji stižu od drugog igrača
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
+    qDebug() << "Data received from Player 2: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMemorijaMessage(receivedMessage);
+        }
+    }
+}
+
+//or use send Message to players and handle the changes there
+void Session::processMemorijaMessage(const QString& request){
+    if(request.startsWith("GENERATE_CARD_IDS")){
+        QString cardIdsString;
+        int size =cardIdssss.size();
+        for(int i = 0; i < size; ++i){
+            cardIdsString.append(QString::number(cardIdssss[i]));
+
+            if(i < size - 1){
+                cardIdsString.append(",");
+            }
+        }
+        sendMessageToBothPlayers("CARD_IDS:" + cardIdsString + "\n");
+    }else if(request.startsWith("TURN1")){
+        sendMessageToPlayer1("CHANGETURN\n");
+    }else if(request.startsWith("TURN2")){
+        sendMessageToPlayer2("CHANGETURN\n");
+    }else if(request.startsWith("MOVE1:")){
+        QString id = request.mid(6);
+        sendMessageToPlayer2("TURNCARD:" + id + "\n");
+    }else if(request.startsWith("MOVE2:")){
+        QString id = request.mid(6);
+        sendMessageToPlayer1("TURNCARD:" + id + "\n");
+    }else if(request.startsWith("POINTS1")){
+        sendMessageToPlayer2("UPDATE_POINTS\n");
+    }else if(request.startsWith("POINTS2")){
+        sendMessageToPlayer1("UPDATE_POINTS\n");
+    }else{
+        //TODO
+    }
+}
+
+
+void Session::shuffleQVector(QVector<int> &vector){
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(vector.begin(),vector.end(),g);
+}
+
+QVector<int> Session::generateCardIds(){
+
+    QVector<int> allCardIds;
+
+    for(int i = 1; i <= 20; ++i){
+        allCardIds.append(i);
+    }
+
+    shuffleQVector(allCardIds);
+
+    QVector<int> cardIdss;
+
+    for(int i = 0; i<10; ++i){
+        cardIdss.append(allCardIds[i]);
+    }
+
+    QVector<int> finalCardIds;
+
+    for(int num : cardIdss){
+        finalCardIds.append(num);
+        finalCardIds.append(num);
+    }
+
+    shuffleQVector(finalCardIds);
+    return finalCardIds;
 }
 
 void Session::startRecko(){
@@ -105,7 +210,7 @@ void Session::player1ReadyReadRecko()
 void Session::player2ReadyReadRecko()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');

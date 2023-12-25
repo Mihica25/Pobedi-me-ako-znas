@@ -29,6 +29,7 @@ void CardWidget::reveal(){
 }
 
 void CardWidget::mousePressEvent(QMouseEvent *event){
+
     if(!isRevealed){
         reveal();
         emit clicked(idReveal);
