@@ -28,3 +28,7 @@ void Recko::incrementRow(){
 int Recko::getCurrentRow(){
     return currentRow;
 }
+
+void Recko::setCurrentRow(int row){
+    currentRow = row;
+}

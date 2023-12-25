@@ -102,20 +102,19 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 
 void PocetniEkran::initConntroler(){
 
- //   ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
-//    this->close();
-//    recko->show();
-//    connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
-
-    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
     this->close();
-    mojbroj->show();
-    connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
-
-    //analogno za mene
+    recko->show();
+    connect(recko, &ReckoUI::mGameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
 }
 
 void PocetniEkran::on_reckoEnds(){
+    qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
+    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    mojbroj->show();
+    connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
+
+
     return;
 }
 

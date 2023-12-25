@@ -9,9 +9,9 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
     recko = "HOUSE";
-    submit = 0;
-
-    //generator brojeva
+    reckoGameNo = 1;
+    reckoPoints = 12;
+    reckoWordNo = 0;
 
     startGame();
 }
@@ -71,10 +71,7 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-    //startRecko();
-
-    startMojBroj();
-
+    startRecko();
 
 //    startWordle();
 //    startPogodiSta();
@@ -93,7 +90,16 @@ void Session::startRecko(){
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
 }
 
-//isto ovako
+void Session::stopRecko(){
+    qDebug() << "Zavrsio se Recko, prelazimo na sledecu igru :)" << endl;
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+
+    // Ovde trebamo pozvati funkciju koja ce pokrenuti MojBroj
+
+    return;
+}
+
 void Session::startMojBroj(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMojBroj);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMojBroj);
@@ -129,6 +135,66 @@ void Session::player2ReadyReadRecko()
     }
 }
 
+void Session::processReckoMessage(const QString& msg){
+    if(msg.startsWith("WORD:")) {
+            reckoWordNo++;
+            QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
+            word = word.toUpper();
+            QString result = checkReckoSolution(word);
+            if(result == "GGGGG"){
+                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:") + QString::number(reckoPoints) + "\n" + "GAME" + QString::number(reckoGameNo) + "_ENDED\n");
+                if(reckoGameNo == 1){
+                    player1->addPoints(reckoPoints);
+                } else {
+                    player2->addPoints(reckoPoints);
+                }
+                reckoWordNo = 0;
+                reckoPoints = 12;
+                reckoGameNo++;
+                if(reckoGameNo > 2){
+                    stopRecko();
+                }
+            } else {
+                if(reckoWordNo < 5){
+                    sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+                    reckoPoints -= 2;
+                } else {
+                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nGAME") + QString::number(reckoGameNo) + "_ENDED\n");
+                     reckoPoints = 12;
+                     reckoWordNo = 0;
+                     reckoGameNo++;
+                     if(reckoGameNo > 2){
+                         stopRecko();
+                     }
+                }
+            }
+    } else if(msg.startsWith("TIMES_UP")){
+        sendMessageToBothPlayers("CORRECT_WORD:" + recko + "\nGAME" + QString::number(reckoGameNo) + "_ENDED\n");
+        reckoPoints = 12;
+        reckoGameNo++;
+        reckoWordNo = 0;
+        if(reckoGameNo > 2){
+            stopRecko();
+        }
+    }
+}
+
+QString Session::checkReckoSolution(const QString& word){
+    QString result;
+    qDebug() << word << endl;
+    qDebug() << recko << endl;
+    for(int i = 0; i < recko.size() && i < word.size(); i++){
+        if(word.at(i) == recko.at(i)){
+            result.append("G");
+        } else if (recko.contains(word.at(i))) {
+            result.append("Y");
+        } else {
+            result.append("R");
+        }
+    }
+    return result;
+}
+
 void Session::player1ReadyReadMojBroj()
 {
     // Obrada podataka koji stižu od prvog igrača
@@ -157,37 +223,6 @@ void Session::player2ReadyReadMojBroj()
             processMojBrojMessage(receivedMessage);
         }
     }
-}
-
-//isto ovakve
-
-void Session::processReckoMessage(const QString& msg){
-    if(msg.startsWith("WORD:")) {
-            QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
-            word = word.toUpper();
-            QString result = checkReckoSolution(word);
-            if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
-            } else {
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
-            }
-    }
-}
-
-QString Session::checkReckoSolution(const QString& word){
-    QString result;
-    qDebug() << word << endl;
-    qDebug() << recko << endl;
-    for(int i = 0; i < recko.size() && i < word.size(); i++){
-        if(word.at(i) == recko.at(i)){
-            result.append("G");
-        } else if (recko.contains(word.at(i))) {
-            result.append("Y");
-        } else {
-            result.append("R");
-        }
-    }
-    return result;
 }
 
 void Session::processMojBrojMessage(const QString& msg){

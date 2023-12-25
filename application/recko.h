@@ -16,6 +16,7 @@ public:
     void newWordle();
     void incrementRow();
     int getCurrentRow();
+    void setCurrentRow(int row);
 
 
     QString wordle = "";

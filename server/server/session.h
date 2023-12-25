@@ -35,7 +35,9 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
-
+    int reckoGameNo;
+    int reckoPoints;
+    int reckoWordNo;
     QString targetNumber;
     QString initialNumbers;
     QString player1_res;
@@ -44,6 +46,7 @@ private:
 
     void startGame();
     void startRecko();
+    void stopRecko();
     void startMojBroj();
 
     void processReckoMessage(const QString& msg);
