@@ -357,6 +357,13 @@ void ReckoUI::on_timesUp()
     emit gameEnds();
 }
 
+void ReckoUI::on_mTimesUp()
+{
+    sendMessage(server, "TIMES_UP\n");
+    qDebug() << "Isteklo vreme";
+    QTimer::singleShot(3000, this, &ReckoUI::restartGame);
+}
+
 void ReckoUI::on_gameEnds(){
     tajmer->stop();
     ukupni_bodovi += bodovi;
