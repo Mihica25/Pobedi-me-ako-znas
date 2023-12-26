@@ -24,6 +24,8 @@ public:
     void setUpBackground();
     bool quess();
     void startGame();
+    int getPlayer1Points();
+    int getPlayer2Points();
 
 signals:
     void timesUp();

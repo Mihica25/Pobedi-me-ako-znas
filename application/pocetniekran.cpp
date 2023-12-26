@@ -7,13 +7,14 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     , ui(new Ui::PocetniEkran)
 {
     ui->setupUi(this);
-
-    ui->setupUi(this);
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
+    player1Points = 0;
+    player2Points = 0;
 
     connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
 
@@ -102,7 +103,7 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 
 void PocetniEkran::initConntroler(){
 
-    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
     this->close();
     recko->show();
     connect(recko, &ReckoUI::mGameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
@@ -110,7 +111,9 @@ void PocetniEkran::initConntroler(){
 
 void PocetniEkran::on_reckoEnds(){
     qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
-    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
+    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
     mojbroj->show();
     connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
 

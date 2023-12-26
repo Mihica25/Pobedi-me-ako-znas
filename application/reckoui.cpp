@@ -507,4 +507,10 @@ void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)
 
 }
 
+int ReckoUI::getPlayer1Points(){
+    return player1Points;
+}
 
+int ReckoUI::getPlayer2Points(){
+    return player2Points;
+}

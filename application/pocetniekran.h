@@ -35,6 +35,7 @@ private:
     bool turn;
     int player1Points = 0;
     int player2Points = 0;
+    ReckoUI* recko;
 
     void initConntroler();
 
