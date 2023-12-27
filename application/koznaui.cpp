@@ -63,6 +63,8 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     player1Points = player1Points1;
     player2Points = player2Points2;
     ui->setupUi(this);
+    ui->poeni1->setText(QString::number(player1Points));
+    ui->poeni2->setText(QString::number(player2Points));
 
 
     QPixmap bkgnd(":/background/resources/ko_zna.png");
@@ -72,7 +74,11 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     this->setPalette(palette);
     ui->label->setText(player1);
 
-    sendMessage(server, "SEND:\n");
+
+    qDebug()<< "SEND" << endl;
+
+    sendMessage(server, "SEND:hhhuhuuhhu\n");
+
 
     connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1Multiplayer);
     connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2Multiplayer);
@@ -93,11 +99,18 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
 
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 
-    player1Points = 0;
-    player2Points = 0;
+    //player1Points = 0;
+    //player2Points = 0;
 
 }
 
+int KoZnaui::getPlayer1Points(){
+    return player1Points;
+}
+
+int KoZnaui::getPlayer2Points(){
+    return player2Points;
+}
 KoZnaui::~KoZnaui()
 {
     delete ui;
@@ -122,7 +135,7 @@ void KoZnaui::displayQuestion(int questionNumber)
 void KoZnaui::generisiPitanja(QString pitanje){
     qDebug() << "pitanje" << pitanje;
 
-    //QVector<QStringList> pitanja;
+
     QStringList svaPitanja = pitanje.split("/");
     brojPitanja = svaPitanja.size();
 
@@ -348,6 +361,7 @@ void KoZnaui::on_gameEnds(){
     //ui->leBodovi->setText(QString::number(ukupni_bodovi));
     //showSolution();
     qDebug() << "Game ends";
+    sendMessage(server, "END\n");
 }
 
 

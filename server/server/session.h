@@ -62,8 +62,10 @@ private:
     void startRecko();
     void stopRecko();
     void startMojBroj();
+    void stopMojBroj();
     void startPogodiSta();
     void startKoZna();
+    void stopKoZna();
     void startPodrunda();
     void otvoriPodrundu();
     void stopPodrunda();

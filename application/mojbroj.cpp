@@ -513,6 +513,8 @@ void Mojbroj::processServerMessage(QString serverMessage){
         ui->label_player2->setText(QString::number(player2Points));
 
     } else if (serverMessage.startsWith("GAME END")){
+        //dodato
+        disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         emit mGameEnds();
     } else {
         qDebug() << "Unknown server message: " << serverMessage;

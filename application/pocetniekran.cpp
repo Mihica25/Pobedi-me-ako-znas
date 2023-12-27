@@ -126,12 +126,21 @@ void PocetniEkran::on_mojbrojEnds(){
     qDebug() << "PocetniEkran::on_mojbrojEnds()" << endl;
     qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
     qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
+    kozna = new KoZnaui(nullptr, tcpSocket, playerName, opponentName, turn, mojbroj->getPlayer1Points(), mojbroj->getPlayer2Points());
     mojbroj->close();
+    kozna->show();
+    connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
+
+
 
     //naredna igra
 }
 
 void PocetniEkran::on_koZnaEnds(){
+    qDebug() << "PocetniEkran::on_koznaEnds()" << endl;
+    qDebug() << "Player1: " << kozna->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << kozna->getPlayer2Points() << endl;
+    kozna->close();
     return;
 }
 
