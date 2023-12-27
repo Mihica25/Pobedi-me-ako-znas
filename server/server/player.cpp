@@ -6,7 +6,8 @@ Player::Player(QTcpSocket* socket, const QString& username, QObject *parent) : Q
     podrunda_time = -1;
     podrunda_guess = -1;
     podrunda_resenje = -1;
-    int pointsKoZna = 0;
+    pointsKoZna = 0;
+
 }
 
 Player::~Player()

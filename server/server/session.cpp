@@ -102,7 +102,7 @@ void Session::startGame(){
 
     //startRecko();
       startKoZna();
-      startPodrunda();
+      //startPodrunda();
 
 //    startWordle();
 //    startPogodiSta();
@@ -122,6 +122,22 @@ void Session::startRecko(){
 }
 
 void Session::startKoZna(){
+    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
+}
+
+void Session::otvoriPodrundu() {
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
+
+    startPodrunda();
+}
+
+void Session::stopPodrunda()
+{
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPodrunda);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPodrunda);
+
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
 }
@@ -318,53 +334,104 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     {        
         int pobednikk = checkPodrundaWinner();
         QString pobednik = QString::number(pobednikk);
-        //sendMessageToPlayer1("POBEDNIK:" + pobednik);
 
-        if (pobednikk == 11)
+        if(player1->pobednik & player2->pobednik)
         {
-            sendMessageToPlayer1("POBEDNIK:" + pobednik);
-            pobednikk = 21;
-            QString pobednik = QString::number(pobednikk);
-            sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            //sendMessageToBothPlayers("POENI3\n");
+            sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+            sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
         }
-        else if (pobednikk == 21)
+        else if(player1->pobednik & !player2->pobednik)
         {
-            sendMessageToPlayer1("POBEDNIK:" + pobednik);
-            pobednikk = 11;
-            QString pobednik = QString::number(pobednikk);
-            sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            //sendMessageToBothPlayers("POENI1\n");
+            sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+            //sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
         }
-        else if (pobednikk == 12)
+        else if(!player1->pobednik & player2->pobednik)
         {
-            sendMessageToPlayer1("POBEDNIK:" + pobednik);
-            pobednikk = 22;
-            QString pobednik = QString::number(pobednikk);
-            sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            //sendMessageToBothPlayers("POENI2\n");
+            //sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+            sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
         }
-        else if (pobednikk == 22)
+
+
+
+        if (player1->podrunda_guess == -2 & player2->podrunda_guess == -2)
         {
-            sendMessageToPlayer1("POBEDNIK:" + pobednik);
-            pobednikk = 12;
-            QString pobednik = QString::number(pobednikk);
-            sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            sendMessageToBothPlayers("ISTEKLO VREME!\n");
+        }
+        else if(player1->podrunda_guess == -2)
+        {
+            qDebug() << "prvi nije odg\n";
+            sendMessageToPlayer1("ISTEKLO VREME!\n");
+            sendMessageToPlayer2("POBEDNIK:22\n");
+            sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
+        }
+        else if(player2->podrunda_guess == -2)
+        {
+            qDebug() << "drugi nije odg\n";
+            sendMessageToPlayer2("ISTEKLO VREME!\n");
+            sendMessageToPlayer1("POBEDNIK:11\n");
+            sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
         }
         else
         {
-            sendMessageToBothPlayers("POBEDNIK:" + pobednik);
-        }
-    }
-    /*
-    if(msg.startsWith("ROUND:")) {
-            QString guess = msg.mid(6);  // Preskakanje prvih 5 karaktera (prefiks "ROUND:")
-            guess = guess.toUpper();
-            QString result = checkReckoSolution(word);
-            if(result == "GGGGG"){
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nPOINTS:10\n"));
-            } else {
-                sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
+            //int pobednikk = checkPodrundaWinner();
+            //QString pobednik = QString::number(pobednikk);
+            //sendMessageToPlayer1("POBEDNIK:" + pobednik);
+
+            if (pobednikk == 11)
+            {
+                //sendMessageToBothPlayers("POENI1\n");
+                sendMessageToPlayer1("POBEDNIK:" + pobednik);
+                pobednikk = 21;
+                QString pobednik = QString::number(pobednikk);
+                sendMessageToPlayer2("POBEDNIK:" + pobednik);
             }
+            else if (pobednikk == 21)
+            {
+                //sendMessageToBothPlayers("POENI2\n");
+                sendMessageToPlayer1("POBEDNIK:" + pobednik);
+                pobednikk = 11;
+                QString pobednik = QString::number(pobednikk);
+                sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            }
+            else if (pobednikk == 12)
+            {
+                //sendMessageToBothPlayers("POENI1\n");
+
+                sendMessageToPlayer1("POBEDNIK:" + pobednik);
+                pobednikk = 22;
+                QString pobednik = QString::number(pobednikk);
+                sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            }
+            else if (pobednikk == 22)
+            {
+                //sendMessageToBothPlayers("POENI2\n");
+                sendMessageToPlayer1("POBEDNIK:" + pobednik);
+                pobednikk = 12;
+                QString pobednik = QString::number(pobednikk);
+                sendMessageToPlayer2("POBEDNIK:" + pobednik);
+            }
+            else
+            {
+                if(pobednikk == 0)
+                    //sendMessageToBothPlayers("POENI12\n");
+
+                sendMessageToBothPlayers("POBEDNIK:" + pobednik);
+            }
+        }
+
+        player1->podrunda_time = -1;
+        player2->podrunda_time = -1;
+        player1->podrunda_guess = -1;
+        player2->podrunda_guess = -1;
+        player1->podrunda_resenje = -1;
+        player2->podrunda_resenje = -1;
+
+        stopPodrunda();
+
     }
-    */
 }
 
 void Session::processKoZnaMessage(const QString& msg, int num){
@@ -377,7 +444,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         QStringList odg = msg.mid(7).split(",");
              //answer1 = msg.mid(7);
         answer1 = odg.value(0);
-        qDebug()<< answer1 ;
+        qDebug() << answer1 ;
 
         qDebug() << odg.value(1).toInt() << "porukicaaaaa\n";
         qDebug() << odg << "listaaa\n";
@@ -390,6 +457,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
 
         //if da se doda sa prefiksom da li je manje ili vece od nule
         sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+        //sendMessageToBothPlayers("POENI1:" + odg.value(1) + "\n");
         sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
 
 
@@ -397,7 +465,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
 
     if(msg.startsWith("ANSWER:") and num == 2) {
             // answer2 = msg.mid(7);
-            //sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
+            //sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
 
         QStringList odg = msg.mid(7).split(",");
              //answer1 = msg.mid(7);
@@ -416,11 +484,21 @@ void Session::processKoZnaMessage(const QString& msg, int num){
 
         //da se doda
         sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
-        sendMessageToPlayer1("ANSWERP2:" + answer2 + "\n");
+        sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
     }
 
     if(answer1 != "" and answer2 != ""){
-        sendMessageToBothPlayers("PREBACI\n");
+
+        if (answer1 == "true" & answer2 == "true")
+        {
+            sendMessageToBothPlayers("PODRUNDA\n");
+            otvoriPodrundu();
+        }
+        else
+        {
+            sendMessageToBothPlayers("PREBACI\n");
+        }
+
         answer1 = "";
         answer2 = "";
 
@@ -482,11 +560,17 @@ int Session::checkPodrundaWinner()
     if (razlika1 < razlika2)
     {
         // pobednik je 1. igrac jer je blizi resenju
+        player1->pobednik = true;
+        player2->pobednik = false;
+        player1->pointsKoZna += 10;
         return 11;
     }
     else if (razlika1 > razlika2)
     {
         // pobednik je 2. igrac jer je blizi resenju
+        player1->pobednik = false;
+        player2->pobednik = true;
+        player2->pointsKoZna += 10;
         return 21;
     }
     else if (razlika1 == razlika2)
@@ -494,16 +578,26 @@ int Session::checkPodrundaWinner()
         if(player1->podrunda_time > player2->podrunda_time)
         {
             // pobednik je 1. igrac jer je brzi
+            player1->pobednik = true;
+            player2->pobednik = false;
+            player1->pointsKoZna += 10;
             return 12;
         }
         else if(player1->podrunda_time < player2->podrunda_time)
         {
             // pobednik je 2. igrac jer je brzi
+            player1->pobednik = false;
+            player2->pobednik = true;
+            player2->pointsKoZna += 10;
             return 22;
         }
         else
         {
             // nereseno -> oba igraca dobijaju poene
+            player1->pobednik = true;
+            player2->pobednik = true;
+            player1->pointsKoZna += 10;
+            player2->pointsKoZna += 10;
             return 0;
         }
     }

@@ -47,6 +47,8 @@ private:
     void startRecko();
     void startKoZna();
     void startPodrunda();
+    void otvoriPodrundu();
+    void stopPodrunda();
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);

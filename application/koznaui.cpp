@@ -42,8 +42,8 @@ KoZnaui::KoZnaui(QWidget *parent)
     ui->poeni2->setText("0");
 
 
-    int poeni11 = 0;
-    int poeni22 = 0;
+    //int poeni11 = 0;
+    //int poeni22 = 0;
 
 
 
@@ -79,6 +79,7 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+    ui->label->setText(player1);
 
 
      sendMessage(server, "SEND:\n");
@@ -110,6 +111,8 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
 
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 
+    player1Points = 0;
+    player2Points = 0;
 
 
 
@@ -579,9 +582,9 @@ void KoZnaui::processServerMessage(QString serverMessage){
     }
 
 
-    if (serverMessage.startsWith("ANSWERP2:")) {
-        qDebug() <<"poruka o odgovoru" << serverMessage.mid(9);
-        if(serverMessage.mid(9) == "true"){
+    if (serverMessage.startsWith("ANSWERP22:")) {
+        qDebug() <<"poruka o odgovoru" << serverMessage.mid(10);
+        if(serverMessage.mid(10) == "true"){
             ui->poeni2->setStyleSheet("background-color: green");
 
         }else{
@@ -599,8 +602,9 @@ void KoZnaui::processServerMessage(QString serverMessage){
         qDebug() << "usaoo" << endl;
          //poeni11 = serverMessage.mid(7).toInt();
        qDebug()<< "Vrednost po pit"<< numberOfQuestion << serverMessage.mid(7).toInt()<< endl;
-        //qDebug() << po << endl;
+        //qDebug() << serverMessage.mid(7) << endl;
 
+       player1Points = serverMessage.mid(7).toInt();
         ui->poeni1->setText(serverMessage.mid(7));
 
     }
@@ -611,7 +615,26 @@ void KoZnaui::processServerMessage(QString serverMessage){
         qDebug() <<"Vrednosto po pitanjima:" << numberOfQuestion << serverMessage.mid(7).toInt() << endl;
         //qDebug() << po << endl;
 
+        player2Points = serverMessage.mid(7).toInt();
         ui->poeni2->setText(serverMessage.mid(7));
+
+
+    }
+
+    if (serverMessage.startsWith("PODRUNDA"))
+    {
+        time = 20;
+
+        //emit podrundaStarts();
+        //disconnect(server, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
+        //connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
+        disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+
+
+        podrunda = new Podrundaui(nullptr, server, player1, player2, player1Points, player2Points);
+        //this->close();
+        podrunda->show();
+        connect(podrunda, &Podrundaui::gameEnded, this, &KoZnaui::on_podrundaEnds, Qt::UniqueConnection);
 
 
     }
@@ -619,6 +642,43 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
 
 
+}
+
+void KoZnaui::on_podrundaEnds(){
+    qDebug() << "PODRUNDA ENDS\n";
+    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    //podrunda->close();
+
+    player1Points = podrunda->player1Points;
+    player2Points = podrunda->player2Points;
+    QString poeni_prvog = QString::number(player1Points);
+    QString poeni_drugog = QString::number(player2Points);
+    ui->poeni1->setVisible(true);
+    ui->poeni2->setVisible(true);
+
+    QApplication::processEvents();
+
+
+
+
+    ui->poeni1->setText(poeni_prvog);
+    ui->poeni2->setText(poeni_drugog);
+   // ui->poeni2->setStyleSheet("white");
+
+
+     //qDebug() << "poeni1 nakrju kozna tekst"<< poeni_prvog;
+     //qDebug() << "poeni1 nakrju kozna tekst"<< poeni_drugog;
+
+
+
+    qDebug() << "poeni 1 podrunda" << podrunda->player1Points;
+    qDebug() << "poeni 1 kozna" << player1Points;
+    qDebug() << "poeni 2 podrunda" << podrunda->player2Points;
+    qDebug() << "poeni 2 kozna" << player2Points;
+
+
+    podrunda->~Podrundaui();
+    return;
 }
 
 

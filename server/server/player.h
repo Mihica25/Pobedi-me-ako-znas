@@ -23,6 +23,7 @@ public:
     int podrunda_time;
     int podrunda_guess;
     int podrunda_resenje;
+    bool pobednik;
 
 private:
     QString username;

@@ -22,6 +22,11 @@ public:
     ~Podrundaui();
 
     void startGame();
+    void resetGame();
+
+    int player1Points = 0;
+    int player2Points = 0;
+
 
 private:
     Ui::Podrundaui *ui;
@@ -35,8 +40,6 @@ private:
     QTcpSocket* server = nullptr;
     QString player1 = "";
     QString player2 = "";
-    int player1Points = 0;
-    int player2Points = 0;
 
     Ui::Podrundaui *getUi();
     void on_pbOdgovori();

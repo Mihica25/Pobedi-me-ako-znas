@@ -27,6 +27,8 @@ Podrundaui::Podrundaui(QWidget *parent) :
     timer->start(1000);
     this->getQuestion();
 
+
+
 }
 
 Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
@@ -54,6 +56,12 @@ Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
     connect(this, &Podrundaui::timesUp, this, &Podrundaui::on_timesUp);
     connect(this, &Podrundaui::gameEnded, this, &Podrundaui::on_gameEnded);
 
+    //resetGame();
+
+    getUi()->label->setText(player1);
+
+    podrunda->guess = -1;
+
     startGame();
 }
 
@@ -69,10 +77,28 @@ void Podrundaui::startGame(){
     return;
 }
 
+void Podrundaui::resetGame()
+{
+    qDebug() << "udje u reset game\n";
+    disconnect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
+    disconnect(this, &Podrundaui::timesUp, this, &Podrundaui::on_timesUp);
+    disconnect(this, &Podrundaui::gameEnded, this, &Podrundaui::on_gameEnded);
+
+    //time = 60;
+    getUi()->labTimer->clear();
+
+
+
+    //timer->stop();
+    getUi()->labTacanOdgovor->clear();
+    enableUI();
+}
 
 Podrundaui::~Podrundaui()
 {
     delete ui;
+    delete podrunda;
+    delete timer;
 }
 
 
@@ -108,7 +134,7 @@ void Podrundaui::on_pbOdgovoriMultiplayer()
     QString vreme = QString::number(time);
     notifyServer(server, "TIME:" + vreme.toUtf8() + "\n");
 
-    timer->stop();
+    //timer->stop();
     getUi()->labTimer->clear();
 
     adjustResultLabel();
@@ -201,6 +227,7 @@ void Podrundaui::notifyServer(QTcpSocket* socket, QString msg)
 void Podrundaui::getGuess()
 {
     podrunda->guess = getUi()->teOdgovor->toPlainText().toDouble();
+    //timer->stop();
 }
 
 
@@ -231,11 +258,15 @@ void Podrundaui::updateTime()
 
 void Podrundaui::on_timesUp()
 {
-    QString pokusaj = QString::number(-2);
-    notifyServer(server, "ANSWER:" + pokusaj.toUtf8() + "\n");
+    if (podrunda->guess == -1)
+    {
+        QString pokusaj = QString::number(-2);
+        notifyServer(server, "ANSWER:" + pokusaj.toUtf8() + "\n");
 
-    QString vreme = QString::number(0);
-    notifyServer(server, "TIME:" + vreme.toUtf8() + "\n");
+        QString vreme = QString::number(0);
+        notifyServer(server, "TIME:" + vreme.toUtf8() + "\n");
+    }
+
     emit gameEnded();
 }
 
@@ -257,6 +288,11 @@ void Podrundaui::on_gameEnded(){
     adjustResultLabel();
 
     disableUI();
+    disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+
+    qDebug() << "reset game\n";
+    resetGame();
+    this->close();
 }
 
 void Podrundaui::adjustResultLabel()
@@ -303,7 +339,7 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
             getUi()->labTacanOdgovor->setStyleSheet("background-color:green");
 
-            player1Points += 5;
+            //player1Points += 10;
             podrunda->dobio_poene = 1;
         }
         else if (pobednik == 21)
@@ -313,7 +349,7 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
             getUi()->labTacanOdgovor->setStyleSheet("background-color:red");
 
-            player2Points += 5;
+           // player2Points += 10;
             podrunda->dobio_poene = 2;
         }
         else if (pobednik == 12)
@@ -323,7 +359,7 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
             getUi()->labTacanOdgovor->setStyleSheet("background-color:green");
 
-            player1Points += 5;
+           // player1Points += 10;
             podrunda->dobio_poene = 1;
         }
         else if (pobednik == 22)
@@ -333,7 +369,7 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
             getUi()->labTacanOdgovor->setStyleSheet("background-color:red");
 
-            player2Points += 5;
+           // player2Points += 10;
             podrunda->dobio_poene = 2;
         }
         else if (pobednik == 0)
@@ -343,8 +379,8 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
             getUi()->labTacanOdgovor->setStyleSheet("background-color:green");
 
-            player1Points += 5;
-            player2Points += 5;
+          //  player1Points += 10;
+           // player2Points += 10;
             podrunda->dobio_poene = 0;
         }
         else if (pobednik == -1)
@@ -366,9 +402,46 @@ void Podrundaui::processServerMessage(QString serverMessage)
         //getUi()->labTacanOdgovor->setStyleSheet("background-color:white");
         adjustResultLabel();
         disableUI();
+        time = 3;
     }
-    else
+    else if(serverMessage.startsWith("POENI1"))
     {
-        qDebug() << "Unknown server message: " << serverMessage;
+        //player1Points += 10;
+        QString poeni = serverMessage.mid(7);
+        player1Points = poeni.toInt();
     }
+    else if(serverMessage.startsWith("POENI2"))
+    {
+         //player2Points += 10;
+        QString poeni = serverMessage.mid(7);
+        player2Points = poeni.toInt();
+    }
+    else if(serverMessage.startsWith("POENI3"))
+    {
+         //player1Points += 10;
+         //player2Points += 10;
+        QString poeni1 = serverMessage.mid(7);
+        player1Points = poeni1.toInt();
+        QString poeni2 = serverMessage.mid(7);
+        player2Points = poeni2.toInt();
+    }
+    else if(serverMessage.startsWith("ISTEKLO"))
+    {
+        qDebug() << "isteklo vreme\n";
+
+
+        const QString poruka = "Vreme je isteklo!!!";
+        getUi()->labTacanOdgovor->setText(poruka);
+        getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
+        getUi()->labTacanOdgovor->setStyleSheet("background-color:red");
+
+        //player1Points = 0;
+        //player2Points = 0;
+
+        adjustResultLabel();
+        disableUI();
+        //time = 3;
+    }
+
+
 }
