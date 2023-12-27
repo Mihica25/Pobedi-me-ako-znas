@@ -416,7 +416,7 @@ public:
         label_player1->setGeometry(QRect(10, 70, 67, 17));
         label_player2 = new QLabel(Mojbroj);
         label_player2->setObjectName(QString::fromUtf8("label_player2"));
-        label_player2->setGeometry(QRect(120, 70, 67, 17));
+        label_player2->setGeometry(QRect(710, 70, 67, 17));
 
         retranslateUi(Mojbroj);
 

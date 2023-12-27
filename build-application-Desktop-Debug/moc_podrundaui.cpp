@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Podrundaui_t {
-    QByteArrayData data[7];
-    char stringdata0[65];
+    QByteArrayData data[8];
+    char stringdata0[77];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,11 +37,12 @@ QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 9), // "gameEnded"
 QT_MOC_LITERAL(4, 30, 10), // "updateTime"
 QT_MOC_LITERAL(5, 41, 10), // "on_timesUp"
-QT_MOC_LITERAL(6, 52, 12) // "on_gameEnded"
+QT_MOC_LITERAL(6, 52, 12), // "on_gameEnded"
+QT_MOC_LITERAL(7, 65, 11) // "onReadyRead"
 
     },
     "Podrundaui\0timesUp\0\0gameEnded\0updateTime\0"
-    "on_timesUp\0on_gameEnded"
+    "on_timesUp\0on_gameEnded\0onReadyRead"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,7 +52,7 @@ static const uint qt_meta_data_Podrundaui[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -59,19 +60,21 @@ static const uint qt_meta_data_Podrundaui[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
-       3,    0,   40,    2, 0x06 /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
+       3,    0,   45,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   41,    2, 0x0a /* Public */,
-       5,    0,   42,    2, 0x0a /* Public */,
-       6,    0,   43,    2, 0x0a /* Public */,
+       4,    0,   46,    2, 0x0a /* Public */,
+       5,    0,   47,    2, 0x0a /* Public */,
+       6,    0,   48,    2, 0x0a /* Public */,
+       7,    0,   49,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -90,6 +93,7 @@ void Podrundaui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->updateTime(); break;
         case 3: _t->on_timesUp(); break;
         case 4: _t->on_gameEnded(); break;
+        case 5: _t->onReadyRead(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -141,13 +145,13 @@ int Podrundaui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

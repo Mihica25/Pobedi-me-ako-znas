@@ -167,7 +167,6 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		../application/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -195,7 +194,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../application/mainwindow.h \
 		../application/memorija.h \
 		../application/mojbroj.h \
-		mojbrojlogic.hpp \
+		../application/mojbrojlogic.h \
 		../application/podrundaui.h \
 		../application/pocetniekran.h \
 		../application/recko.h \
@@ -286,7 +285,6 @@ Makefile: ../application/application.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -365,7 +363,6 @@ Makefile: ../application/application.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/l
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
-.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -403,7 +400,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../application/cardwidget.h ../application/game.h ../application/kozna.h ../application/koznaui.h ../application/logindialog.h ../application/mainwindow.h ../application/memorija.h ../application/mojbroj.h mojbrojlogic.hpp ../application/podrundaui.h ../application/pocetniekran.h ../application/recko.h ../application/reckoui.h ../application/podrunda.h ../application/pogodista.h ../application/pogodistaui.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../application/cardwidget.h ../application/game.h ../application/kozna.h ../application/koznaui.h ../application/logindialog.h ../application/mainwindow.h ../application/memorija.h ../application/mojbroj.h ../application/mojbrojlogic.h ../application/podrundaui.h ../application/pocetniekran.h ../application/recko.h ../application/reckoui.h ../application/podrunda.h ../application/pogodista.h ../application/pogodistaui.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/cardwidget.cpp ../application/game.cpp ../application/logindialog.cpp ../application/main.cpp ../application/mainwindow.cpp ../application/kozna.cpp ../application/koznaui.cpp ../application/memorija.cpp ../application/mojbroj.cpp ../application/mojbrojlogic.cpp ../application/podrundaui.cpp ../application/pocetniekran.cpp ../application/recko.cpp ../application/reckoui.cpp ../application/podrunda.cpp ../application/pogodista.cpp ../application/pogodistaui.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../application/logindialog.ui ../application/mainwindow.ui ../application/pogodistaui.ui ../application/memorija.ui ../application/reckoui.ui ../application/kozna.ui ../application/mojbroj.ui ../application/podrundaui.ui ../application/pocetniekran.ui $(DISTDIR)/
 
@@ -461,6 +458,8 @@ moc_cardwidget.cpp: ../application/cardwidget.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/Desktop/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/cardwidget.h -o moc_cardwidget.cpp
 
 moc_koznaui.cpp: ../application/koznaui.h \
+		../application/podrundaui.h \
+		../application/podrunda.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/user/Desktop/pobedi-me-ako-znas/build-application-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/user/Desktop/pobedi-me-ako-znas/application -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtNetwork -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../application/koznaui.h -o moc_koznaui.cpp
@@ -590,10 +589,10 @@ logindialog.o: ../application/logindialog.cpp ../application/logindialog.h \
 
 main.o: ../application/main.cpp ../application/mainwindow.h \
 		../application/koznaui.h \
-		../application/mojbroj.h \
-		../application/mojbrojlogic.h \
 		../application/podrundaui.h \
 		../application/podrunda.h \
+		../application/mojbroj.h \
+		../application/mojbrojlogic.h \
 		../application/pocetniekran.h \
 		../application/logindialog.h \
 		../application/reckoui.h \
@@ -612,6 +611,8 @@ kozna.o: ../application/kozna.cpp ../application/kozna.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o kozna.o ../application/kozna.cpp
 
 koznaui.o: ../application/koznaui.cpp ../application/koznaui.h \
+		../application/podrundaui.h \
+		../application/podrunda.h \
 		ui_kozna.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o koznaui.o ../application/koznaui.cpp
 

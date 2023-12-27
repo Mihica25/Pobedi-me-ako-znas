@@ -27,6 +27,7 @@ public:
     QLabel *labPitanje;
     QLabel *labTacanOdgovor;
     QLabel *labTimer;
+    QLabel *label_2;
 
     void setupUi(QWidget *Podrundaui)
     {
@@ -55,6 +56,9 @@ public:
         labTimer->setObjectName(QString::fromUtf8("labTimer"));
         labTimer->setGeometry(QRect(210, 130, 61, 41));
         labTimer->setStyleSheet(QString::fromUtf8("background-color:white"));
+        label_2 = new QLabel(Podrundaui);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(70, 40, 58, 16));
 
         retranslateUi(Podrundaui);
 
@@ -69,6 +73,7 @@ public:
         labPitanje->setText(QApplication::translate("Podrundaui", "<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">PITANJE</span></p></body></html>", nullptr));
         labTacanOdgovor->setText(QString());
         labTimer->setText(QString());
+        label_2->setText(QApplication::translate("Podrundaui", "TextLabel", nullptr));
     } // retranslateUi
 
 };
