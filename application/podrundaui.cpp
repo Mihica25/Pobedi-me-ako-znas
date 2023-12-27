@@ -6,7 +6,6 @@
 Podrundaui::Podrundaui(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Podrundaui)
-
 {
     getUi()->setupUi(this);
     setBackground();
@@ -26,9 +25,6 @@ Podrundaui::Podrundaui(QWidget *parent) :
 
     timer->start(1000);
     this->getQuestion();
-
-
-
 }
 
 Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
@@ -66,7 +62,8 @@ Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
 }
 
 
-void Podrundaui::startGame(){
+void Podrundaui::startGame()
+{
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     timer->start(1000);
 
@@ -87,12 +84,11 @@ void Podrundaui::resetGame()
     //time = 60;
     getUi()->labTimer->clear();
 
-
-
     //timer->stop();
     getUi()->labTacanOdgovor->clear();
     enableUI();
 }
+
 
 Podrundaui::~Podrundaui()
 {
@@ -124,6 +120,7 @@ void Podrundaui::on_pbOdgovori()
     disableUI();
     displayAnswer();
 }
+
 
 void Podrundaui::on_pbOdgovoriMultiplayer()
 {
@@ -295,6 +292,7 @@ void Podrundaui::on_gameEnded(){
     this->close();
 }
 
+
 void Podrundaui::adjustResultLabel()
 {
     QFontMetrics metrics(getUi()->labTacanOdgovor->font());
@@ -302,7 +300,9 @@ void Podrundaui::adjustResultLabel()
     getUi()->labTacanOdgovor->setFixedSize(textSize);
 }
 
-void Podrundaui::onReadyRead() {
+
+void Podrundaui::onReadyRead()
+{
     QByteArray data = server->readAll();
     QString msg = QString::fromUtf8(data);
 
@@ -314,6 +314,7 @@ void Podrundaui::onReadyRead() {
         }
     }
 }
+
 
 void Podrundaui::processServerMessage(QString serverMessage)
 {
@@ -398,7 +399,6 @@ void Podrundaui::processServerMessage(QString serverMessage)
             getUi()->labTacanOdgovor->setStyleSheet("background-color:white");
         }
 
-
         //getUi()->labTacanOdgovor->setStyleSheet("background-color:white");
         adjustResultLabel();
         disableUI();
@@ -429,7 +429,6 @@ void Podrundaui::processServerMessage(QString serverMessage)
     {
         qDebug() << "isteklo vreme\n";
 
-
         const QString poruka = "Vreme je isteklo!!!";
         getUi()->labTacanOdgovor->setText(poruka);
         getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
@@ -442,6 +441,4 @@ void Podrundaui::processServerMessage(QString serverMessage)
         disableUI();
         //time = 3;
     }
-
-
 }

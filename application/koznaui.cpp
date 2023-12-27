@@ -41,15 +41,6 @@ KoZnaui::KoZnaui(QWidget *parent)
     ui->poeni1->setText("0");
     ui->poeni2->setText("0");
 
-
-    //int poeni11 = 0;
-    //int poeni22 = 0;
-
-
-
-
-
-
     //this->displayQuestion(numberOfQuestion);
 
 }
@@ -81,20 +72,13 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     this->setPalette(palette);
     ui->label->setText(player1);
 
-
-     sendMessage(server, "SEND:\n");
-
+    sendMessage(server, "SEND:\n");
 
     connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1Multiplayer);
     connect(ui->pushButtonAns2, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns2Multiplayer);
     connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3Multiplayer);
     connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4Multiplayer);
     connect(ui->DALJE1, &QPushButton::clicked, this, &KoZnaui::on_DALJE);
-
-
-
-
-
 
 
     numberOfQuestion = 0;
@@ -105,55 +89,12 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
     connect(this, &KoZnaui::gameEnds, this, &KoZnaui::on_gameEnds);
 
-
     tajmer->start(1000);
-
 
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 
     player1Points = 0;
     player2Points = 0;
-
-
-
-
-    //qDebug()<<"Cao";
-   /* time = 45;
-    ui->labelTimer->setText(QString::number(time));
-
-    connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
-    connect(this, &KoZnaui::gameEnds, this, &KoZnaui::on_gameEnds);
-
-
-    connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-*/
-
-
-
-/*
-    time = 45;
-    ui->labelTimer->setText(QString::number(time));
-
-    connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
-    connect(this, &KoZnaui::gameEnds, this, &KoZnaui::on_gameEnds);
-
-*/
-
-
-   // displayQuestion();
-
-
-
-    // qDebug()<<"Cao1";
-
-
-
-
-
-
-
 
 }
 
@@ -163,84 +104,43 @@ KoZnaui::~KoZnaui()
 }
 
 
-//QVector<QString> KoZnaui::getQuestion(int numberOfQuestion)
-//{
-
-
-
-
-    //return  pitanja[numberOfQuestion];
-//}
-
-
-
 void KoZnaui::displayQuestion(int questionNumber)
 {
-
-   // qDebug() << "greska";
-
     time = 45;
 
     enableUi();
     restartColor();
-
-
 
     ui->labQuestion->setText(pitanja.at(questionNumber).value(0));
     ui->pushButtonAns1->setText(pitanja.at(questionNumber).value(1));
     ui->pushButtonAns2->setText(pitanja.at(questionNumber).value(2));
     ui->pushButtonAns3->setText(pitanja.at(questionNumber).value(3));
     ui->pushButtonAns4->setText(pitanja.at(questionNumber).value(4));
-
-
-
- }
-
-
+}
 
 
 void KoZnaui::generisiPitanja(QString pitanje){
     qDebug() << "pitanje" << pitanje;
 
-   // QVector<QStringList> pitanja;
-      QStringList svaPitanja = pitanje.split("/");
-      brojPitanja = svaPitanja.size();
+    //QVector<QStringList> pitanja;
+    QStringList svaPitanja = pitanje.split("/");
+    brojPitanja = svaPitanja.size();
 
+    for(const auto&  jednoPitanje : svaPitanja){
+        QStringList podeljenoPitanje = jednoPitanje.split("_");
+        qDebug() << "pitanje" << podeljenoPitanje.size() << "\n";
 
+        pitanja.append(podeljenoPitanje);
+    }
+    qDebug() << "pitanje" << pitanja.at(numberOfQuestion).value(0) << "\n";
 
+    disableUi();
 
-
-      for(const auto&  jednoPitanje : svaPitanja){
-          QStringList podeljenoPitanje = jednoPitanje.split("_");
-           qDebug() << "pitanje" << podeljenoPitanje.size() << "\n";
-
-          pitanja.append(podeljenoPitanje);
-      }
-      qDebug() << "pitanje" << pitanja.at(numberOfQuestion).value(0) << "\n";
-
-
-
-      //qDebug() <<"Broj pi:"<<pitanja.size();
-
-       //pitanja = pitanje.split("/");
-      disableUi();
-
-
-      displayQuestion(numberOfQuestion);
-
-
-
-              //qDebug() <<"Broj pi:"<<pitanja.size();
-
-
+    displayQuestion(numberOfQuestion);
 }
 
 
-
-
-
 void KoZnaui::on_pushButtonAns1(){
-
 
     disableUi();
 
@@ -248,11 +148,11 @@ void KoZnaui::on_pushButtonAns1(){
     qDebug()<< answer << "\n";
     if (guess(answer)){
         ui->pushButtonAns1->setStyleSheet("background-color: green");
-      }
-    else{
+    }
+    else {
         ui->pushButtonAns1->setStyleSheet("background-color: red");
         displayAnswer();
-       }
+    }
     time = 2;
 }
 
@@ -263,33 +163,34 @@ void KoZnaui::on_pushButtonAns2(){
     QString answer = ui->pushButtonAns2->text();
     qDebug()<< answer << "\n";
 
-    if (guess(answer)){
+    if(guess(answer)) {
         ui->pushButtonAns2->setStyleSheet("background-color: green");
-      }
-    else{
+    }
+    else {
         ui->pushButtonAns2->setStyleSheet("background-color: red");
         displayAnswer();
-       }
+    }
     time = 2;
 }
+
 
 void KoZnaui::on_pushButtonAns3(){
     disableUi();
 
     QString answer = ui->pushButtonAns3->text();
     qDebug()<< answer << "\n";
-    if (guess(answer)){
+    if (guess(answer)) {
         ui->pushButtonAns3->setStyleSheet("background-color: green");
-      }
-    else{
+    }
+    else {
         ui->pushButtonAns3->setStyleSheet("background-color: red");
-
         displayAnswer();
-       };
+    };
     time = 2;
 }
 
-void KoZnaui::on_pushButtonAns4(){
+
+void KoZnaui::on_pushButtonAns4() {
 
     disableUi();
 
@@ -297,20 +198,12 @@ void KoZnaui::on_pushButtonAns4(){
     qDebug()<< answer << "\n";
     if (guess(answer)){
         ui->pushButtonAns4->setStyleSheet("background-color: green");
-
-
-
-      }
+    }
     else{
         ui->pushButtonAns4->setStyleSheet("background-color: red");
-
         displayAnswer();
-       };
+    };
     //time = 2;
-
-
-
-
 }
 
 
@@ -323,13 +216,12 @@ void KoZnaui::on_pushButtonAns1Multiplayer(){
     if (guess(answer)){
         ui->pushButtonAns1->setStyleSheet("background-color: green");
         sendMessage(server, "ANSWER:true,10,\n");
-      }
-    else{
+    }
+    else {
         ui->pushButtonAns1->setStyleSheet("background-color: red");
         sendMessage(server, "ANSWER:false,5,\n");
-
         displayAnswer();
-       }
+    }
     //time = 2;
 }
 
@@ -343,16 +235,17 @@ void KoZnaui::on_pushButtonAns2Multiplayer(){
         ui->pushButtonAns2->setStyleSheet("background-color: green");
         sendMessage(server, "ANSWER:true,10,\n");
         //sendMessage(server, "POINTS:10\n");
-
-      }
+    }
     else{
         ui->pushButtonAns2->setStyleSheet("background-color: red");
         sendMessage(server, "ANSWER:false,5,\n");
-       // sendMessage(server, "POINTS:5\n");
+        //sendMessage(server, "POINTS:5\n");
         displayAnswer();
-       }
-   // time = 2;
+    }
+    //time = 2;
 }
+
+
 void KoZnaui::on_pushButtonAns3Multiplayer(){
     disableUi();
 
@@ -362,33 +255,29 @@ void KoZnaui::on_pushButtonAns3Multiplayer(){
     if (guess(answer)){
         ui->pushButtonAns3->setStyleSheet("background-color: green");
         sendMessage(server, "ANSWER:true,10,\n");
-
-      }
+    }
     else{
         ui->pushButtonAns3->setStyleSheet("background-color: red");
-         sendMessage(server, "ANSWER:false,5,\n");
+        sendMessage(server, "ANSWER:false,5,\n");
         displayAnswer();
-       }
+    }
     //time = 2;
-
 }
 
+
 void KoZnaui::on_pushButtonAns4Multiplayer(){
-
     disableUi();
-
 
     QString answer = ui->pushButtonAns4->text();
     if (guess(answer)){
         ui->pushButtonAns4->setStyleSheet("background-color: green");
         sendMessage(server, "ANSWER:true,10,\n");
-
-      }
+    }
     else{
         ui->pushButtonAns4->setStyleSheet("background-color: red");
-         sendMessage(server, "ANSWER:false,5,\n");
+        sendMessage(server, "ANSWER:false,5,\n");
         displayAnswer();
-       };
+     };
     //time = 2;
 }
 
@@ -397,21 +286,14 @@ void KoZnaui::on_DALJE(){
     disableUi();
 
     displayAnswer();
-
     QString answer = ui->DALJE1->text();
-   qDebug()<< answer << "\n";
-        sendMessage(server, "ANSWER:answer,0,\n");
-        //sendMessage(server, "POINTS:10\n");
-
-
+    qDebug()<< answer << "\n";
+    sendMessage(server, "ANSWER:answer,0,\n");
+    //sendMessage(server, "POINTS:10\n");
 }
 
 
-
-
-
-bool KoZnaui::guess(QString answer)
-{
+bool KoZnaui::guess(QString answer) {
     QString correctAns = getCorrectAnswer();
 
     if(correctAns == answer){
@@ -419,60 +301,39 @@ bool KoZnaui::guess(QString answer)
     }
     else {
         return false;
-
     }
-
-  }
-
+}
 
 
-
-
-
-
-void KoZnaui::displayAnswer()
-{
+void KoZnaui::displayAnswer() {
     QString answer = getCorrectAnswer();
 
     qDebug()<<answer<<"\n";
 
     if(ui->pushButtonAns1->text() == answer){
         ui->pushButtonAns1->setStyleSheet("background-color: green");
-
     }
 
     if(ui->pushButtonAns2->text() == answer){
         ui->pushButtonAns2->setStyleSheet("background-color: green");
-
     }
     if(ui->pushButtonAns3->text() == answer){
         ui->pushButtonAns3->setStyleSheet("background-color: green");
-
     }
     if(ui->pushButtonAns4->text() == answer){
         ui->pushButtonAns4->setStyleSheet("background-color: green");
-
     }
-
-
-
-
 }
 
 
-QString KoZnaui::getCorrectAnswer()
-{
-
+QString KoZnaui::getCorrectAnswer() {
     QString correctAns = pitanja.at(numberOfQuestion).value(5);
 
     return correctAns;
-
 }
 
 
-
-void KoZnaui::on_timesUp()
-{
+void KoZnaui::on_timesUp() {
     time = 45;
     ui->labelTimer->setText(QString::number(time));
     tajmer->start();
@@ -480,18 +341,17 @@ void KoZnaui::on_timesUp()
     displayQuestion(++numberOfQuestion);
 }
 
+
 void KoZnaui::on_gameEnds(){
     tajmer->stop();
     ukupni_bodovi += bodovi;
     //ui->leBodovi->setText(QString::number(ukupni_bodovi));
     //showSolution();
     qDebug() << "Game ends";
-
 }
 
 
-void KoZnaui::updateTime()
-{
+void KoZnaui::updateTime() {
     if (time >= 0){
         ui->labelTimer->setText(QString::number(time));
     }
@@ -500,47 +360,36 @@ void KoZnaui::updateTime()
         if(numberOfQuestion == 2)
             emit gameEnds();
         else {
-
             emit timesUp();
-
         }
-
     }
 }
 
 
-void KoZnaui::disableUi()
-{
+void KoZnaui::disableUi() {
     ui->pushButtonAns1->setDisabled(true);
     ui->pushButtonAns2->setDisabled(true);
     ui->pushButtonAns3->setDisabled(true);
     ui->pushButtonAns4->setDisabled(true);
-
 }
 
 
-void KoZnaui::enableUi()
-{
+void KoZnaui::enableUi() {
     ui->pushButtonAns1->setEnabled(true);
     ui->pushButtonAns2->setEnabled(true);
     ui->pushButtonAns3->setEnabled(true);
     ui->pushButtonAns4->setEnabled(true);
-
-
 }
 
-void KoZnaui::restartColor()
-{
+
+void KoZnaui::restartColor() {
     ui->pushButtonAns1->setStyleSheet("background-color: white");
     ui->pushButtonAns2->setStyleSheet("background-color: white");
     ui->pushButtonAns3->setStyleSheet("background-color: white");
     ui->pushButtonAns4->setStyleSheet("background-color: white");
     ui->poeni1->setStyleSheet("background-color: white");
     ui->poeni2->setStyleSheet("background-color: white");
-
-
 }
-
 
 //to da sredim mozda mi ne treba
 void KoZnaui::startGame(){
@@ -552,47 +401,37 @@ void KoZnaui::startGame(){
         connect(ui->pushButtonAns3, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns3Multiplayer);
         connect(ui->pushButtonAns4, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns4Multiplayer);
     }
-
-
     return;
 }
 
 
-
-
-
 void KoZnaui::processServerMessage(QString serverMessage){
-     qDebug()<<"usao u pre pitanje";
+    qDebug()<<"usao u pre pitanje";
     if (serverMessage.startsWith("PITANJE:")) {
         qDebug()<<"usao u pitanje";
         generisiPitanja(serverMessage.mid(8));
-}
+    }
 
     if (serverMessage.startsWith("ANSWERP1:")) {
         if(serverMessage.mid(9) == "true"){
             ui->poeni1->setStyleSheet("background-color: green");
 
-        }else if(serverMessage.mid(9) == "false"){
+        }
+        else if(serverMessage.mid(9) == "false"){
             ui->poeni1->setStyleSheet("background-color: red");
         }
-
-
-
-
     }
-
 
     if (serverMessage.startsWith("ANSWERP22:")) {
         qDebug() <<"poruka o odgovoru" << serverMessage.mid(10);
         if(serverMessage.mid(10) == "true"){
             ui->poeni2->setStyleSheet("background-color: green");
 
-        }else{
+        }
+        else{
             ui->poeni2->setStyleSheet("background-color: red");
-
         }
-
-        }
+    }
 
     if (serverMessage.startsWith("PREBACI")) {
         time = 2;
@@ -600,13 +439,12 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
     if (serverMessage.startsWith("POENI1:")) {
         qDebug() << "usaoo" << endl;
-         //poeni11 = serverMessage.mid(7).toInt();
-       qDebug()<< "Vrednost po pit"<< numberOfQuestion << serverMessage.mid(7).toInt()<< endl;
+        //poeni11 = serverMessage.mid(7).toInt();
+        qDebug()<< "Vrednost po pit"<< numberOfQuestion << serverMessage.mid(7).toInt()<< endl;
         //qDebug() << serverMessage.mid(7) << endl;
 
-       player1Points = serverMessage.mid(7).toInt();
+        player1Points = serverMessage.mid(7).toInt();
         ui->poeni1->setText(serverMessage.mid(7));
-
     }
 
     if (serverMessage.startsWith("POENI2:")) {
@@ -617,32 +455,18 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
         player2Points = serverMessage.mid(7).toInt();
         ui->poeni2->setText(serverMessage.mid(7));
-
-
     }
 
-    if (serverMessage.startsWith("PODRUNDA"))
-    {
+    if (serverMessage.startsWith("PODRUNDA")) {
         time = 20;
 
-        //emit podrundaStarts();
-        //disconnect(server, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
-        //connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
         disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
-
-
         podrunda = new Podrundaui(nullptr, server, player1, player2, player1Points, player2Points);
-        //this->close();
         podrunda->show();
         connect(podrunda, &Podrundaui::gameEnded, this, &KoZnaui::on_podrundaEnds, Qt::UniqueConnection);
-
-
     }
-
-
-
-
 }
+
 
 void KoZnaui::on_podrundaEnds(){
     qDebug() << "PODRUNDA ENDS\n";
@@ -658,33 +482,17 @@ void KoZnaui::on_podrundaEnds(){
 
     QApplication::processEvents();
 
-
-
-
     ui->poeni1->setText(poeni_prvog);
     ui->poeni2->setText(poeni_drugog);
-   // ui->poeni2->setStyleSheet("white");
-
-
-     //qDebug() << "poeni1 nakrju kozna tekst"<< poeni_prvog;
-     //qDebug() << "poeni1 nakrju kozna tekst"<< poeni_drugog;
-
-
 
     qDebug() << "poeni 1 podrunda" << podrunda->player1Points;
     qDebug() << "poeni 1 kozna" << player1Points;
     qDebug() << "poeni 2 podrunda" << podrunda->player2Points;
     qDebug() << "poeni 2 kozna" << player2Points;
 
-
     podrunda->~Podrundaui();
     return;
 }
-
-
-
-
-
 
 
 void KoZnaui::onReadyRead() {
@@ -706,23 +514,4 @@ void KoZnaui::sendMessage(QTcpSocket* socket, QString msg)
     qDebug() << "Sending msg: " << msg;
     socket->write(msg.toUtf8());
     socket->flush();
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-

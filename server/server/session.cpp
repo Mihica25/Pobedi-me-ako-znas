@@ -12,7 +12,6 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 
     recko = "HOUSE";
 
-
     //podrunda_resenje = -1;
 
     //ovo mora da se sredi, ovde samo radi testiranja
@@ -33,14 +32,9 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     player2->pointsKoZna = 0;
 
 
-
-
-
-
-   pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
+    pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
 
     qDebug()<<"velicina:"<<pitanje.size();
-
 
     startGame();
 }
@@ -54,6 +48,7 @@ Session::~Session()
     delete player2;
 }
 
+
 void Session::sendMessageToPlayer1(QString message)
 {
     // Slanje poruke prvom igraču
@@ -62,6 +57,7 @@ void Session::sendMessageToPlayer1(QString message)
     player1->tcpSocket->flush();
 }
 
+
 void Session::sendMessageToPlayer2(QString message)
 {
     // Slanje poruke drugom igraču
@@ -69,6 +65,7 @@ void Session::sendMessageToPlayer2(QString message)
     player2->tcpSocket->write(message.toUtf8());
     player2->tcpSocket->flush();
 }
+
 
 void Session::sendMessageToBothPlayers(QString message)
 {
@@ -101,8 +98,8 @@ void Session::startGame(){
     sendMessageToBothPlayers("START");
 
     //startRecko();
-      startKoZna();
-      //startPodrunda();
+    startKoZna();
+    //startPodrunda();
 
 //    startWordle();
 //    startPogodiSta();
@@ -116,15 +113,18 @@ void Session::startGame(){
     return;
 }
 
+
 void Session::startRecko(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
 }
 
+
 void Session::startKoZna(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
 }
+
 
 void Session::otvoriPodrundu() {
     disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
@@ -132,6 +132,7 @@ void Session::otvoriPodrundu() {
 
     startPodrunda();
 }
+
 
 void Session::stopPodrunda()
 {
@@ -141,6 +142,7 @@ void Session::stopPodrunda()
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
 }
+
 
 void Session::startPodrunda()
 {
@@ -164,6 +166,7 @@ void Session::player1ReadyReadRecko()
     }
 }
 
+
 void Session::player1ReadyReadPodrunda()
 {
     // Obrada podataka koji stižu od prvog igrača
@@ -178,6 +181,7 @@ void Session::player1ReadyReadPodrunda()
         }
     }
 }
+
 
 void Session::player1ReadyReadKoZna()
 {
@@ -210,6 +214,7 @@ void Session::player2ReadyReadRecko()
     }
 }
 
+
 void Session::player2ReadyReadPodrunda()
 {
     // Obrada podataka koji stižu od drugog igrača
@@ -224,6 +229,7 @@ void Session::player2ReadyReadPodrunda()
         }
     }
 }
+
 
 void Session::player2ReadyReadKoZna()
 {
@@ -253,6 +259,7 @@ void Session::processReckoMessage(const QString& msg){
             }
     }
 }
+
 
 void Session::processPodrundaMessage(const QString& msg, const int num)
 {
@@ -355,7 +362,6 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
         }
 
 
-
         if (player1->podrunda_guess == -2 & player2->podrunda_guess == -2)
         {
             sendMessageToBothPlayers("ISTEKLO VREME!\n");
@@ -430,9 +436,9 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
         player2->podrunda_resenje = -1;
 
         stopPodrunda();
-
     }
 }
+
 
 void Session::processKoZnaMessage(const QString& msg, int num){
 
@@ -459,9 +465,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
         //sendMessageToBothPlayers("POENI1:" + odg.value(1) + "\n");
         sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
-
-
-      }
+    }
 
     if(msg.startsWith("ANSWER:") and num == 2) {
             // answer2 = msg.mid(7);
@@ -502,32 +506,23 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         answer1 = "";
         answer2 = "";
 
-      if(msg.startsWith("POINTS:") and num == 1){
-          qDebug() << "serverrr" << player1->pointsKoZna << endl;
-          int poeni = msg.mid(7).toInt();
-          player1->pointsKoZna += poeni;
-          sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
-      }
+        if(msg.startsWith("POINTS:") and num == 1){
+            qDebug() << "serverrr" << player1->pointsKoZna << endl;
+            int poeni = msg.mid(7).toInt();
+            player1->pointsKoZna += poeni;
+            sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
+        }
 
 
-      if(msg.startsWith("POINTS:") and num == 2){
-          qDebug() << "serverrr" << player2->pointsKoZna << endl;
-         int  poeni = msg.mid(7).toInt();
-           player2->pointsKoZna += poeni;
-          sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
-      }
-
-
-
+        if(msg.startsWith("POINTS:") and num == 2){
+            qDebug() << "serverrr" << player2->pointsKoZna << endl;
+            int  poeni = msg.mid(7).toInt();
+            player2->pointsKoZna += poeni;
+            sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
+        }
     }
-
-
-
-
-
-
-
 }
+
 
 QString Session::checkReckoSolution(const QString& word){
     QString result;
@@ -544,6 +539,7 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
+
 
 int Session::checkPodrundaWinner()
 {
@@ -603,6 +599,7 @@ int Session::checkPodrundaWinner()
     }
     return -1;
 }
+
 
 QString Session::checkKoZnaSolution(const QString& word){
     QString result;
