@@ -24,8 +24,6 @@ public:
     int submitSolution(const QString& solution, const QString& indicator);
     QPair<QString,QString> deleteLastInput();
 
-    void test();
-
     int targetNumber;
     QVector<int> availableNumbers;
     QVector<QString> currentExpression;
