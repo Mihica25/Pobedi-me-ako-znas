@@ -42,7 +42,8 @@ private:
     QString initialNumbers;
     QString player1_res;
     QString player2_res;
-    int submit;
+    int submit_mojbroj;
+    int gameEnd_mojbroj;
 
     void startGame();
     void startRecko();

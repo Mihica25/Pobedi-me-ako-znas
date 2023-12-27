@@ -58,6 +58,7 @@ private slots:
     void buttonPressedOp();
     void buttonPressedSubmit();
     void buttonPressedNextRound();
+    void buttonPressedNextGame();
     void del();
 
 public slots:
@@ -70,6 +71,7 @@ public slots:
 signals:
     void timesUp();
     void gameEnd();
+    void mGameEnds();
 
 };
 

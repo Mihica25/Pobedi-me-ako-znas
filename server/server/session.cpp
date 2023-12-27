@@ -13,7 +13,8 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     reckoPoints = 12;
     reckoWordNo = 0;
 
-    submit = 0;
+    submit_mojbroj = 0;
+    gameEnd_mojbroj = 0;
 
     startGame();
 }
@@ -296,16 +297,23 @@ void Session::processMojBrojMessage(const QString& msg){
             qDebug() << "PLAYER2 RESULT: " << player2_res;
         }
 
-        submit++;
+        submit_mojbroj++;
         checkMojBrojSolution(player1_res,player2_res);
+    } else if(msg.startsWith("GAME END"))
+    {
+        qDebug("ENDDDDDDDDDDDDDDDDDDDDDDD");
+        gameEnd_mojbroj++;
+
+        if (gameEnd_mojbroj == 2)
+            sendMessageToBothPlayers("GAME END\n");
     }
 }
 
 //DODATI POENE U SERVER
 void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
 {
-    qDebug()<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "<< submit;
-    if (submit != 2 && submit != 4)
+    qDebug()<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "<< submit_mojbroj;
+    if (submit_mojbroj != 2 && submit_mojbroj != 4)
         return;
 
     int res1 = pt1.toInt();
