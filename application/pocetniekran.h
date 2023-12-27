@@ -7,6 +7,7 @@
 #include <QTcpSocket>
 #include "reckoui.h"
 #include "mojbroj.h"
+#include "pogodistaui.h"
 #include <QString>
 
 QT_BEGIN_NAMESPACE
@@ -27,8 +28,8 @@ public slots:
     void on_mojbrojEnds();
     void on_koZnaEnds();
     void on_podrundaEnded();
+    void on_pogodiStaEnds();
     void onReadyRead();
-
 
 private:
     Ui::PocetniEkran *ui;
@@ -40,7 +41,7 @@ private:
     int player2Points = 0;
     ReckoUI* recko;
     Mojbroj* mojbroj;
-
+    PogodiStaUI* pogodiSta;
     void initConntroler();
 
     bool connectToServer();

@@ -32,6 +32,8 @@ private slots:
     void player2ReadyReadKoZna();
     void player1ReadyReadPodrunda();
     void player2ReadyReadPodrunda();
+    void player1ReadyReadPogodiSta();
+    void player2ReadyReadPogodiSta();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -52,17 +54,18 @@ private:
     QString answer2;
     int points1;
     int points2;
-
+    QString pogodiSta;
 
     void startGame();
     void startRecko();
     void stopRecko();
     void startMojBroj();
+    void startPogodiSta();
     void startKoZna();
     void startPodrunda();
     void otvoriPodrundu();
     void stopPodrunda();
-
+    void stopPogodiSta();
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
     void processMojBrojMessage(const QString& msg);
@@ -70,6 +73,9 @@ private:
 
     QString generateTargetNumber();
     QString generateInitialNumbers();
+
+    void processPogodiStaMessage(const QString& msg, Player* player);
+    void generatePogodiSta();
 
     void processKoZnaMessage(const QString& msg, int num);
     QString checkKoZnaSolution(const QString& word);

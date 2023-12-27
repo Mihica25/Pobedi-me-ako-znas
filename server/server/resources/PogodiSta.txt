@@ -1,0 +1,4 @@
+2,Majkl Dzordan,osoba
+1,Luvr,mesto
+3,Nikola Tesla,osoba
+0,Londonsko oko,mesto

@@ -6,8 +6,6 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PocetniEkran)
 {
-   
-
     ui->setupUi(this);
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -136,4 +134,9 @@ void PocetniEkran::on_mojbrojEnds(){
     //naredna igra
 }
 //istu ovakvu
+
+void PocetniEkran::on_pogodiStaEnds()
+{
+    return;
+}
 

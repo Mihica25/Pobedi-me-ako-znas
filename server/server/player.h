@@ -10,7 +10,8 @@ class Player : public QObject
     Q_OBJECT
 
 public:
-    Player(QTcpSocket* socket, const QString& username, QObject *parent = nullptr);
+    Player(QTcpSocket* socket, const QString& username, QObject *parent = nullptr,
+            bool isReady = false);
     ~Player();
 
     QString getPlayerUsername() const;
@@ -24,6 +25,8 @@ public:
     int podrunda_guess;
     int podrunda_resenje;
     bool pobednik;
+    bool isReady;
+    int playerId;
 
 private:
     QString username;
