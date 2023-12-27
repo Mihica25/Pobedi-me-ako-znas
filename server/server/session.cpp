@@ -250,3 +250,4 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
+

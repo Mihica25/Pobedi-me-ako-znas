@@ -40,17 +40,6 @@ Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
     player2Points = SecondPlayerPoints;
     ui->setupUi(this);
 
-    QTimer timer;
-
-        // Postavite vreme intervala na 1000 ms (1 sekunda)
-        timer.setInterval(1000);
-
-        // Povežite signal timeout sa odgovarajućim slotom
-        QObject::connect(&timer, &QTimer::timeout, [&]() {
-            // Ovde postavite kod koji želite izvršiti nakon 1 sekunde
-            qDebug() << "Prošla je 1 sekunda!";
-        });
-
     setUpBackground();
 
 //    this->show();
@@ -218,8 +207,7 @@ void Memorija::opponentsView(int card){
 
 void Memorija::hideUnmatchedCards(){
 
-    // Pokrenite timer
-    timer.start();
+    sleep(1);
 
     for(int idReveale : turnedCards){
         cardIdToWidget.value(idReveale,nullptr)->hide();
@@ -228,7 +216,7 @@ void Memorija::hideUnmatchedCards(){
 
 void Memorija::hideUnmatchedCardsOp(){
 
-    timer.start();
+    sleep(1);
 
     for(int idReveale : turnedCardsOp){
         cardIdToWidget.value(idReveale,nullptr)->hide();
