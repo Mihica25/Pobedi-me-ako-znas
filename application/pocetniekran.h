@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include "reckoui.h"
+#include "pogodistaui.h"
 #include <QString>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +24,7 @@ public:
 public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();
+    void on_pogodiStaEnds();
     void onReadyRead();
 
 private:
@@ -30,6 +32,8 @@ private:
     QTcpSocket* tcpSocket;
     QString playerName = "";
     QString opponentName = "";
+    ReckoUI* recko = nullptr;
+    PogodiStaUI* pogodiSta = nullptr;
     bool turn;
     int player1Points = 0;
     int player2Points = 0;

@@ -13,7 +13,7 @@ class PogodiSta : public QObject
 
 public:
     PogodiSta();
-
+    PogodiSta(int index, QString info_m, QString answ);
 
     QString getAnswer() const;
 
@@ -23,12 +23,15 @@ public:
 
     int calculatePoints(int roundNumber);
 
+    void setAnswer(const QString &newAnswer);
+
+    void setInfo(const QString &newInfo);
 private:
     QString answer;
     QString info;
     QPixmap guessingImage;
 
-    void loadRandomImage();
+    void loadRandomImage(const int index = -1);
 };
 
 #endif // POGODISTA_H

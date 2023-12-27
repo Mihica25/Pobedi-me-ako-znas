@@ -34,3 +34,6 @@ HEADERS += \
     player.h \
     server.h \
     session.h
+
+RESOURCES += \
+    resources.qrc

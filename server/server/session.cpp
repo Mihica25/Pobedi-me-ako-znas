@@ -1,4 +1,4 @@
-#include "session.h"
+﻿#include "session.h"
 #include <thread>
 #include <chrono>
 
@@ -7,7 +7,8 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 {
 //    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
-
+    player1->playerId = 1;
+    player2->playerId = 2;
     recko = "HOUSE";
 
     startGame();
@@ -68,10 +69,10 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-    startRecko();
+    // startRecko();
 
 //    startWordle();
-//    startPogodiSta();
+    startPogodiSta();
 //    startKoZnaZna();
 //    startMemorija();
 //    startMojBroj();
@@ -85,6 +86,14 @@ void Session::startGame(){
 void Session::startRecko(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+}
+
+void Session::startPogodiSta()
+{
+    // disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
+    // disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPogodiSta);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPogodiSta);
 }
 
 void Session::player1ReadyReadRecko()
@@ -117,6 +126,36 @@ void Session::player2ReadyReadRecko()
     }
 }
 
+void Session::player1ReadyReadPogodiSta()
+{
+    // Obrada podataka koji stižu od drugog igrača
+    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    qDebug() << "Data received from Player 1: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processPogodiStaMessage(receivedMessage, player1);
+        }
+    }
+}
+
+void Session::player2ReadyReadPogodiSta()
+{
+    // Obrada podataka koji stižu od drugog igrača
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
+    qDebug() << "Data received from Player 2: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processPogodiStaMessage(receivedMessage, player2);
+        }
+    }
+}
+
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
             QString word = msg.mid(5);  // Preskakanje prvih 5 karaktera (prefiks "WORD:")
@@ -127,6 +166,27 @@ void Session::processReckoMessage(const QString& msg){
             } else {
                 sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
             }
+    }
+}
+
+void Session::processPogodiStaMessage(const QString &msg, Player* player)
+{
+    if(msg.startsWith("IMAGE_GEN")) {
+        player->isReady = true;
+        if(player1->isReady == true && player2->isReady == true){
+            generatePogodiSta();
+            player1->isReady = false;
+            player2->isReady = false;
+        }
+    }
+    else if (msg.startsWith("IMG_GUESS:")) {
+        QString guess = msg.mid(10);
+        qDebug() << "Player" + QString::number(player->playerId)
+                 << " guessed: " + guess;
+        if(guess == pogodiSta.toLower()) {
+            QString answer = "IMG_ANS:" + QString::number(player->playerId) + ":" + pogodiSta + "\n";
+            sendMessageToBothPlayers(answer);
+        }
     }
 }
 
@@ -145,3 +205,31 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
+
+void Session::generatePogodiSta()
+{
+    QFile file(":/data/resources/PogodiSta.txt");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QStringList lines = QTextStream(&file).readAll().split('\n');
+        int randomIndex = QRandomGenerator::global()->bounded(lines.size());
+        QString randomLine = lines[randomIndex];
+        qDebug() << randomLine;
+
+        QStringList parts = randomLine.split(',');
+        if (parts.size() == 3) {
+            int index = parts[0].trimmed().toInt();
+            pogodiSta = parts[1].trimmed();
+            qDebug() << "PogodiSta answer: " + pogodiSta;
+            QString info = parts[2].trimmed();
+
+            QByteArray message;
+            message.append("IMAGE_G:");
+            message.append(QString::number(index) + ":");
+            message.append(info.toUtf8() + ":");
+            message.append(pogodiSta + "\n");
+            sendMessageToBothPlayers(message);
+        }
+    }
+}
+
+

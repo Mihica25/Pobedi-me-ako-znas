@@ -102,13 +102,24 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 
 void PocetniEkran::initConntroler(){
 
-    ReckoUI* recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    // recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    // this->close();
+    // recko->show();
+    // connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds);
+    qDebug() << "pokretanje Pogodi Sta....";
     this->close();
-    recko->show();
-    connect(recko, &ReckoUI::gameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
+    pogodiSta = new PogodiStaUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0, 0);
+    pogodiSta->show();
+    connect(pogodiSta, &PogodiStaUI::gameEnds, this, &PocetniEkran::on_pogodiStaEnds);
 }
 
-void PocetniEkran::on_reckoEnds(){
+void PocetniEkran::on_reckoEnds()
+{
+    return;
+}
+
+void PocetniEkran::on_pogodiStaEnds()
+{
     return;
 }
 
