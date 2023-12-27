@@ -6,6 +6,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PocetniEkran)
 {
+   
+
     ui->setupUi(this);
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -113,16 +115,25 @@ void PocetniEkran::on_reckoEnds(){
     qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
     qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
     qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
-    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    recko->close(); //dodato
     mojbroj->show();
     connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
+}
+void PocetniEkran::on_koZnaEnds(){
+    return;
+}
 
-
+void PocetniEkran::on_podrundaEnded(){
     return;
 }
 
 void PocetniEkran::on_mojbrojEnds(){
-    return;
+    qDebug() << "PocetniEkran::on_mojbrojEnds()" << endl;
+    qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
+
+    //naredna igra
 }
 //istu ovakvu
 

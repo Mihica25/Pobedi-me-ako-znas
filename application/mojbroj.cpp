@@ -88,8 +88,23 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
     playerNo = turn;
     player1Points = player1Points_;
     player2Points = player2Points_;
+    qDebug() << "PLAYER1: "<<player1Points;
+    qDebug() << "PLAYER2: "<<player2Points;
     ui->setupUi(this);
 
+
+    ui->label_player1->setText(QString::number(player1Points));
+    ui->label_player2->setText(QString::number(player2Points));
+
+//    if (playerNo)
+//    {
+//        ui->label_player1->setText("1: " + QString::number(player1Points));
+//        ui->label_player2->setText("2: " + QString::number(player2Points));
+//    } else
+//    {
+//        ui->label_player1->setText("2: " + QString::number(player2Points));
+//        ui->label_player2->setText("1: " + QString::number(player1Points));
+//    }
 
     QPixmap bkgnd(":background/resources/moj_broj.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -414,6 +429,14 @@ void Mojbroj::setButtonStatus(bool enabled)
     ui->pushButton_submit->setEnabled(enabled);
 }
 
+int Mojbroj::getPlayer1Points(){
+    return player1Points;
+}
+
+int Mojbroj::getPlayer2Points(){
+    return player2Points;
+}
+
 //TIMER
 void Mojbroj::on_timesUp()
 {
@@ -537,15 +560,19 @@ void Mojbroj::processServerMessage(QString serverMessage){
         qDebug() << player1 << " points: " << player1Points;
         qDebug() << player2 << " points: " << player2Points;
 
-        if (playerNo)
-        {
-            ui->label_player1->setText(QString::number(player1Points));
-            ui->label_player2->setText(QString::number(player2Points));
-        } else
-        {
-            ui->label_player1->setText(QString::number(player2Points));
-            ui->label_player2->setText(QString::number(player1Points));
-        }
+
+        ui->label_player1->setText(QString::number(player1Points));
+        ui->label_player2->setText(QString::number(player2Points));
+
+//        if (playerNo)
+//        {
+//            ui->label_player1->setText(QString::number(player1Points));
+//            ui->label_player2->setText(QString::number(player2Points));
+//        } else
+//        {
+//            ui->label_player1->setText(QString::number(player2Points));
+//            ui->label_player2->setText(QString::number(player1Points));
+//        }
      } else {
         qDebug() << "Unknown server message: " << serverMessage;
     }
