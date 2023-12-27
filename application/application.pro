@@ -55,7 +55,7 @@ HEADERS += \
     mainwindow.h \
     memorija.h \
     mojbroj.h \
-    mojbrojlogic.hpp\
+    mojbrojlogic.h\
     podrundaui.h \
     pocetniekran.h \
     recko.h \

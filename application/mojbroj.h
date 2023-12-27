@@ -23,6 +23,9 @@ public:
     explicit Mojbroj(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString player1 = "", QString player2 = "", bool red = false, int player1Points = 0, int player2Points = 0);
     ~Mojbroj();
 
+    int getPlayer1Points();
+    int getPlayer2Points();
+
 private:
     Ui::Mojbroj *ui;
     MojBrojLogic *m_mojbroj;

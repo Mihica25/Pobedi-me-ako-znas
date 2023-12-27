@@ -36,6 +36,7 @@ private:
     int player1Points = 0;
     int player2Points = 0;
     ReckoUI* recko;
+    Mojbroj* mojbroj;
 
     void initConntroler();
 

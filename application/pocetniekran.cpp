@@ -113,7 +113,8 @@ void PocetniEkran::on_reckoEnds(){
     qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
     qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
     qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
-    Mojbroj* mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    recko->close(); //dodato
     mojbroj->show();
     connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
 
@@ -122,7 +123,11 @@ void PocetniEkran::on_reckoEnds(){
 }
 
 void PocetniEkran::on_mojbrojEnds(){
-    return;
+    qDebug() << "PocetniEkran::on_mojbrojEnds()" << endl;
+    qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
+
+    //naredna igra
 }
 //istu ovakvu
 

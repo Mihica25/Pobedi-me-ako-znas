@@ -13,6 +13,8 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
     reckoPoints = 12;
     reckoWordNo = 0;
 
+    submit = 0;
+
     startGame();
 }
 
@@ -102,6 +104,7 @@ void Session::stopRecko(){
 }
 
 void Session::startMojBroj(){
+    qDebug()<<"zapoCETOOOOOOOOOOO";
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMojBroj);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMojBroj);
 }
@@ -301,6 +304,7 @@ void Session::processMojBrojMessage(const QString& msg){
 //DODATI POENE U SERVER
 void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
 {
+    qDebug()<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "<< submit;
     if (submit != 2 && submit != 4)
         return;
 
@@ -311,25 +315,24 @@ void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
 
     if ( (res1 == -1179 || res1 == -1951) && (res2 != -1179 && res2 != -1951) )
     {
-        sendMessageToPlayer1("POINTS:0%10");
-        sendMessageToPlayer2("POINTS:10%0");
+        sendMessageToBothPlayers("POINTS:0%10");
         return;
     } else if ( (res2 == -1179 || res2 == -1951) && (res1 != -1179 && res1 != -1951) )
     {
-        sendMessageToPlayer1("POINTS:10%0");
-        sendMessageToPlayer2("POINTS:0%10");
+        sendMessageToBothPlayers("POINTS:10%0");
         return;
-    } else if ( res1 == -1179 && res2 == -1951 || res1 == -1951 && res2 == -1179|| res1 == -1179 && res2 == -1179 || res1 == -1951 && res2 == -1951)
+    } else if ( (res1 == -1179 && res2 == -1951) || (res1 == -1951 && res2 == -1179) || (res1 == -1179 && res2 == -1179) || (res1 == -1951 && res2 == -1951))
+    {   qDebug() << "PRAZNO!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
+        sendMessageToBothPlayers("POINTS:0%0");
         return;
+    }
 
     if (qAbs(res-res1) < qAbs(res-res2))
     {
-        sendMessageToPlayer1("POINTS:10%0");
-        sendMessageToPlayer2("POINTS:0%10");
+        sendMessageToBothPlayers("POINTS:10%0");
     } else if (qAbs(res-res1) > qAbs(res-res2))
     {
-        sendMessageToPlayer1("POINTS:0%10");
-        sendMessageToPlayer2("POINTS:10%0");
+        sendMessageToBothPlayers("POINTS:0%10");
     } else {
         sendMessageToBothPlayers("POINTS:5%5");
     }
