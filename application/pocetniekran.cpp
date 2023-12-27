@@ -6,6 +6,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::PocetniEkran)
 {
+   
+
     ui->setupUi(this);
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -117,8 +119,12 @@ void PocetniEkran::on_reckoEnds(){
     recko->close(); //dodato
     mojbroj->show();
     connect(mojbroj, &Mojbroj::gameEnd, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
+}
+void PocetniEkran::on_koZnaEnds(){
+    return;
+}
 
-
+void PocetniEkran::on_podrundaEnded(){
     return;
 }
 
