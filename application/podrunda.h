@@ -14,6 +14,7 @@ public:
 
     std::pair<QString, double> answerQuestion;
     double guess;
+    int dobio_poene;
 
 signals:
 

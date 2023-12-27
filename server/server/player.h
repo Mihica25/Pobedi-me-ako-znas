@@ -16,8 +16,15 @@ public:
     QString getPlayerUsername() const;
     int getPoints() const;
     void addPoints(int p);
+    int pointsKoZna;
 
     QTcpSocket* tcpSocket;
+
+    int podrunda_time;
+    int podrunda_guess;
+    int podrunda_resenje;
+    bool pobednik;
+
 private:
     QString username;
     int points;

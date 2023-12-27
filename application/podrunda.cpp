@@ -9,6 +9,7 @@ Podrunda::Podrunda()
 
     std::pair<QString, double> answerQuestion;
     double guess;
+    int dobio_poene;
 }
 
 std::pair<QString, double> Podrunda::getAnswerQuestion() const

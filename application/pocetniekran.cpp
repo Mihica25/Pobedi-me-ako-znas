@@ -130,5 +130,13 @@ void PocetniEkran::on_mojbrojEnds(){
 
     //naredna igra
 }
-//istu ovakvu
+
+void PocetniEkran::on_koZnaEnds(){
+    return;
+}
+
+void PocetniEkran::on_podrundaEnded(){
+    return;
+}
+
 

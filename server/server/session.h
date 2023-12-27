@@ -28,6 +28,10 @@ private slots:
     void player2ReadyReadRecko();
     void player1ReadyReadMojBroj();
     void player2ReadyReadMojBroj();
+    void player1ReadyReadKoZna();
+    void player2ReadyReadKoZna();
+    void player1ReadyReadPodrunda();
+    void player2ReadyReadPodrunda();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -45,10 +49,20 @@ private:
     int submit_mojbroj;
     int gameEnd_mojbroj;
 
+    QString pitanje;
+    QString answer1;
+    QString answer2;
+    int points1;
+    int points2;
+
     void startGame();
     void startRecko();
     void stopRecko();
     void startMojBroj();
+    void startKoZna();
+    void startPodrunda();
+    void otvoriPodrundu();
+    void stopPodrunda();
 
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
@@ -57,6 +71,14 @@ private:
 
     QString generateTargetNumber();
     QString generateInitialNumbers();
+
+    void processKoZnaMessage(const QString& msg, int num);
+    QString checkKoZnaSolution(const QString& word);
+    int checkPodrundaWinner();
+    void processPodrundaMessage(const QString& msg, const int num);
+
+    //int podrunda_resenje;
+
 
 };
 
