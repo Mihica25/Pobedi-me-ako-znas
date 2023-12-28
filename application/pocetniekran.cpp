@@ -104,7 +104,9 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 void PocetniEkran::initConntroler(){
 
     recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
+    windowGeometry = this->geometry();
     this->close();
+    recko->setGeometry(windowGeometry);
     recko->show();
     connect(recko, &ReckoUI::mGameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
 }
@@ -114,7 +116,9 @@ void PocetniEkran::on_reckoEnds(){
     qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
     qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
     mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    windowGeometry = recko->geometry();
     recko->close(); //dodato
+    mojbroj->setGeometry(windowGeometry);
     mojbroj->show();
     connect(mojbroj, &Mojbroj::mGameEnds, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
 
@@ -127,7 +131,9 @@ void PocetniEkran::on_mojbrojEnds(){
     qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
     qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
     kozna = new KoZnaui(nullptr, tcpSocket, playerName, opponentName, turn, mojbroj->getPlayer1Points(), mojbroj->getPlayer2Points());
+    windowGeometry = mojbroj->geometry();
     mojbroj->close();
+    kozna->setGeometry(windowGeometry);
     kozna->show();
     connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
 

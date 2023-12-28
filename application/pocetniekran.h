@@ -5,6 +5,7 @@
 #include "logindialog.h"
 #include <QDebug>
 #include <QTcpSocket>
+#include <QRect>
 #include "reckoui.h"
 #include "mojbroj.h"
 #include "pogodistaui.h"
@@ -46,6 +47,8 @@ private:
     PogodiStaUI* pogodiSta;
     KoZnaui* kozna;
     void initConntroler();
+
+    QRect windowGeometry;
 
     bool connectToServer();
     void processServerMessage(const QString& serverMessage);
