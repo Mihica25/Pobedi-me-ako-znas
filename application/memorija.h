@@ -21,9 +21,11 @@ public:
     explicit Memorija(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString player1 = "", QString player2 = "", bool red = false, int player1Points = 0, int player2Points = 0);
     ~Memorija();
 
+    int getPlayer1Points();
+    int getPlayer2Points();
 
 signals:
-    void gameEnd();
+    void mGameEnds();
 
 public slots:
     void onReadyRead();
@@ -66,6 +68,7 @@ private:
 
     void sendMessage(QTcpSocket* socket, QString msg);
     void processServerMessage(QString serverMessage);
+
 };
 
 #endif // MEMORIJA_H

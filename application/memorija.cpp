@@ -57,6 +57,17 @@ Memorija::~Memorija()
     delete ui;
 }
 
+int Memorija::getPlayer1Points()
+{
+    return player1Points;
+}
+
+
+int Memorija::getPlayer2Points()
+{
+    return player2Points;
+}
+
 void Memorija::setUpBackground(){
     QPixmap background(":background/resources/igra_memorije.png");
     background.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -203,7 +214,7 @@ void Memorija::opponentsView(int card){
         turnedCardsOp.clear();
 
         if(pairsFound == totalPairs){
-            //TODO
+            sendMessage(server, "MEMORIJA_END\n");
         }
     }
 }
@@ -298,6 +309,9 @@ void Memorija::processServerMessage(QString serverMessage){
         }
     } else if(serverMessage.startsWith("CHANGETURN")){
         switchTurns(turn);
+    } else if (serverMessage.startsWith("MEMORIJA_END")) {
+        disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+        emit mGameEnds();
     } else {
         qDebug() << "Unknown server message: " << serverMessage;
     }
@@ -346,3 +360,5 @@ void Memorija::blockWholeWindow(bool block){
     ui->widget_20->setEnabled(!block);
 
 }
+
+

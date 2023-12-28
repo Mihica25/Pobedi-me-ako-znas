@@ -46,6 +46,7 @@ private:
     Mojbroj* mojbroj;
     PogodiStaUI* pogodiSta;
     KoZnaui* kozna;
+    Memorija* memorija;
     void initConntroler();
 
     bool connectToServer();

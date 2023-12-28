@@ -152,7 +152,9 @@ void PocetniEkran::on_podrundaEnded(){
 }
 
 void PocetniEkran::on_memorijaEnds(){
-    return;
+    qDebug() << "PocetniEkran::on_memorijaEnds()" << endl;
+    qDebug() << "Player1: " << memorija->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << memorija->getPlayer2Points() << endl;
 }
 
 
@@ -162,6 +164,11 @@ void PocetniEkran::on_pogodiStaEnds()
     qDebug() << "PocetniEkran::on_pogodiStaEnds()" << endl;
     qDebug() << "Player1: " << pogodiSta->getPlayer1Points() << endl;
     qDebug() << "Player2: " << pogodiSta->getPlayer2Points() << endl;
+    memorija = new Memorija(nullptr, tcpSocket, playerName, opponentName, turn, pogodiSta->getPlayer1Points(), pogodiSta->getPlayer2Points());
     pogodiSta->close();
+    memorija->show();
+    connect(memorija, &Memorija::mGameEnds, this, &PocetniEkran::on_memorijaEnds);
+
+
 }
 
