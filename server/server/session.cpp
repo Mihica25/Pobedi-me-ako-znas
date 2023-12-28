@@ -40,7 +40,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     player1->pointsKoZna = 0;
     player2->pointsKoZna = 0;
 
-    QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/kozna.txt";
+    QString filePath = ":/kozna/pitanja/kozna.txt";
 
 
        if (!QFile::exists(filePath))
@@ -460,7 +460,7 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     {
         // generisanje pitanja
 
-        QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/podrunda.txt";
+        QString filePath = ":/kozna/pitanja/podrunda.txt";
         QStringList pitanja;
 
         if (!QFile::exists(filePath))
