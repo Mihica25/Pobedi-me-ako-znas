@@ -78,6 +78,10 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     qDebug()<< "SEND" << endl;
 
     sendMessage(server, "SEND:hhhuhuuhhu\n");
+    sendMessage(server, "P1:" + QString::number(player1Points) + "\n");
+    sendMessage(server, "P2:" + QString::number(player2Points) + "\n");
+
+
 
 
     connect(ui->pushButtonAns1, &QPushButton::clicked, this, &KoZnaui::on_pushButtonAns1Multiplayer);
@@ -228,7 +232,7 @@ void KoZnaui::on_pushButtonAns1Multiplayer(){
 
     if (guess(answer)){
         ui->pushButtonAns1->setStyleSheet("background-color: green");
-        sendMessage(server, "ANSWER:true,10,\n");
+            sendMessage(server, "ANSWER:true,10,\n");
     }
     else {
         ui->pushButtonAns1->setStyleSheet("background-color: red");
@@ -299,9 +303,9 @@ void KoZnaui::on_DALJE(){
     disableUi();
 
     displayAnswer();
-    QString answer = ui->DALJE1->text();
-    qDebug()<< answer << "\n";
-    sendMessage(server, "ANSWER:answer,0,\n");
+    //QString answer = ui->DALJE1->text();
+   // qDebug()<< answer << "\n";
+    sendMessage(server, "ANSWER:DALJE,0,\n");
     //sendMessage(server, "POINTS:10\n");
 }
 
@@ -385,6 +389,9 @@ void KoZnaui::disableUi() {
     ui->pushButtonAns2->setDisabled(true);
     ui->pushButtonAns3->setDisabled(true);
     ui->pushButtonAns4->setDisabled(true);
+    ui->DALJE1->setDisabled(true);
+
+
 }
 
 
@@ -393,6 +400,7 @@ void KoZnaui::enableUi() {
     ui->pushButtonAns2->setEnabled(true);
     ui->pushButtonAns3->setEnabled(true);
     ui->pushButtonAns4->setEnabled(true);
+    ui->DALJE1->setEnabled(true);
 }
 
 

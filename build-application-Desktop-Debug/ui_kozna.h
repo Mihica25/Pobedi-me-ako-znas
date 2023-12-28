@@ -195,7 +195,7 @@ public:
         KoZnaui->setCentralWidget(widget);
         menubar = new QMenuBar(KoZnaui);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
+        menubar->setGeometry(QRect(0, 0, 800, 29));
         KoZnaui->setMenuBar(menubar);
         statusbar = new QStatusBar(KoZnaui);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -218,7 +218,7 @@ public:
         pushButtonAns3->setText(QString());
         pushButtonAns2->setText(QString());
         pushButtonAns1->setText(QString());
-        DALJE1->setText(QApplication::translate("KoZnaui", "PushButton", nullptr));
+        DALJE1->setText(QApplication::translate("KoZnaui", "DALJE", nullptr));
     } // retranslateUi
 
 };
