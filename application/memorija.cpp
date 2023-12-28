@@ -40,6 +40,19 @@ Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
     player2Points = SecondPlayerPoints;
     ui->setupUi(this);
 
+    if(playerNo){
+        ui->userName1->setText(firstPlayer);
+        ui->userName2->setText(secondPlayer);
+        ui->user1points->setText(QString::number(player1Points));
+        ui->user2points->setText(QString::number(player2Points));
+    }else{
+        ui->userName1->setText(secondPlayer);
+        ui->userName2->setText(firstPlayer);
+        ui->user1points->setText(QString::number(player1Points));
+        ui->user2points->setText(QString::number(player2Points));
+    }
+
+
     setUpBackground();
 
 //    this->show();
@@ -55,6 +68,17 @@ Memorija::~Memorija()
         }
     }
     delete ui;
+}
+
+int Memorija::getPlayer1Points()
+{
+    return player1Points;
+}
+
+
+int Memorija::getPlayer2Points()
+{
+    return player2Points;
 }
 
 void Memorija::setUpBackground(){
@@ -141,9 +165,11 @@ void Memorija::onCardClicked(int idReveal){
             ++pairsFound;
             if(playerNo){
                 ++player1Points;
+                ui->user1points->setText(QString::number(player1Points));
                 sendMessage(server, "POINTS1\n");
             }else{
                 ++player2Points;
+                ui->user2points->setText(QString::number(player2Points));
                 sendMessage(server,"POINTS2\n");
             }
         }else{
@@ -203,7 +229,7 @@ void Memorija::opponentsView(int card){
         turnedCardsOp.clear();
 
         if(pairsFound == totalPairs){
-            //TODO
+            sendMessage(server, "MEMORIJA_END\n");
         }
     }
 }
@@ -284,8 +310,10 @@ void Memorija::processServerMessage(QString serverMessage){
 
         if(playerNo){
             ++player2Points;
+            ui->user2points->setText(QString::number(player2Points));
         }else{
             ++player1Points;
+            ui->user1points->setText(QString::number(player1Points));
         }
      } else if(serverMessage.startsWith("TURNCARD:")){
         QString str = serverMessage.mid(9);
@@ -298,6 +326,9 @@ void Memorija::processServerMessage(QString serverMessage){
         }
     } else if(serverMessage.startsWith("CHANGETURN")){
         switchTurns(turn);
+    } else if (serverMessage.startsWith("MEMORIJA_END")) {
+        disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+        emit mGameEnds();
     } else {
         qDebug() << "Unknown server message: " << serverMessage;
     }
@@ -346,3 +377,5 @@ void Memorija::blockWholeWindow(bool block){
     ui->widget_20->setEnabled(!block);
 
 }
+
+

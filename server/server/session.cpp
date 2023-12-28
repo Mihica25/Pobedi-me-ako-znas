@@ -40,7 +40,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     player1->pointsKoZna = 0;
     player2->pointsKoZna = 0;
 
-    QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/kozna.txt";
+    QString filePath = ":/kozna/pitanja/kozna.txt";
 
 
        if (!QFile::exists(filePath))
@@ -181,6 +181,8 @@ void Session::stopPogodiSta() {
     qDebug() << "Zavrsila se igra Pogodi Sta, prelazimo na sledecu igru :)" << endl;
     disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPogodiSta);
     disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPogodiSta);
+
+    startMemorija();
     //pokretanje sledece igre
 
 }
@@ -229,7 +231,6 @@ void Session::startPodrunda()
 void Session::startMemorija(){
     connect(player1->tcpSocket, &QTcpSocket::readyRead,this,&Session::player1ReadyReadMemorija);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
-
 }
 
 void Session::stopMemorija(){
@@ -460,7 +461,7 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     {
         // generisanje pitanja
 
-        QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/podrunda.txt";
+        QString filePath = ":/kozna/pitanja/podrunda.txt";
         QStringList pitanja;
 
         if (!QFile::exists(filePath))
@@ -626,8 +627,9 @@ void Session::processMemorijaMessage(const QString& request){
         sendMessageToPlayer2("UPDATE_POINTS\n");
     }else if(request.startsWith("POINTS2")){
         sendMessageToPlayer1("UPDATE_POINTS\n");
-    }else{
-        //TODO
+    }else if (request.startsWith("MEMORIJA_END")){
+        sendMessageToBothPlayers("MEMORIJA_END\n");
+        stopMemorija();
     }
 }
 void Session::shuffleQVector(QVector<int> &vector){

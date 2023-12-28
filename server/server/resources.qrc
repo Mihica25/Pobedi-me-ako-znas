@@ -11,4 +11,8 @@
     <qresource prefix="/recko">
         <file>resources/recko_words.txt</file>
     </qresource>
+    <qresource prefix="/kozna">
+        <file>pitanja/kozna.txt</file>
+        <file>pitanja/podrunda.txt</file>
+    </qresource>
 </RCC>
