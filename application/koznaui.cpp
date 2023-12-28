@@ -375,7 +375,7 @@ void KoZnaui::updateTime() {
     }
 
     if(time--==0){
-        if(numberOfQuestion == 9)
+        if(numberOfQuestion == 6)
             emit gameEnds();
         else {
             emit timesUp();
