@@ -3,13 +3,15 @@
 #include <chrono>
 
 
-Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(parent), player1(player1), player2(player2)
+Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
 //    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
     player1->playerId = 1;
     player2->playerId = 2;
-    recko = "HOUSE";
+    reckoWords = reckoChoosenWords;
+    recko = reckoWords[0];
+    qDebug() << "Recko word:" << recko << endl;
     reckoGameNo = 1;
     reckoPoints = 12;
     reckoWordNo = 0;
@@ -230,7 +232,7 @@ void Session::player1ReadyReadKoZna()
 void Session::player2ReadyReadRecko()
 {
     // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
     qDebug() << "Data received from Player 2: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
@@ -291,7 +293,10 @@ void Session::processReckoMessage(const QString& msg){
                 reckoWordNo = 0;
                 reckoPoints = 12;
                 reckoGameNo++;
+                recko = reckoWords[1];
+                qDebug() << "Recko2: " << recko;
                 if(reckoGameNo > 2){
+                    qDebug() << "Stopiramo recka" << endl;
                     stopRecko();
                 }
             } else {
@@ -303,7 +308,10 @@ void Session::processReckoMessage(const QString& msg){
                      reckoPoints = 12;
                      reckoWordNo = 0;
                      reckoGameNo++;
+                     recko = reckoWords[1];
+                     qDebug() << "Recko2: " << recko;
                      if(reckoGameNo > 2){
+                         qDebug() << "Stopiramo recka" << endl;
                          stopRecko();
                      }
                 }
@@ -313,7 +321,10 @@ void Session::processReckoMessage(const QString& msg){
         reckoPoints = 12;
         reckoGameNo++;
         reckoWordNo = 0;
+        recko = reckoWords[1];
+        qDebug() << "Recko2: " << recko;
         if(reckoGameNo > 2){
+            qDebug() << "Stopiramo recka" << endl;
             stopRecko();
         }
     }

@@ -6,6 +6,11 @@
 #include <QDebug>
 #include <algorithm>
 #include "session.h"
+#include <QRandomGenerator>
+#include <QStringList>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
 
 class Lobby : public QObject
 {
@@ -22,6 +27,10 @@ public:
 
 private:
     QList<Player*> players;
+    QStringList reckoWordList;
+
+    QStringList loadWordsFromFile(const QString &filePath);
+    QStringList chooseRandomWords(const QStringList &wordList);
 
 };
 

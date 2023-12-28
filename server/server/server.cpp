@@ -56,3 +56,4 @@ void Server::sendMessage(QTcpSocket* socket, QString msg)
     socket->flush();
 
 }
+

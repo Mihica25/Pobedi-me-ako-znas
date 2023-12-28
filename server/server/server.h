@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTcpServer>
 #include "lobby.h"
+#include <QDebug>
 
 class Server : public QObject
 {

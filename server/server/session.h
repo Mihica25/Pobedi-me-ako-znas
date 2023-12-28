@@ -10,13 +10,14 @@
 #include <QTextStream>
 #include <QString>
 #include <QRandomGenerator>
+#include <QStringList>
 
 class Session : public QObject
 {
     Q_OBJECT
 
 public:
-    Session(Player *player1, Player *player2, QObject *parent = nullptr);
+    Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent = nullptr);
     ~Session();
 
     void sendMessageToPlayer1(QString message);
@@ -40,6 +41,7 @@ private slots:
 private:
     Player *player1;
     Player *player2;
+    QStringList reckoWords;
     QString recko;
     int reckoGameNo;
     int reckoPoints;

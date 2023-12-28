@@ -4,6 +4,7 @@ Lobby::Lobby(QObject *parent) : QObject(parent)
 {
     // Inicijalizujte praznu listu
     players = QList<Player*>();
+    reckoWordList = loadWordsFromFile(":/recko/resources/recko_words.txt");
 }
 
 Lobby::~Lobby()
@@ -24,7 +25,7 @@ void Lobby::addPlayer(Player* player) {
     // Proveramo da li imamo dovoljan broj igrača za sesiju
     if (getPlayersCount() >= 2) {
         // Kreiranje sesije sa prva dva igrača iz liste
-        Session* session = new Session(players[0], players[1]);
+        Session* session = new Session(players[0], players[1],  chooseRandomWords(reckoWordList));
 //        delete session;
 
         // Uklanjamo igrače iz liste
@@ -40,4 +41,42 @@ const QList<Player*>& Lobby::getPlayers() const {
 
 int Lobby::getPlayersCount() const{
     return players.size();
+}
+
+QStringList Lobby::loadWordsFromFile(const QString &filePath) {
+    QStringList words;
+
+        QFile file(filePath);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "Nije moguće otvoriti fajl: " << file.errorString();
+            return words;
+        }
+
+        QTextStream in(&file);
+        QString fileContent = in.readAll();
+        file.close();
+
+        words = fileContent.split(" ");
+
+        return words;
+}
+
+QStringList Lobby::chooseRandomWords(const QStringList &wordList) {
+    QStringList chosenWords;
+
+    if (wordList.size() < 2) {
+        qDebug() << "Nedovoljno reči za izbor.";
+        return chosenWords;
+    }
+
+    int index1 = QRandomGenerator::global()->bounded(wordList.size());
+    int index2;
+    do {
+        index2 = QRandomGenerator::global()->bounded(wordList.size());
+    } while (index2 == index1);
+
+    chosenWords.append(wordList.at(index1));
+    chosenWords.append(wordList.at(index2));
+
+    return chosenWords;
 }

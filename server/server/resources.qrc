@@ -8,4 +8,7 @@
     <qresource prefix="/data">
         <file>resources/PogodiSta.txt</file>
     </qresource>
+    <qresource prefix="/recko">
+        <file>resources/recko_words.txt</file>
+    </qresource>
 </RCC>
