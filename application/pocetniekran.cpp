@@ -129,7 +129,7 @@ void PocetniEkran::on_mojbrojEnds(){
     kozna = new KoZnaui(nullptr, tcpSocket, playerName, opponentName, turn, mojbroj->getPlayer1Points(), mojbroj->getPlayer2Points());
     mojbroj->close();
     kozna->show();
-    connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
+    connect(kozna, &KoZnaui::mGameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
 
 
 
@@ -140,8 +140,10 @@ void PocetniEkran::on_koZnaEnds(){
     qDebug() << "PocetniEkran::on_koznaEnds()" << endl;
     qDebug() << "Player1: " << kozna->getPlayer1Points() << endl;
     qDebug() << "Player2: " << kozna->getPlayer2Points() << endl;
+    pogodiSta = new PogodiStaUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, kozna->getPlayer1Points(), kozna->getPlayer2Points());
     kozna->close();
-    return;
+    pogodiSta->show();
+    connect(pogodiSta, &PogodiStaUI::mGameEnds, this, &PocetniEkran::on_pogodiStaEnds);
 }
 
 void PocetniEkran::on_podrundaEnded(){
@@ -151,6 +153,9 @@ void PocetniEkran::on_podrundaEnded(){
 
 void PocetniEkran::on_pogodiStaEnds()
 {
-    return;
+    qDebug() << "PocetniEkran::on_pogodiStaEnds()" << endl;
+    qDebug() << "Player1: " << pogodiSta->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << pogodiSta->getPlayer2Points() << endl;
+    pogodiSta->close();
 }
 

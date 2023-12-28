@@ -95,6 +95,7 @@ private:
 signals:
     void timesUp();
     void gameEnds();
+    void mGameEnds();
     void podrundaEnds();
 
 

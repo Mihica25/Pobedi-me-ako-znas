@@ -26,9 +26,12 @@ public:
     void startGame();
     static void sleep(int time);
     bool isReadyToStart = false;
+    int getPlayer1Points();
+    int getPlayer2Points();
 
 signals:
     void gameEnds();
+    void mGameEnds();
 
 private slots:
     void updateTimer();
@@ -56,8 +59,8 @@ private:
     bool playerNo = false;
     QString player1 = "";
     QString player2 = "";
-    int player1Points = 0;
-    int player2Points = 0;
+    int player1Points;
+    int player2Points;
     QString info;
     bool turn = false;
 

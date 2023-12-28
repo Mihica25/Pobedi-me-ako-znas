@@ -147,6 +147,7 @@ void Session::stopKoZna(){
     disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
     disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
 
+    startPogodiSta();
     //pokretanje sledece igre
 
     return;
@@ -154,8 +155,10 @@ void Session::stopKoZna(){
 //
 void Session::stopPogodiSta() {
     qDebug() << "Zavrsila se igra Pogodi Sta, prelazimo na sledecu igru :)" << endl;
-    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
-    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPogodiSta);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPogodiSta);
+    //pokretanje sledece igre
+
 }
 
 void Session::startMojBroj(){
@@ -166,8 +169,6 @@ void Session::startMojBroj(){
 
 void Session::startPogodiSta()
 {
-    // disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
-    // disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadRecko);
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPogodiSta);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPogodiSta);
 }
@@ -757,12 +758,11 @@ void Session::processKoZnaMessage(const QString& msg, int num){
             player2->pointsKoZna += poeni;
             sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
         }
-
-        if(msg.startsWith("END")) {
-            stopKoZna();
-        }
-
-
+    }
+    if(msg.startsWith("END")) {
+        qDebug() << "END Ko zna";
+        sendMessageToBothPlayers("END\n");
+        stopKoZna();
     }
 }
 
@@ -959,8 +959,9 @@ void Session::processPogodiStaMessage(const QString &msg, Player* player)
             sendMessageToBothPlayers(answer);
         }
     }
-    else if (msg.startsWith("POGODISTA_END:")) {
-
+    else if (msg.startsWith("POGODISTA_END")) {
+        sendMessageToBothPlayers("POGODISTA_END\n");
+        stopPogodiSta();
     }
 }
 

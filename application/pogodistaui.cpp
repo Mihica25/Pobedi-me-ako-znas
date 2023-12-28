@@ -25,18 +25,18 @@ PogodiStaUI::PogodiStaUI(QWidget *parent, QTcpSocket *tcpSocket, QString player_
     multiplayer = true;
     turn = red;
     qDebug() << "Red: " << turn;
+
     if (turn) {
         player1 = player_1;
-        player1Points = player1_points;
         player2 = player_2;
-        player2Points = player2_points;
     }
     else {
         player1 = player_2;
-        player1Points = player2_points;
         player2 = player_1;
-        player2Points = player1_points;
     }
+    player1Points = player1_points;
+    player2Points = player2_points;
+
     pogodiStaPartija = pSPartija;
 
     ui->setupUi(this);
@@ -61,10 +61,12 @@ void PogodiStaUI::startGame()
     gameTime = 60;
     roundNumber = 6;
     generateImage();
-    gameTimer->start(1000);
     if (pogodiStaPartija == 0) {
         connect(ui->leInsert, &QLineEdit::returnPressed, this, &PogodiStaUI::onGuessSubmit);
     }
+    ui->lcdPoints1->display(player1Points);
+    ui->lcdPoints2->display(player2Points);
+    gameTimer->start(1000);
 }
 
 void PogodiStaUI::updateTimer()
@@ -138,7 +140,7 @@ void PogodiStaUI::onReadyRead()
 {
     QByteArray data = server->readAll();
     QString msg = QString::fromUtf8(data);
-
+    qDebug() << "Received message: " + msg;
     QStringList receivedMessages = msg.split('\n');
 
     for (const QString& receivedMessage : receivedMessages) {
@@ -216,13 +218,9 @@ void PogodiStaUI::processServerMessage(QString serverMessage)
         int correctPlayer = data[1].toInt();
         if(correctPlayer == 1){
             player1Points += pogodiSta->calculatePoints(roundNumber);
-            qDebug() << "p1 points: " + QString::number(player1Points)
-                     << " round num: " + QString::number(roundNumber);
         }
         else {
             player2Points += pogodiSta->calculatePoints(roundNumber);
-            qDebug() << "p2 points: " + QString::number(player2Points)
-                     << " round num: " + QString::number(roundNumber);
         }
         pogodiSta->setAnswer(data[2]);
         ui->lcdPoints1->display(player1Points);
@@ -230,6 +228,17 @@ void PogodiStaUI::processServerMessage(QString serverMessage)
 
         showSolution();
     }
+    else if (serverMessage.startsWith("POGODISTA_END")) {
+        disconnect(server, &QTcpSocket::readyRead, this, &PogodiStaUI::onReadyRead);
+        disconnect(gameTimer, &QTimer::timeout, this, &PogodiStaUI::updateTimer);
+        disconnect(this, &PogodiStaUI::gameEnds, this, &PogodiStaUI::on_gameEnds);
+        sleep(3000);
+        emit mGameEnds();
+    }
+    else {
+        qDebug() << "Unknown server message: " << serverMessage;
+    }
+
 }
 
 void PogodiStaUI::showSolution()
@@ -242,4 +251,12 @@ void PogodiStaUI::showSolution()
 void PogodiStaUI::generateImage()
 {
     sendMessage(server, "IMAGE_GEN\n");
+}
+
+int PogodiStaUI::getPlayer1Points(){
+    return player1Points;
+}
+
+int PogodiStaUI::getPlayer2Points(){
+    return player2Points;
 }

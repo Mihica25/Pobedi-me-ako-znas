@@ -487,6 +487,10 @@ void KoZnaui::processServerMessage(QString serverMessage){
         podrunda->show();
         connect(podrunda, &Podrundaui::gameEnded, this, &KoZnaui::on_podrundaEnds, Qt::UniqueConnection);
     }
+    if(serverMessage.startsWith("END")) {
+        disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+        emit mGameEnds();
+    }
 }
 
 
