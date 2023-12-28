@@ -102,12 +102,18 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 }
 
 void PocetniEkran::initConntroler(){
+    stackedWidget = new QStackedWidget(this);
+    setCentralWidget(stackedWidget);
 
     recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
-    windowGeometry = this->geometry();
-    this->close();
-    recko->setGeometry(windowGeometry);
-    recko->show();
+    //windowGeometry = this->geometry();
+    //this->close();
+    //recko->setGeometry(windowGeometry);
+    recko->setAutoFillBackground(true);
+    stackedWidget->addWidget(recko);
+    stackedWidget->removeWidget(this);
+    stackedWidget->setCurrentWidget(recko);
+    //recko->show();
     connect(recko, &ReckoUI::mGameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
 }
 
@@ -116,10 +122,14 @@ void PocetniEkran::on_reckoEnds(){
     qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
     qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
     mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
-    windowGeometry = recko->geometry();
-    recko->close(); //dodato
-    mojbroj->setGeometry(windowGeometry);
-    mojbroj->show();
+    //windowGeometry = recko->geometry();
+    //recko->close(); //dodato
+    //mojbroj->setGeometry(windowGeometry);
+    mojbroj->setAutoFillBackground(true);
+    stackedWidget->addWidget(mojbroj);
+    stackedWidget->removeWidget(recko);
+    stackedWidget->setCurrentWidget(mojbroj);
+    //mojbroj->show();
     connect(mojbroj, &Mojbroj::mGameEnds, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
 
 
@@ -131,10 +141,14 @@ void PocetniEkran::on_mojbrojEnds(){
     qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
     qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
     kozna = new KoZnaui(nullptr, tcpSocket, playerName, opponentName, turn, mojbroj->getPlayer1Points(), mojbroj->getPlayer2Points());
-    windowGeometry = mojbroj->geometry();
-    mojbroj->close();
-    kozna->setGeometry(windowGeometry);
-    kozna->show();
+    //windowGeometry = mojbroj->geometry();
+    //mojbroj->close();
+    //kozna->setGeometry(windowGeometry);
+    kozna->setAutoFillBackground(true);
+    stackedWidget->addWidget(kozna);
+    stackedWidget->removeWidget(mojbroj);
+    stackedWidget->setCurrentWidget(kozna);
+    //kozna->show();
     connect(kozna, &KoZnaui::gameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
 
 
@@ -146,7 +160,14 @@ void PocetniEkran::on_koZnaEnds(){
     qDebug() << "PocetniEkran::on_koznaEnds()" << endl;
     qDebug() << "Player1: " << kozna->getPlayer1Points() << endl;
     qDebug() << "Player2: " << kozna->getPlayer2Points() << endl;
-    kozna->close();
+
+    //dodato - poslednja igra connect na start ekran
+    stackedWidget->removeWidget(kozna);
+
+    ui->setupUi(this);
+    connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
+    connect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
+    //kozna->close();
     return;
 }
 

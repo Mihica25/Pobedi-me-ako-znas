@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QTcpSocket>
 #include <QRect>
+#include <QStackedWidget>
 #include "reckoui.h"
 #include "mojbroj.h"
 #include "pogodistaui.h"
@@ -49,6 +50,7 @@ private:
     void initConntroler();
 
     QRect windowGeometry;
+    QStackedWidget* stackedWidget;
 
     bool connectToServer();
     void processServerMessage(const QString& serverMessage);

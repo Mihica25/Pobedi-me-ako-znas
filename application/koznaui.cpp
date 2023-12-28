@@ -360,6 +360,9 @@ void KoZnaui::on_gameEnds(){
     ukupni_bodovi += bodovi;
     //ui->leBodovi->setText(QString::number(ukupni_bodovi));
     //showSolution();
+
+    //dodato
+    disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     qDebug() << "Game ends";
     sendMessage(server, "END\n");
 }
