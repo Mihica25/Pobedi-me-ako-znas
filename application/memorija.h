@@ -46,7 +46,6 @@ private:
     int player1Points = 0;
     int player2Points = 0;
     int pairsFound=0;
-    QVector<int> cardIds;
     QVector<int> turnedCards;
     QVector<int> turnedCardsOp;
     QMap<int, CardWidget*> cardIdToWidget;

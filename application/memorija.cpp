@@ -11,6 +11,7 @@
 #include <QEventLoop>
 #include <QTimer>
 
+/*
 Memorija::Memorija(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Memorija)
@@ -21,7 +22,7 @@ Memorija::Memorija(QWidget *parent) :
 
     //initializeGame();
 }
-
+*/
 
 Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
                  QString firstPlayer, QString secondPlayer, bool red,
@@ -34,7 +35,6 @@ Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
     player1 = firstPlayer;
     player2 = secondPlayer;
     turn = red;
-    qDebug() << red << endl;
     playerNo = turn;
     player1Points = firstPlayerPoints;
     player2Points = SecondPlayerPoints;
@@ -166,12 +166,15 @@ void Memorija::onCardClicked(int idReveal){
         resetTurnedCards();
 
         if(pairsFound == totalPairs){
-            //TODO
+            if(playerNo){
+                sendMessage(server,"TOTAL_POINTS_MEM_1:" + QString::number(player1Points) + "\n");
+            }else{
+                sendMessage(server,"TOTAL_POINTS_MEM_2:" + QString::number(player2Points) + "\n");
+            }
+            //close window??
         }
 
-        qDebug() << QString::number(player1Points) << " " << QString::number(player2Points) <<endl;
     }
-
 
 }
 
@@ -246,13 +249,11 @@ void Memorija::onReadyRead() {
     QByteArray data = server->readAll();
     QString msg = QString::fromUtf8(data);
 
-    qDebug() << msg << endl;
 
     QStringList receivedMessages = msg.split('\n');
 
     for (const QString& receivedMessage : receivedMessages) {
         if (!receivedMessage.isEmpty()) {
-            qDebug() << "Primilo poruku" << receivedMessage <<"\n";
             processServerMessage(receivedMessage);
         }else {
             //qDebug() << "Nije primio poruku\n";
@@ -296,7 +297,6 @@ void Memorija::processServerMessage(QString serverMessage){
             qDebug() << "Invalid integer:" << str << endl;
         }
     } else if(serverMessage.startsWith("CHANGETURN")){
-        qDebug() << serverMessage << endl;
         switchTurns(turn);
     } else {
         qDebug() << "Unknown server message: " << serverMessage;
@@ -305,7 +305,6 @@ void Memorija::processServerMessage(QString serverMessage){
 
 void Memorija::sendMessage(QTcpSocket* socket, QString msg)
 {
-    qDebug() << "Sending msg: " << msg;
     socket->write(msg.toUtf8());
     socket->flush();
 
@@ -319,19 +318,8 @@ void Memorija::switchTurns(bool t){
         blockWholeWindow(false);
     }
 
-    if(turn){
-        qDebug() << true << endl;
-    }else{
-        qDebug() << false << endl;
-    }
-
     turn = !turn;
 
-    if(turn){
-        qDebug() << true << endl;
-    }else{
-        qDebug() << false << endl;
-    }
 }
 
 void Memorija::blockWholeWindow(bool block){
@@ -357,11 +345,4 @@ void Memorija::blockWholeWindow(bool block){
     ui->widget_19->setEnabled(!block);
     ui->widget_20->setEnabled(!block);
 
-    if(block){
-
-        qDebug() <<"Blokira prozor\n";
-    }else{
-
-        qDebug() << "Odblokira prozor\n";
-    }
 }

@@ -13,5 +13,26 @@
         <file>resources/ko_zna.png</file>
         <file>resources/igra_memorije.png</file>
     </qresource>
-
+    <qresource prefix="/kartice">
+        <file>resources/kartice_memorija/image1.jpg</file>
+        <file>resources/kartice_memorija/image10.jpg</file>
+        <file>resources/kartice_memorija/image11.jpg</file>
+        <file>resources/kartice_memorija/image12.jpg</file>
+        <file>resources/kartice_memorija/image13.jpg</file>
+        <file>resources/kartice_memorija/image14.jpg</file>
+        <file>resources/kartice_memorija/image15.jpg</file>
+        <file>resources/kartice_memorija/image16.jpg</file>
+        <file>resources/kartice_memorija/image17.jpg</file>
+        <file>resources/kartice_memorija/image18.jpg</file>
+        <file>resources/kartice_memorija/image19.jpg</file>
+        <file>resources/kartice_memorija/image2.jpg</file>
+        <file>resources/kartice_memorija/image20.jpg</file>
+        <file>resources/kartice_memorija/image3.jpg</file>
+        <file>resources/kartice_memorija/image4.jpg</file>
+        <file>resources/kartice_memorija/image5.jpg</file>
+        <file>resources/kartice_memorija/image6.jpg</file>
+        <file>resources/kartice_memorija/image7.jpg</file>
+        <file>resources/kartice_memorija/image8.jpg</file>
+        <file>resources/kartice_memorija/image9.jpg</file>
+    </qresource>
 </RCC>

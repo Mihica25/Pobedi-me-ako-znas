@@ -35,11 +35,12 @@ private:
     Player *player1;
     Player *player2;
     QString recko;
-    QVector<int> cardIdssss;
+    QVector<int> generatedCards;
 
     void startGame();
     void startRecko();
     void startMemorija();
+    void stopMemorija();
 
     void shuffleQVector(QVector<int> &vector);
     QVector<int> generateCardIds();

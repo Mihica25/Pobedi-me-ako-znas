@@ -10,7 +10,7 @@ Session::Session(Player *player1, Player *player2, QObject *parent) : QObject(pa
 //    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
 //    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
 
-    cardIdssss = generateCardIds();
+    generatedCards = generateCardIds();
     startGame();
 }
 
@@ -76,6 +76,7 @@ void Session::startGame(){
 //    startKoZnaZna();
     startMemorija();
 //    startMojBroj();
+//    showStatistic();
 
     // Svako implemenitra komunikaciju izmedju servera i klijenta za svoju igru
     // Takodje moramo razmisliti gde implementirati komunikaciju na klijentskoj strani
@@ -88,6 +89,16 @@ void Session::startMemorija(){
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
 
 }
+
+void Session::stopMemorija(){
+    qDebug() << "Zavrsila se Memorija, prizazujemo statistiku " << endl;
+
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMemorija);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
+
+    return;
+}
+
 
 
 void Session::player1ReadyReadMemorija()
@@ -120,13 +131,12 @@ void Session::player2ReadyReadMemorija()
     }
 }
 
-//or use send Message to players and handle the changes there
 void Session::processMemorijaMessage(const QString& request){
     if(request.startsWith("GENERATE_CARD_IDS")){
         QString cardIdsString;
-        int size =cardIdssss.size();
+        int size =generatedCards.size();
         for(int i = 0; i < size; ++i){
-            cardIdsString.append(QString::number(cardIdssss[i]));
+            cardIdsString.append(QString::number(generatedCards[i]));
 
             if(i < size - 1){
                 cardIdsString.append(",");
@@ -162,25 +172,21 @@ void Session::shuffleQVector(QVector<int> &vector){
 
 QVector<int> Session::generateCardIds(){
 
-    QVector<int> allCardIds;
+    const int totalCards = 20;
+    const int cardPairs = 10;
 
-    for(int i = 1; i <= 20; ++i){
+    QVector<int> allCardIds;
+    QVector<int> finalCardIds;
+
+    for(int i = 1; i <= totalCards; ++i){
         allCardIds.append(i);
     }
 
     shuffleQVector(allCardIds);
 
-    QVector<int> cardIdss;
-
-    for(int i = 0; i<10; ++i){
-        cardIdss.append(allCardIds[i]);
-    }
-
-    QVector<int> finalCardIds;
-
-    for(int num : cardIdss){
-        finalCardIds.append(num);
-        finalCardIds.append(num);
+    for(int i = 0; i<cardPairs; ++i){
+        finalCardIds.append(allCardIds[i]);
+        finalCardIds.append(allCardIds[i]);
     }
 
     shuffleQVector(finalCardIds);

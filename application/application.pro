@@ -31,7 +31,7 @@ SOURCES += \
     mainwindow.cpp \
     kozna.cpp \
     koznaui.cpp \
-    memorija.cpp \ 
+    memorija.cpp \
     mojbroj.cpp \
     mojbrojlogic.cpp \
     podrundaui.cpp \
@@ -42,7 +42,7 @@ SOURCES += \
     pogodista.cpp \
     pogodistaui.cpp
 
-   
+
 
 
 
@@ -55,7 +55,7 @@ HEADERS += \
     mainwindow.h \
     memorija.h \
     mojbroj.h \
-    mojbrojlogic.hpp\
+    mojbrojlogic.h\
     podrundaui.h \
     pocetniekran.h \
     recko.h \
@@ -63,7 +63,6 @@ HEADERS += \
     podrunda.h \
     pogodista.h \
     pogodistaui.h
-
 
 
 FORMS += \
@@ -78,4 +77,3 @@ FORMS += \
     pocetniekran.ui
 
 RESOURCES += resources.qrc
-
