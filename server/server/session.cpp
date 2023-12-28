@@ -686,7 +686,8 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         //if da se doda sa prefiksom da li je manje ili vece od nule
         sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
         //sendMessageToBothPlayers("POENI1:" + odg.value(1) + "\n");
-        sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
+        if(answer1 != "DALJE")
+           sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
     }
 
     if(msg.startsWith("ANSWER:") and num == 2) {
@@ -702,6 +703,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
         qDebug() << odg.value(1) << "porukicaaaaa\n";
         qDebug() << odg << "listaaa\n";
         int poeni2 = odg.value(1).toInt();
+        qDebug() << poeni2 << "kad je dalje\n";
         if (poeni2 == 5)
              player2->pointsKoZna -= poeni2;
         else
@@ -710,7 +712,8 @@ void Session::processKoZnaMessage(const QString& msg, int num){
 
         //da se doda
         sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
-        sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
+        if(answer2 != "DALJE")
+          sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
     }
 
     if(answer1 != "" and answer2 != ""){

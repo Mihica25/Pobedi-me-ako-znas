@@ -11,8 +11,10 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLCDNumber>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -24,6 +26,14 @@ public:
     QLabel *lbTimer;
     QLabel *lbInfo;
     QLineEdit *leInsert;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLineEdit *lePlayer1;
+    QLCDNumber *lcdPoints1;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_2;
+    QLineEdit *lePlayer2;
+    QLCDNumber *lcdPoints2;
 
     void setupUi(QWidget *PogodiStaUI)
     {
@@ -116,6 +126,52 @@ public:
         leInsert->setEnabled(true);
         leInsert->setGeometry(QRect(75, 725, 650, 41));
         leInsert->setAlignment(Qt::AlignCenter);
+        verticalLayoutWidget = new QWidget(PogodiStaUI);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(20, 10, 160, 80));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        lePlayer1 = new QLineEdit(verticalLayoutWidget);
+        lePlayer1->setObjectName(QString::fromUtf8("lePlayer1"));
+        QFont font2;
+        font2.setPointSize(20);
+        lePlayer1->setFont(font2);
+        lePlayer1->setAutoFillBackground(false);
+        lePlayer1->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
+"color: rgb(255, 255, 255);"));
+        lePlayer1->setAlignment(Qt::AlignCenter);
+        lePlayer1->setReadOnly(true);
+
+        verticalLayout->addWidget(lePlayer1);
+
+        lcdPoints1 = new QLCDNumber(verticalLayoutWidget);
+        lcdPoints1->setObjectName(QString::fromUtf8("lcdPoints1"));
+
+        verticalLayout->addWidget(lcdPoints1);
+
+        verticalLayoutWidget_2 = new QWidget(PogodiStaUI);
+        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(610, 10, 160, 80));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
+        lePlayer2 = new QLineEdit(verticalLayoutWidget_2);
+        lePlayer2->setObjectName(QString::fromUtf8("lePlayer2"));
+        lePlayer2->setFont(font2);
+        lePlayer2->setAutoFillBackground(false);
+        lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
+"color: rgb(255, 255, 255);"));
+        lePlayer2->setAlignment(Qt::AlignCenter);
+        lePlayer2->setReadOnly(true);
+
+        verticalLayout_2->addWidget(lePlayer2);
+
+        lcdPoints2 = new QLCDNumber(verticalLayoutWidget_2);
+        lcdPoints2->setObjectName(QString::fromUtf8("lcdPoints2"));
+
+        verticalLayout_2->addWidget(lcdPoints2);
+
 
         retranslateUi(PogodiStaUI);
 

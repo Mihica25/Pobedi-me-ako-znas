@@ -299,9 +299,9 @@ void KoZnaui::on_DALJE(){
     disableUi();
 
     displayAnswer();
-    QString answer = ui->DALJE1->text();
-    qDebug()<< answer << "\n";
-    sendMessage(server, "ANSWER:answer,0,\n");
+    //QString answer = ui->DALJE1->text();
+   // qDebug()<< answer << "\n";
+    sendMessage(server, "ANSWER:DALJE,0,\n");
     //sendMessage(server, "POINTS:10\n");
 }
 
@@ -385,6 +385,9 @@ void KoZnaui::disableUi() {
     ui->pushButtonAns2->setDisabled(true);
     ui->pushButtonAns3->setDisabled(true);
     ui->pushButtonAns4->setDisabled(true);
+    ui->DALJE1->setDisabled(true);
+
+
 }
 
 
@@ -393,6 +396,7 @@ void KoZnaui::enableUi() {
     ui->pushButtonAns2->setEnabled(true);
     ui->pushButtonAns3->setEnabled(true);
     ui->pushButtonAns4->setEnabled(true);
+    ui->DALJE1->setEnabled(true);
 }
 
 
