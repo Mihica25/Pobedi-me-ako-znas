@@ -396,7 +396,7 @@ void Session::processReckoMessage(const QString& msg){
                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\n"));
                     reckoPoints -= 2;
                 } else {
-                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nGAME") + QString::number(reckoGameNo) + "_ENDED\n");
+                     sendMessageToBothPlayers("OP_WORD:" + word + "\nRESULT:" + result.append("\nCORRECT_WORD:") + recko + "\nGAME" + QString::number(reckoGameNo) + "_ENDED\n");
                      reckoPoints = 12;
                      reckoWordNo = 0;
                      reckoGameNo++;

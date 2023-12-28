@@ -72,7 +72,7 @@ private:
     void disableRow(int index,bool disable = true);
     void setUpRows();
     void disableSolution();
-    void showSolution();
+    void showSolution(QString word);
     void sendMessage(QTcpSocket* socket, QString msg);
     void restartGame();
     QString getWord();

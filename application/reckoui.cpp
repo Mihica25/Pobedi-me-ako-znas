@@ -51,8 +51,13 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
     ui->label->hide();
     ui->leBodovi->hide();
     ui->leTimer->hide();
-    ui->p1Name->setText(player1);
-    ui->p2Name->setText(player2);
+    if(turn){
+        ui->p1Name->setText(player1);
+        ui->p2Name->setText(player2);
+    } else {
+        ui->p1Name->setText(player2);
+        ui->p2Name->setText(player1);
+    }
 
     startGame();
 }
@@ -60,7 +65,6 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
 void ReckoUI::startGame(){
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
-    connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
     tajmer->start(1000);
     if(turn){
         connect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
@@ -68,6 +72,7 @@ void ReckoUI::startGame(){
         connect(ui->pbPotvrdi3 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi3Multiplayer);
         connect(ui->pbPotvrdi4 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi4Multiplayer);
         connect(ui->pbPotvrdi5 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi5Multiplayer);
+        connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
     } else {
         disableRow(0);
     }
@@ -77,7 +82,6 @@ void ReckoUI::startGame(){
 void ReckoUI::restartGame(){
     disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     disconnect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
-    disconnect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
     time = 60;
     ui->mTimer->setText(QString::number(time));
     if(turn){
@@ -86,6 +90,7 @@ void ReckoUI::restartGame(){
         disconnect(ui->pbPotvrdi3 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi3Multiplayer);
         disconnect(ui->pbPotvrdi4 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi4Multiplayer);
         disconnect(ui->pbPotvrdi5 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi5Multiplayer);
+        disconnect(this, &ReckoUI::timesUp, this, &ReckoUI::on_mTimesUp);
         disableRow(0);
     } else {
         disableRow(0, false);
@@ -114,25 +119,34 @@ void ReckoUI::setUpBackground(){
 
 
 void ReckoUI::on_pbPotvrdi1Multiplayer(){
-    qDebug() << "U onBt1 smo" << endl;
     QString word = getWord();
-    sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    if(word.trimmed().length() == 5){
+        sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    }
 }
 void ReckoUI::on_pbPotvrdi2Multiplayer(){
     QString word = getWord();
-    sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    if(word.trimmed().length() == 5){
+        sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    }
 }
 void ReckoUI::on_pbPotvrdi3Multiplayer(){
     QString word = getWord();
-    sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    if(word.trimmed().length() == 5){
+        sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    }
 }
 void ReckoUI::on_pbPotvrdi4Multiplayer(){
     QString word = getWord();
-    sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    if(word.trimmed().length() == 5){
+        sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    }
 }
 void ReckoUI::on_pbPotvrdi5Multiplayer(){
     QString word = getWord();
-    sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    if(word.trimmed().length() == 5){
+        sendMessage(server, "WORD:" + word.toUtf8() + "\n");
+    }
 }
 
 void ReckoUI::on_pbPotvrdi1(){
@@ -256,6 +270,7 @@ void ReckoUI::colorRow(QString result){
 }
 
 void ReckoUI::writeWord(QString word){
+    qDebug() << (recko->getCurrentRow() - 1) << endl;
     QHBoxLayout* horizontalLayout =
             qobject_cast<QHBoxLayout*>(ui->verticalLayout->
                                        itemAt(recko->getCurrentRow() - 1)->
@@ -349,7 +364,9 @@ void ReckoUI::updateTime()
     }
 
     if(time--==0){
-        emit timesUp();
+        if(turn){
+            emit timesUp();
+        }
     }
 
 
@@ -373,7 +390,7 @@ void ReckoUI::on_gameEnds(){
     tajmer->stop();
     ukupni_bodovi += bodovi;
     ui->leBodovi->setText(QString::number(ukupni_bodovi));
-    showSolution();
+//    showSolution(recko);
     qDebug() << "Game ends";
 
 }
@@ -409,7 +426,8 @@ void ReckoUI::clearSolution(){
 
 }
 
-void ReckoUI::showSolution(){
+void ReckoUI::showSolution(QString word){
+    qDebug() << "showSolution() :)" << endl;
     QHBoxLayout* Row =
             qobject_cast<QHBoxLayout*>(ui->resenje->layout());
     for (int j = 0; j < Row->count(); ++j) {
@@ -417,7 +435,7 @@ void ReckoUI::showSolution(){
 
         if (lineEdit) {
             lineEdit->setDisabled(false);
-            lineEdit->setText(recko->wordle.at(j));
+            lineEdit->setText(word.at(j));
             lineEdit->setDisabled(true);
         }
     }
@@ -474,7 +492,8 @@ void ReckoUI::processServerMessage(QString serverMessage){
 
      } else if(serverMessage.startsWith("CORRECT_WORD:")){
             QString opWord = serverMessage.mid(13);
-            writeWord(opWord);
+//            writeWord(opWord);
+            showSolution(opWord);
     } else if(serverMessage.startsWith("GAME1_ENDED")){
         qDebug() << "First game just ended up :(" << endl;
 //        restartGame();

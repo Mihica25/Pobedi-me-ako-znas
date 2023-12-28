@@ -1,3 +1,10 @@
+/********************************************************************************
+** Form generated from reading UI file 'kozna.ui'
+**
+** Created by: Qt User Interface Compiler version 5.12.8
+**
+** WARNING! All changes made in this file will be lost when recompiling UI file!
+********************************************************************************/
 
 #ifndef UI_KOZNA_H
 #define UI_KOZNA_H
