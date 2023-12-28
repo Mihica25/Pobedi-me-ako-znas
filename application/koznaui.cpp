@@ -492,6 +492,7 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
 void KoZnaui::on_podrundaEnds(){
     qDebug() << "PODRUNDA ENDS\n";
+    time = 3;
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     //podrunda->close();
 

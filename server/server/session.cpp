@@ -391,7 +391,7 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     {
         // generisanje pitanja
 
-        QString filePath = "/home/user/pobedi-me-ako-znas/server/server/podrunda_pitanja/pitanja.txt";
+        QString filePath = "/home/tamara/Desktop/pobedi-me-ako-znas/server/server/podrunda_pitanja/pitanja.txt";
         QStringList pitanja;
 
         if (!QFile::exists(filePath))

@@ -1,6 +1,11 @@
-Koliko slova ima azbuka?,30
-Koje godine je poceo 1. svetski rat?,1914
-Koliko meseci ima godina?,12
-Koliko postoji svetskih cuda?,7
-Koliko dana ima prestupna godina?,366
+Koliko sezona ima serija "Friends"?,10
+Koliko od 5 najbržih životinja sveta u Afrifci?,3
+Koliko hidroksidnih grupa ima aluminijum-hidorksid?,3
+Koliko Oskara je dobio film "Jadnici?",3
+Koliko puta je Huan Peron biran za predsednika Argentine?,3
+U kom veku je rođen Leonardo da Vinči?,15
+Koliko sestrića ima Paja Patak?,3
+Koliko puta je Italija pobeđivala na izboru za pesmu Evrovizije?,2
+Koliko je postavljeno velikih nerešenih matematičkih problema poznatih i kao "The Millennium Prize Problems"?,7
+Koliko hromozoma ima ćelija čoveka na početku mejotičke deobe?,46
 
