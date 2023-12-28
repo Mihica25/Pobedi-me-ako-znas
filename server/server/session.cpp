@@ -131,6 +131,27 @@ void Session::stopRecko(){
     return;
 }
 
+//
+void Session::stopMojBroj(){
+    qDebug() << "Zavrsio se Mojbroj, prelazimo na sledecu igru :)" << endl;
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMojBroj);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMojBroj);
+
+    startKoZna();
+
+    return;
+}
+
+void Session::stopKoZna(){
+    qDebug() << "Zavrsila se KoZna, prelazimo na sledecu igru :)" << endl;
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadKoZna);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadKoZna);
+
+    //pokretanje sledece igre
+
+    return;
+}
+//
 void Session::stopPogodiSta() {
     qDebug() << "Zavrsila se igra Pogodi Sta, prelazimo na sledecu igru :)" << endl;
     disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadRecko);
@@ -220,6 +241,8 @@ void Session::player1ReadyReadKoZna()
     qDebug() << "Data received from Player 1: " << msg;
 
     QStringList receivedMessages = msg.split('\n');
+
+    //qDebug()<<receivedMessages<<endl;
 
     for (const QString& receivedMessage : receivedMessages) {
         if (!receivedMessage.isEmpty()) {
@@ -368,7 +391,7 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     {
         // generisanje pitanja
 
-        QString filePath = "/home/tamara/Desktop/pobedi-me-ako-znas/server/server/podrunda_pitanja/pitanja.txt";
+        QString filePath = "/home/user/pobedi-me-ako-znas/server/server/podrunda_pitanja/pitanja.txt";
         QStringList pitanja;
 
         if (!QFile::exists(filePath))
@@ -630,13 +653,18 @@ void Session::processMojBrojMessage(const QString& msg){
         gameEnd_mojbroj++;
 
         if (gameEnd_mojbroj == 2)
+        {
             sendMessageToBothPlayers("GAME END\n");
+            //ovdeee
+            stopMojBroj();
+        }
     }
 }
 
 void Session::processKoZnaMessage(const QString& msg, int num){
-
+    qDebug() << "Primljenja poruka:" << msg << endl;
     if(msg.startsWith("SEND")){
+        qDebug()<< "Primljena"<<endl;
 
         sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
     }
@@ -714,6 +742,12 @@ void Session::processKoZnaMessage(const QString& msg, int num){
             player2->pointsKoZna += poeni;
             sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
         }
+
+        if(msg.startsWith("END")) {
+            stopKoZna();
+        }
+
+
     }
 }
 

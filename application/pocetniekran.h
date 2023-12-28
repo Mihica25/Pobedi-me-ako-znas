@@ -8,7 +8,9 @@
 #include "reckoui.h"
 #include "mojbroj.h"
 #include "pogodistaui.h"
+#include "koznaui.h"
 #include <QString>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }
@@ -42,6 +44,7 @@ private:
     ReckoUI* recko;
     Mojbroj* mojbroj;
     PogodiStaUI* pogodiSta;
+    KoZnaui* kozna;
     void initConntroler();
 
     bool connectToServer();

@@ -44,6 +44,8 @@ public:
     int player2Points = 0;
     QVector<QStringList> pitanja;
     Podrundaui* podrunda;
+    int getPlayer1Points();
+    int getPlayer2Points();
 
 public slots:
     void on_timesUp();
