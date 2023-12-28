@@ -1,10 +1,3 @@
-/********************************************************************************
-** Form generated from reading UI file 'podrundaui.ui'
-**
-** Created by: Qt User Interface Compiler version 5.12.8
-**
-** WARNING! All changes made in this file will be lost when recompiling UI file!
-********************************************************************************/
 
 #ifndef UI_PODRUNDAUI_H
 #define UI_PODRUNDAUI_H

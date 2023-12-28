@@ -1,6 +1,8 @@
 #include "session.h"
 #include <thread>
 #include <chrono>
+#include <random>
+#include <QDebug>
 
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
@@ -16,6 +18,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     reckoPoints = 12;
     reckoWordNo = 0;
 
+    generatedCards = generateCardIds();
     submit_mojbroj = 0;
     gameEnd_mojbroj = 0;
 
@@ -153,6 +156,23 @@ void Session::stopRecko(){
     return;
 }
 
+
+void Session::startMemorija(){
+    connect(player1->tcpSocket, &QTcpSocket::readyRead,this,&Session::player1ReadyReadMemorija);
+    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
+
+}
+
+void Session::stopMemorija(){
+    qDebug() << "Zavrsila se Memorija, prizazujemo statistiku " << endl;
+
+    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMemorija);
+    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
+
+    return;
+}
+
+
 //
 void Session::stopMojBroj(){
     qDebug() << "Zavrsio se Mojbroj, prelazimo na sledecu igru :)" << endl;
@@ -223,6 +243,7 @@ void Session::startPodrunda()
     connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadPodrunda);
     connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadPodrunda);
 }
+
 
 
 void Session::player1ReadyReadRecko()
@@ -322,6 +343,35 @@ void Session::player2ReadyReadKoZna()
     }
 }
 
+void Session::player1ReadyReadMemorija()
+{
+    // Obrada podataka koji stižu od prvog igrača
+    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
+    qDebug() << "Data received from Player 1: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMemorijaMessage(receivedMessage);
+        }
+    }
+}
+
+void Session::player2ReadyReadMemorija()
+{
+    // Obrada podataka koji stižu od drugog igrača
+    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
+    qDebug() << "Data received from Player 2: " << msg;
+
+    QStringList receivedMessages = msg.split('\n');
+
+    for (const QString& receivedMessage : receivedMessages) {
+        if (!receivedMessage.isEmpty()) {
+            processMemorijaMessage(receivedMessage);
+        }
+    }
+}
 
 void Session::processReckoMessage(const QString& msg){
     if(msg.startsWith("WORD:")) {
@@ -554,6 +604,66 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
     }
 }
 
+void Session::processMemorijaMessage(const QString& request){
+    if(request.startsWith("GENERATE_CARD_IDS")){
+        QString cardIdsString;
+        int size =generatedCards.size();
+        for(int i = 0; i < size; ++i){
+            cardIdsString.append(QString::number(generatedCards[i]));
+
+            if(i < size - 1){
+                cardIdsString.append(",");
+            }
+        }
+        sendMessageToBothPlayers("CARD_IDS:" + cardIdsString + "\n");
+    }else if(request.startsWith("TURN1")){
+        sendMessageToPlayer1("CHANGETURN\n");
+    }else if(request.startsWith("TURN2")){
+        sendMessageToPlayer2("CHANGETURN\n");
+    }else if(request.startsWith("MOVE1:")){
+        QString id = request.mid(6);
+        sendMessageToPlayer2("TURNCARD:" + id + "\n");
+    }else if(request.startsWith("MOVE2:")){
+        QString id = request.mid(6);
+        sendMessageToPlayer1("TURNCARD:" + id + "\n");
+    }else if(request.startsWith("POINTS1")){
+        sendMessageToPlayer2("UPDATE_POINTS\n");
+    }else if(request.startsWith("POINTS2")){
+        sendMessageToPlayer1("UPDATE_POINTS\n");
+    }else{
+        //TODO
+    }
+}
+
+void Session::shuffleQVector(QVector<int> &vector){
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(vector.begin(),vector.end(),g);
+}
+
+QVector<int> Session::generateCardIds(){
+
+    const int totalCards = 20;
+    const int cardPairs = 10;
+
+    QVector<int> allCardIds;
+    QVector<int> finalCardIds;
+
+    for(int i = 1; i <= totalCards; ++i){
+        allCardIds.append(i);
+    }
+
+    shuffleQVector(allCardIds);
+
+    for(int i = 0; i<cardPairs; ++i){
+        finalCardIds.append(allCardIds[i]);
+        finalCardIds.append(allCardIds[i]);
+    }
+
+    shuffleQVector(finalCardIds);
+    return finalCardIds;
+}
 
 QString Session::checkReckoSolution(const QString& word){
     QString result;
@@ -570,447 +680,3 @@ QString Session::checkReckoSolution(const QString& word){
     }
     return result;
 }
-
-void Session::player1ReadyReadMojBroj()
-{
-    // Obrada podataka koji stižu od prvog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
-    qDebug() << "Data received from Player 1: " << msg;
-
-    QStringList receivedMessages = msg.split('\n');
-
-    for (const QString& receivedMessage : receivedMessages) {
-        if (!receivedMessage.isEmpty()) {
-            processMojBrojMessage(receivedMessage);
-        }
-    }
-}
-
-void Session::player2ReadyReadMojBroj()
-{
-    // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
-    qDebug() << "Data received from Player 2: " << msg;
-
-    QStringList receivedMessages = msg.split('\n');
-
-    for (const QString& receivedMessage : receivedMessages) {
-        if (!receivedMessage.isEmpty()) {
-            processMojBrojMessage(receivedMessage);
-        }
-    }
-}
-
-void Session::processMojBrojMessage(const QString& msg){
-
-    // Ako pocinje sa NUMBER I U PITANJU JE GENERATE ONDA POZOVI GENERISANJE brojeva i posalji igracima
-    if(msg.startsWith("GENERATE:"))
-    {
-        //NE DIRATI GENERISANJE BROJEVA - FUNKCIONISE!
-        QString originality = msg.mid(9);
-        qDebug() << "OVOOOO jE; " << originality;
-        if (originality == "original")
-        {
-            //generisi brojeve
-
-            //saljemo brojeve
-            sendMessageToBothPlayers("GENERATE:" + targetNumber + initialNumbers + "\n");
-
-            qDebug() << "SALJE SE ORIGINAL: " << "GENERATE:" + targetNumber + initialNumbers + "\n";
-        } else
-        {
-            //uzmi kopiju
-
-
-            qDebug() << "SALJE SE KOPIJA: " << "GENERATE:" + targetNumber + initialNumbers + "\n";
-            //saljemo brojeve
-            sendMessageToBothPlayers("GENERATE:" + targetNumber + initialNumbers + "\n");
-        }
-
-    } else if(msg.startsWith("START GAME:"))
-    {
-        targetNumber = generateTargetNumber();
-        initialNumbers = generateInitialNumbers();
-
-        QString player = msg.mid(11);
-        qDebug() << "SIGNAL I ZA START NJEGOV" << player;
-
-        if (player == player1->getPlayerUsername())
-        {
-            qDebug() << "player111111111111111";
-            sendMessageToPlayer1("START GAME");
-        } else
-        {
-            qDebug() << "player222222222222222";
-            sendMessageToPlayer2("START GAME");
-        }
-    } else if(msg.startsWith("EXPRESSION:"))
-    {
-        QString expression = msg.mid(11);
-        if (expression.startsWith(player1->getPlayerUsername()))
-            sendMessageToPlayer2("EXPRESSION:" + expression.mid(player1->getPlayerUsername().length()+1) + "\n");
-        else
-            sendMessageToPlayer1("EXPRESSION:" + expression.mid(player2->getPlayerUsername().length()+1) + "\n");
-
-    } else if(msg.startsWith("RESULT:"))
-    {
-        QString result = msg.mid(7);
-        qDebug() << "RESULT: " << result;
-
-        int index = result.indexOf('%');
-        if (result.left(index) == player1->getPlayerUsername())
-        {
-            player1_res = result.mid(index+1);
-            qDebug() << "PLAYER1 RESULT: " << player1_res;
-        } else
-        {
-            player2_res = result.mid(index+1);
-            qDebug() << "PLAYER2 RESULT: " << player2_res;
-        }
-
-        submit_mojbroj++;
-        checkMojBrojSolution(player1_res,player2_res);
-    } else if(msg.startsWith("GAME END"))
-    {
-        qDebug("ENDDDDDDDDDDDDDDDDDDDDDDD");
-        gameEnd_mojbroj++;
-
-        if (gameEnd_mojbroj == 2)
-        {
-            sendMessageToBothPlayers("GAME END\n");
-            //ovdeee
-            stopMojBroj();
-        }
-    }
-}
-
-void Session::processKoZnaMessage(const QString& msg, int num){
-    qDebug() << "Primljenja poruka:" << msg << endl;
-
-    if(msg.startsWith("P1:")){
-        player1->pointsKoZna = msg.mid(3).toInt();
-
-    }
-
-    if(msg.startsWith("P2:")){
-        player2->pointsKoZna = msg.mid(3).toInt();
-
-    }
-
-
-    if(msg.startsWith("SEND")){
-        qDebug()<< "Primljena"<<endl;
-
-        sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
-    }
-    if(msg.startsWith("ANSWER:") and num == 1) {
-        QStringList odg = msg.mid(7).split(",");
-             //answer1 = msg.mid(7);
-        answer1 = odg.value(0);
-        qDebug() << answer1 ;
-
-        qDebug() << odg.value(1).toInt() << "porukicaaaaa\n";
-        qDebug() << odg << "listaaa\n";
-        int poeni1 = odg.value(1).toInt();
-        if (poeni1 == 5)
-             player1->pointsKoZna -= poeni1;
-        else
-            player1->pointsKoZna += poeni1;
-
-
-        //if da se doda sa prefiksom da li je manje ili vece od nule
-        sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
-        //sendMessageToBothPlayers("POENI1:" + odg.value(1) + "\n");
-        if(answer1 != "DALJE")
-           sendMessageToPlayer2("ANSWERP1:" + answer1 + "\n");
-    }
-
-    if(msg.startsWith("ANSWER:") and num == 2) {
-            // answer2 = msg.mid(7);
-            //sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
-
-        QStringList odg = msg.mid(7).split(",");
-             //answer1 = msg.mid(7);
-        answer2 = odg.value(0);
-
-        qDebug()<<"sada"<< answer2 << endl;
-
-        qDebug() << odg.value(1) << "porukicaaaaa\n";
-        qDebug() << odg << "listaaa\n";
-        int poeni2 = odg.value(1).toInt();
-        qDebug() << poeni2 << "kad je dalje\n";
-        if (poeni2 == 5)
-             player2->pointsKoZna -= poeni2;
-        else
-            player2->pointsKoZna += poeni2;
-
-
-        //da se doda
-        sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
-        if(answer2 != "DALJE")
-          sendMessageToPlayer1("ANSWERP22:" + answer2 + "\n");
-    }
-
-    if(answer1 != "" and answer2 != ""){
-
-        if (answer1 == "true" & answer2 == "true")
-        {
-            sendMessageToBothPlayers("PODRUNDA\n");
-            otvoriPodrundu();
-        }
-        else
-        {
-            sendMessageToBothPlayers("PREBACI\n");
-        }
-
-        answer1 = "";
-        answer2 = "";
-
-        if(msg.startsWith("POINTS:") and num == 1){
-            qDebug() << "serverrr" << player1->pointsKoZna << endl;
-            int poeni = msg.mid(7).toInt();
-            player1->pointsKoZna += poeni;
-            sendMessageToBothPlayers("POENI1:" + QString::number(player1->pointsKoZna) + "\n");
-        }
-
-
-        if(msg.startsWith("POINTS:") and num == 2){
-            qDebug() << "serverrr" << player2->pointsKoZna << endl;
-            int  poeni = msg.mid(7).toInt();
-            player2->pointsKoZna += poeni;
-            sendMessageToBothPlayers("POENI2:" + QString::number(player2->pointsKoZna) + "\n");
-        }
-    }
-    if(msg.startsWith("END")) {
-        qDebug() << "END Ko zna";
-        sendMessageToBothPlayers("END\n");
-        stopKoZna();
-    }
-}
-
-
-
-//DODATI POENE U SERVER
-void Session::checkMojBrojSolution(const QString& pt1, const QString& pt2)
-{
-    qDebug()<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ "<< submit_mojbroj;
-    if (submit_mojbroj != 2 && submit_mojbroj != 4)
-        return;
-
-    int res1 = pt1.toInt();
-    int res2 = pt2.toInt();
-    int res  = targetNumber.toInt();
-    qDebug() << pt1 << pt2 << targetNumber;
-
-    if ( (res1 == -1179 || res1 == -1951) && (res2 != -1179 && res2 != -1951) )
-    {
-        sendMessageToBothPlayers("POINTS:0%10");
-        return;
-    } else if ( (res2 == -1179 || res2 == -1951) && (res1 != -1179 && res1 != -1951) )
-    {
-        sendMessageToBothPlayers("POINTS:10%0");
-        return;
-    } else if ( (res1 == -1179 && res2 == -1951) || (res1 == -1951 && res2 == -1179) || (res1 == -1179 && res2 == -1179) || (res1 == -1951 && res2 == -1951))
-    {   qDebug() << "PRAZNO!@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
-        sendMessageToBothPlayers("POINTS:0%0");
-        return;
-    }
-
-    if (qAbs(res-res1) < qAbs(res-res2))
-    {
-        sendMessageToBothPlayers("POINTS:10%0");
-    } else if (qAbs(res-res1) > qAbs(res-res2))
-    {
-        sendMessageToBothPlayers("POINTS:0%10");
-    } else {
-        sendMessageToBothPlayers("POINTS:5%5");
-    }
-
-}
-
-QString Session::generateTargetNumber()
-{
-    return QString::number(QRandomGenerator::global()->bounded(1,1000));
-}
-
-//Done - added QRadnomGenerator
-QString Session::generateInitialNumbers()
-{
-    QString initialNumbers;
-
-    for (int i = 0; i < 4; ++i)
-    {
-        int randomNumber = QRandomGenerator::global()->bounded(1,10);
-        initialNumbers = initialNumbers + "-" + QString::number(randomNumber);
-    }
-
-    int fifthNumberOptions[] = {10, 15, 20};
-    int fifthNumber = QRandomGenerator::global()->bounded(3);
-    initialNumbers = initialNumbers + "-" + QString::number(fifthNumberOptions[fifthNumber]);
-
-    int sixthNumberOptions[] = {25, 50, 75, 100};
-    int sixthNumber = QRandomGenerator::global()->bounded(3);
-    initialNumbers = initialNumbers + "-" + QString::number(sixthNumberOptions[sixthNumber]);
-
-    return initialNumbers;
-}
-
-
-int Session::checkPodrundaWinner()
-{
-    int razlika1 = qAbs(player1->podrunda_guess - player1->podrunda_resenje);
-    int razlika2 = qAbs(player2->podrunda_guess - player2->podrunda_resenje);
-
-    //qDebug() << "podrunda resenje 1 " << player1->podrunda_resenje;
-
-    if (razlika1 < 0 || razlika2 < 0)
-        return -1;
-
-    //return razlika2;
-
-    if (razlika1 < razlika2)
-    {
-        // pobednik je 1. igrac jer je blizi resenju
-        player1->pobednik = true;
-        player2->pobednik = false;
-        player1->pointsKoZna += 10;
-        return 11;
-    }
-    else if (razlika1 > razlika2)
-    {
-        // pobednik je 2. igrac jer je blizi resenju
-        player1->pobednik = false;
-        player2->pobednik = true;
-        player2->pointsKoZna += 10;
-        return 21;
-    }
-    else if (razlika1 == razlika2)
-    {
-        if(player1->podrunda_time > player2->podrunda_time)
-        {
-            // pobednik je 1. igrac jer je brzi
-            player1->pobednik = true;
-            player2->pobednik = false;
-            player1->pointsKoZna += 10;
-            return 12;
-        }
-        else if(player1->podrunda_time < player2->podrunda_time)
-        {
-            // pobednik je 2. igrac jer je brzi
-            player1->pobednik = false;
-            player2->pobednik = true;
-            player2->pointsKoZna += 10;
-            return 22;
-        }
-        else
-        {
-            // nereseno -> oba igraca dobijaju poene
-            player1->pobednik = true;
-            player2->pobednik = true;
-            player1->pointsKoZna += 10;
-            player2->pointsKoZna += 10;
-            return 0;
-        }
-    }
-    return -1;
-}
-
-
-QString Session::checkKoZnaSolution(const QString& word){
-    QString result;
-    qDebug() << word << endl;
-    qDebug() << recko << endl;
-    for(int i = 0; i < recko.size() && i < word.size(); i++){
-        if(word.at(i) == recko.at(i)){
-            result.append("G");
-        } else if (recko.contains(word.at(i))) {
-            result.append("Y");
-        } else {
-            result.append("R");
-        }
-    }
-    return result;
-}
-
-void Session::player1ReadyReadPogodiSta()
-{
-    // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player1->tcpSocket->readAll());
-    qDebug() << "Data received from Player 1: " << msg;
-
-    QStringList receivedMessages = msg.split('\n');
-
-    for (const QString& receivedMessage : receivedMessages) {
-        if (!receivedMessage.isEmpty()) {
-            processPogodiStaMessage(receivedMessage, player1);
-        }
-    }
-}
-
-void Session::player2ReadyReadPogodiSta()
-{
-    // Obrada podataka koji stižu od drugog igrača
-    QString msg = QString::fromUtf8(player2->tcpSocket->readAll());
-    qDebug() << "Data received from Player 2: " << msg;
-
-    QStringList receivedMessages = msg.split('\n');
-
-    for (const QString& receivedMessage : receivedMessages) {
-        if (!receivedMessage.isEmpty()) {
-            processPogodiStaMessage(receivedMessage, player2);
-        }
-    }
-}
-
-void Session::processPogodiStaMessage(const QString &msg, Player* player)
-{
-    if(msg.startsWith("IMAGE_GEN")) {
-        player->isReady = true;
-        if(player1->isReady == true && player2->isReady == true){
-            generatePogodiSta();
-            player1->isReady = false;
-            player2->isReady = false;
-        }
-    }
-    else if (msg.startsWith("IMG_GUESS:")) {
-        QString guess = msg.mid(10);
-        qDebug() << "Player" + QString::number(player->playerId)
-                 << " guessed: " + guess;
-        if(guess == pogodiSta.toLower()) {
-            QString answer = "IMG_ANS:" + QString::number(player->playerId) + ":" + pogodiSta + "\n";
-            sendMessageToBothPlayers(answer);
-        }
-    }
-    else if (msg.startsWith("POGODISTA_END")) {
-        sendMessageToBothPlayers("POGODISTA_END\n");
-        stopPogodiSta();
-    }
-}
-
-void Session::generatePogodiSta()
-{
-    QFile file(":/data/resources/PogodiSta.txt");
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QStringList lines = QTextStream(&file).readAll().split('\n');
-        int randomIndex = QRandomGenerator::global()->bounded(lines.size());
-        QString randomLine = lines[randomIndex];
-        qDebug() << randomLine;
-
-        QStringList parts = randomLine.split(',');
-        if (parts.size() == 3) {
-            int index = parts[0].trimmed().toInt();
-            pogodiSta = parts[1].trimmed();
-            qDebug() << "PogodiSta answer: " + pogodiSta;
-            QString info = parts[2].trimmed();
-
-            QByteArray message;
-            message.append("IMAGE_G:");
-            message.append(QString::number(index) + ":");
-            message.append(info.toUtf8() + ":");
-            message.append(pogodiSta + "\n");
-            sendMessageToBothPlayers(message);
-        }
-    }
-}
-
-

@@ -8,7 +8,7 @@ CardWidget::CardWidget(int id,int idR, QWidget *parent):
     isRevealed(false),
     idReveal(idR)
 {
-    QString imagePath = "/home/user/Desktop/pobedi-me-ako-znas/application/resources/kartice_memorija/image" + QString::number(id) + ".jpg";
+    QString imagePath = ":kartice/resources/kartice_memorija/image" + QString::number(id) + ".jpg";
     cardImage = QPixmap(imagePath);
 
     setFixedSize(150,150);
@@ -29,6 +29,7 @@ void CardWidget::reveal(){
 }
 
 void CardWidget::mousePressEvent(QMouseEvent *event){
+
     if(!isRevealed){
         reveal();
         emit clicked(idReveal);

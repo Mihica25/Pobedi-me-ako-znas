@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.11.0, 2023-12-28T17:04:32. -->
+=======
+<!-- Written by QtCreator 4.11.0, 2023-12-28T17:20:43. -->
+>>>>>>> memorija_server
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>

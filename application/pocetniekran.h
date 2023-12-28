@@ -9,8 +9,8 @@
 #include "mojbroj.h"
 #include "pogodistaui.h"
 #include "koznaui.h"
+#include "memorija.h"
 #include <QString>
-
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }
@@ -31,6 +31,7 @@ public slots:
     void on_koZnaEnds();
     void on_podrundaEnded();
     void on_pogodiStaEnds();
+    void on_memorijaEnds();
     void onReadyRead();
 
 private:

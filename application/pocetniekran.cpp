@@ -7,6 +7,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     , ui(new Ui::PocetniEkran)
 {
     ui->setupUi(this);
+
+    ui->setupUi(this);
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
@@ -110,15 +112,6 @@ void PocetniEkran::initConntroler(){
 }
 
 void PocetniEkran::on_reckoEnds(){
-    qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
-    qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
-    qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
-    mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
-    recko->close(); //dodato
-    mojbroj->show();
-    connect(mojbroj, &Mojbroj::mGameEnds, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
-
-
     return;
 }
 
@@ -149,6 +142,11 @@ void PocetniEkran::on_koZnaEnds(){
 void PocetniEkran::on_podrundaEnded(){
     return;
 }
+
+void PocetniEkran::on_memorijaEnds(){
+    return;
+}
+
 
 
 void PocetniEkran::on_pogodiStaEnds()

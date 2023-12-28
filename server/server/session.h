@@ -11,6 +11,7 @@
 #include <QString>
 #include <QRandomGenerator>
 #include <QStringList>
+#include <QVector>
 
 class Session : public QObject
 {
@@ -35,6 +36,8 @@ private slots:
     void player2ReadyReadPodrunda();
     void player1ReadyReadPogodiSta();
     void player2ReadyReadPogodiSta();
+    void player1ReadyReadMemorija();
+    void player2ReadyReadMemorija();
 //    void player1ReadyRead();
 //    void player2ReadyRead();
 
@@ -42,6 +45,7 @@ private:
     Player *player1;
     Player *player2;
     QStringList reckoWords;
+    QVector<int> generatedCards;
     QString recko;
     int reckoGameNo;
     int reckoPoints;
@@ -72,6 +76,12 @@ private:
     void otvoriPodrundu();
     void stopPodrunda();
     void stopPogodiSta();
+    void startMemorija();
+    void stopMemorija();
+
+    void shuffleQVector(QVector<int> &vector);
+    QVector<int> generateCardIds();
+    void processMemorijaMessage(const QString& request);
     void processReckoMessage(const QString& msg);
     QString checkReckoSolution(const QString& word);
     void processMojBrojMessage(const QString& msg);
