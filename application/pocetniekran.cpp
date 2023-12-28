@@ -112,6 +112,14 @@ void PocetniEkran::initConntroler(){
 }
 
 void PocetniEkran::on_reckoEnds(){
+    qDebug() << "PocetniEkran::on_reckoEnds()" << endl;
+    qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
+    qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
+    mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
+    recko->close(); //dodato
+    mojbroj->show();
+    connect(mojbroj, &Mojbroj::mGameEnds, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
+
     return;
 }
 

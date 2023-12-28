@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,6 +42,10 @@ public:
     QWidget *widget_13;
     QWidget *widget_4;
     QWidget *widget_1;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_4;
+    QLabel *label_5;
 
     void setupUi(QWidget *Memorija)
     {
@@ -161,6 +166,26 @@ public:
 
         gridLayout->addWidget(widget_1, 0, 0, 1, 1);
 
+        label = new QLabel(Memorija);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setEnabled(false);
+        label->setGeometry(QRect(70, 40, 191, 41));
+        label->setStyleSheet(QString::fromUtf8("background-color:rgb(170, 255, 127)"));
+        label_2 = new QLabel(Memorija);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setEnabled(false);
+        label_2->setGeometry(QRect(540, 40, 191, 41));
+        label_2->setStyleSheet(QString::fromUtf8("background-color:rgb(170, 255, 127)"));
+        label_4 = new QLabel(Memorija);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setEnabled(false);
+        label_4->setGeometry(QRect(540, 100, 191, 71));
+        label_4->setStyleSheet(QString::fromUtf8("background-color:rgb(170, 255, 127)"));
+        label_5 = new QLabel(Memorija);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setEnabled(false);
+        label_5->setGeometry(QRect(70, 100, 191, 71));
+        label_5->setStyleSheet(QString::fromUtf8("background-color:rgb(170, 255, 127)"));
 
         retranslateUi(Memorija);
 
@@ -170,6 +195,10 @@ public:
     void retranslateUi(QWidget *Memorija)
     {
         Memorija->setWindowTitle(QApplication::translate("Memorija", "Form", nullptr));
+        label->setText(QString());
+        label_2->setText(QString());
+        label_4->setText(QString());
+        label_5->setText(QString());
     } // retranslateUi
 
 };
