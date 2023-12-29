@@ -69,7 +69,8 @@ private:
     int submit_mojbroj;
     int gameEnd_mojbroj;
 
-    QString pitanje;
+    QString pitanjce;
+
     QString answer1;
     QString answer2;
     int points1;
@@ -101,6 +102,7 @@ private:
 
     QString generateTargetNumber();
     QString generateInitialNumbers();
+    void generateQuestions();
 
     void processPogodiStaMessage(const QString& msg, Player* player);
     void generatePogodiSta();
