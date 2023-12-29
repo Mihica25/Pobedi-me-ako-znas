@@ -119,7 +119,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="userName1">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -138,7 +138,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="userName2">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -157,7 +157,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="user2points">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -176,7 +176,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="user1points">
    <property name="enabled">
     <bool>false</bool>
    </property>
