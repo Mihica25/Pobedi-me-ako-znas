@@ -133,6 +133,7 @@ void PogodiStaUI::on_gameEnds()
     }
     else {
         sendMessage(server, "POGODISTA_END\n");
+        delete pogodiSta;
     }
 }
 

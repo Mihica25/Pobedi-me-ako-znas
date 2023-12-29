@@ -7,8 +7,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     , ui(new Ui::PocetniEkran)
 {
     ui->setupUi(this);
-
-    ui->setupUi(this);
+    tcpSocket = nullptr;
+    stackedWidget = nullptr;
     QPixmap bkgnd(":/background/resources/start_menu.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
@@ -27,6 +27,7 @@ PocetniEkran::PocetniEkran(QWidget *parent)
 
 PocetniEkran::~PocetniEkran()
 {
+    delete tcpSocket;
     delete ui;
 }
 
@@ -87,6 +88,7 @@ bool PocetniEkran::connectToServer(QString message)
         return true;  // Uspesna konekcija
     } else {
         qDebug() << "Greska, neuspesna konekcija sa serverom!";
+//        delete tcpSocket;
         return false;  // Neuspesna konekcija
     }
 }

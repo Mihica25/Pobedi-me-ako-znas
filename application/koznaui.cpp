@@ -556,7 +556,8 @@ void KoZnaui::on_podrundaEnds(){
     qDebug() << "poeni 2 podrunda" << podrunda->player2Points;
     qDebug() << "poeni 2 kozna" << player2Points;
 
-    podrunda->~Podrundaui();
+//    podrunda->~Podrundaui();
+    delete podrunda;
     return;
 }
 

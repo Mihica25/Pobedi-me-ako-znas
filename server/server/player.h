@@ -11,7 +11,7 @@ class Player : public QObject
 
 public:
     Player(QTcpSocket* socket, const QString& username, QObject *parent = nullptr,
-            bool isReady = false);
+            bool ready = false);
     ~Player();
 
     QString getPlayerUsername() const;
