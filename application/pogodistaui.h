@@ -42,7 +42,7 @@ private slots:
 
 private:
     Ui::PogodiStaUI *ui;
-    PogodiSta *pogodiSta = nullptr;;
+    PogodiSta *pogodiSta = nullptr;
     QPixmap updatedImage;
     QTcpSocket* server = nullptr;
     QTimer *gameTimer;

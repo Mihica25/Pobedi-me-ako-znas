@@ -41,33 +41,11 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     player1->pointsKoZna = 0;
     player2->pointsKoZna = 0;
 
-    QString filePath = ":/kozna/pitanja/kozna.txt";
+
 
     generateQuestions();
 
-       if (!QFile::exists(filePath))
-        {
-            qDebug() << "Fajl ne postoji.\n";
-        }
-
-        // Otvaranje fajla za čitanje
-        QFile file(filePath);
-        //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            qDebug() << "Nije moguće otvoriti fajl za čitanje.\n";
-        }
-
-        // Čitanje linija iz fajla i ispis na ekran
-        QTextStream in(&file);
-        pitanje = in.readLine();
-
-        file.close();
-
-
-    //pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
-
-    qDebug()<<"velicina:"<<pitanjce.size();
+      qDebug()<<"velicina:"<<pitanjce.size();
 
     startGame();
 }
@@ -811,7 +789,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
     if(msg.startsWith("SEND")){
         qDebug()<< "Primljena"<<endl;
 
-        sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
+        sendMessageToBothPlayers("PITANJE:" + pitanjce + "\n");
     }
     if(msg.startsWith("ANSWER:") and num == 1) {
         QStringList odg = msg.mid(7).split(",");
@@ -967,7 +945,7 @@ QString Session::generateInitialNumbers()
 
 
 void Session::generateQuestions(){
-    QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/kozna.txt";
+    QString filePath = ":/kozna/pitanja/kozna.txt";
 
 
       if (!QFile::exists(filePath))
