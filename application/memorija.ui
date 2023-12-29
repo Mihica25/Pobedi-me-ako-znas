@@ -119,81 +119,79 @@
     </item>
    </layout>
   </widget>
-  <widget class="QLabel" name="userName1">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>40</y>
-     <width>191</width>
-     <height>41</height>
+     <x>20</x>
+     <y>10</y>
+     <width>160</width>
+     <height>80</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(170, 255, 127)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLineEdit" name="lePlayer1">
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;
+color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLCDNumber" name="lcdPoints1"/>
+    </item>
+   </layout>
   </widget>
-  <widget class="QLabel" name="userName2">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
    <property name="geometry">
     <rect>
-     <x>540</x>
-     <y>40</y>
-     <width>191</width>
-     <height>41</height>
+     <x>610</x>
+     <y>10</y>
+     <width>160</width>
+     <height>80</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(170, 255, 127)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="user2points">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>100</y>
-     <width>191</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(170, 255, 127)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="user1points">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>100</y>
-     <width>191</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color:rgb(170, 255, 127)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLineEdit" name="lePlayer2">
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;
+color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLCDNumber" name="lcdPoints2"/>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

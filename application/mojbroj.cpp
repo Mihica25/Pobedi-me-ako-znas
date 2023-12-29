@@ -1,5 +1,6 @@
 ﻿#include "mojbroj.h"
 #include "ui_mojbroj.h"
+// #include "ui_mojbroj_copy.h"
 #include "mojbrojlogic.h"
 
 #include <QDebug>
@@ -22,14 +23,16 @@ Mojbroj::Mojbroj(QWidget *parent) :
 
     //TIMER
     time = 30;
-    ui->label_time->setText(QString::number(time));
+    // ui->label_time->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &Mojbroj::timesUp, this, &Mojbroj::on_timesUp);
     connect(this, &Mojbroj::gameEnd, this, &Mojbroj::on_gameEnd);
 
     ui->label_round->hide();
-    ui->label_time->hide();
+    // ui->label_time->hide();
+    ui->lbTimer->hide();
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -88,8 +91,10 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
     ui->setupUi(this);
 
 
-    ui->label_player1->setText(QString::number(player1Points));
-    ui->label_player2->setText(QString::number(player2Points));
+    // ui->label_player1->setText(QString::number(player1Points));
+    ui->lcdPoints1->display(player1Points);
+    // ui->label_player2->setText(QString::number(player2Points));
+    ui->lcdPoints2->display(player2Points);
 
     QPixmap bkgnd(":background/resources/moj_broj.png");
     bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
@@ -99,16 +104,20 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
 
     //TIMER
     time = 30;
-    ui->label_time->setText(QString::number(time));
+    // ui->label_time->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
 
     connect(timer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &Mojbroj::timesUp, this, &Mojbroj::on_timesUp);
     connect(this, &Mojbroj::gameEnd, this, &Mojbroj::on_gameEnd);
 
     ui->label_round->hide();
-    ui->label_time->hide();
-    ui->label_player1->hide();
-    ui->label_player2->hide();
+    // ui->label_time->hide();
+    ui->lbTimer->hide();
+    // ui->label_player1->hide();
+    ui->lcdPoints1->hide();
+    // ui->label_player2->hide();
+    ui->lcdPoints2->hide();
 
     ui->lineEdit->setReadOnly(true);
     ui->lineEdit_result->setReadOnly(true);
@@ -162,9 +171,12 @@ void Mojbroj::initGame()
     timer->start(1000);
 
     ui->label_round->show();
-    ui->label_time->show();    
-    ui->label_player1->show();
-    ui->label_player2->show();
+    // ui->label_time->show();
+    ui->lbTimer->show();
+    // ui->label_player1->show();
+    ui->lcdPoints1->show();
+    // ui->label_player2->show();
+    ui->lcdPoints2->show();
 
     setButtonStatus(true);
     m_mojbroj = new MojBrojLogic();
@@ -336,7 +348,8 @@ void Mojbroj::buttonPressedNextRound()
     deinitGame();
     newRound->hide();
     time = 30;
-    ui->label_time->setText(QString::number(time));
+    // ui->label_time->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
     timer->start();
 
     ui->label_round->setText("Round 2");
@@ -426,7 +439,8 @@ void Mojbroj::updateTime()
 {
     if (time >= 0)
     {
-        ui->label_time->setText(QString::number(time));
+        // ui->label_time->setText(QString::number(time));
+        ui->lbTimer->setText(QString::number(time));
     }
 
     if (time-- == 0)
@@ -509,8 +523,10 @@ void Mojbroj::processServerMessage(QString serverMessage){
         player1Points += points.left(index).toInt();
         player2Points += points.mid(index+1).toInt();
 
-        ui->label_player1->setText(QString::number(player1Points));
-        ui->label_player2->setText(QString::number(player2Points));
+        // ui->label_player1->setText(QString::number(player1Points));
+        ui->lcdPoints1->display(player1Points);
+        // ui->label_player2->setText(QString::number(player2Points));
+        ui->lcdPoints2->display(player2Points);
 
     } else if (serverMessage.startsWith("GAME END")){
         //dodato
