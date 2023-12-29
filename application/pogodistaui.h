@@ -23,7 +23,7 @@ public:
                          int player1Points = 0, int player2Points = 0);
     ~PogodiStaUI();
 
-    void startGame();
+
     static void sleep(int time);
     bool isReadyToStart = false;
     int getPlayer1Points();
@@ -70,6 +70,7 @@ private:
     void processServerMessage(QString serverMessage);
     void showSolution();
     void generateImage();
+    void startGame();
 };
 
 #endif // POGODISTAUI_H

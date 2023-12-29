@@ -70,7 +70,6 @@ Mojbroj::Mojbroj(QWidget *parent) :
     connect(ui->pushButton_nextRound,SIGNAL(released()),this,SLOT(buttonPressedNextRound()));
 
     connect(ui->pushButton_del,SIGNAL(released()),this,SLOT(del()));
-
 }
 
 Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
@@ -86,6 +85,7 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
     player2 = player2_;
     turn = red;
     playerNo = turn;
+
     player1Points = player1Points_;
     player2Points = player2Points_;
     ui->setupUi(this);
@@ -101,6 +101,7 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
 
     //TIMER
     time = 30;
@@ -168,7 +169,17 @@ Mojbroj::Mojbroj(QWidget *parent, QTcpSocket* tcpSocket,
 
 void Mojbroj::initGame()
 {
+    if (playerNo) {
+        ui->lePlayer1->setText(player1);
+        ui->lePlayer2->setText(player2);
+    }
+    else {
+        ui->lePlayer2->setText(player1);
+        ui->lePlayer1->setText(player2);
+    }
     timer->start(1000);
+
+
 
     ui->label_round->show();
     // ui->label_time->show();
