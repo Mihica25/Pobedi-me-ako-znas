@@ -4,6 +4,7 @@
 #include <random>
 #include <QDebug>
 #include <QTime>
+#include <QDir>
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
@@ -19,7 +20,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     generatedCards = generateCardIds();
     submit_mojbroj = 0;
     gameEnd_mojbroj = 0;
-
+    currentDir = QDir::currentPath();
     //podrunda_resenje = -1;
 
     //ovo mora da se sredi, ovde samo radi testiranja
@@ -1168,9 +1169,14 @@ void Session::generatePogodiSta()
 
 void Session::saveResult(const QString &player1Name, int player1Points,
                 const QString &player2Name, int player2Points) {
-//    QFile file(":/results/resources/results.txt");
-    QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+
+    QString resPath = currentDir + "/../server/resources/results.txt";
+    QFile file(resPath);
+    qDebug() << "Res path: " + resPath;
+    // QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+    qDebug() << "file exist: " + QString::number(file.exists());
     if (file.open(QIODevice::Append | QIODevice::Text)) {
+        qDebug() << "file open";
         QTextStream stream(&file);
         stream << player1Name << "," << player1Points << ","
                << player2Name << "," << player2Points << ","

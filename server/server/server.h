@@ -28,7 +28,7 @@ private slots:
 private:
     QTcpServer *tcpServer;
     Lobby *lobby;
-
+    QString currentDir;
     void sendMessage(QTcpSocket* socket,QString msg);
 //    QTcpSocket* waitForNewConnection();
 

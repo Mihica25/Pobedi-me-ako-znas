@@ -70,7 +70,7 @@ private:
     int gameEnd_mojbroj;
 
     QString pitanjce;
-
+    QString currentDir;
     QString answer1;
     QString answer2;
     int points1;
