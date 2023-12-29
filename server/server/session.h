@@ -12,6 +12,17 @@
 #include <QRandomGenerator>
 #include <QStringList>
 #include <QVector>
+#include <QFile>
+#include <QDateTime>
+#include <QList>
+
+//struct GameResult {
+//        QString player1Name;
+//        int player1Points;
+//        QString player2Name;
+//        int player2Points;
+//        QDateTime dateTime;
+//};
 
 class Session : public QObject
 {
@@ -101,9 +112,11 @@ private:
     int checkPodrundaWinner();
     void processPodrundaMessage(const QString& msg, const int num);
 
+    void saveResult(const QString &player1Name, int player1Points, const QString &player2Name, int player2Points);
     //int podrunda_resenje;
 
-
+//    QList<GameResult> loadResults();
+//    void printResults(const QList<GameResult> &results);
 };
 
 #endif // SESSION_H

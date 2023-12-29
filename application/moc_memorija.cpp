@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Memorija_t {
     QByteArrayData data[6];
-    char stringdata0[51];
+    char stringdata0[53];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,14 +32,14 @@ struct qt_meta_stringdata_Memorija_t {
 static const qt_meta_stringdata_Memorija_t qt_meta_stringdata_Memorija = {
     {
 QT_MOC_LITERAL(0, 0, 8), // "Memorija"
-QT_MOC_LITERAL(1, 9, 7), // "gameEnd"
-QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 11), // "onReadyRead"
-QT_MOC_LITERAL(4, 30, 13), // "onCardClicked"
-QT_MOC_LITERAL(5, 44, 6) // "cardId"
+QT_MOC_LITERAL(1, 9, 9), // "mGameEnds"
+QT_MOC_LITERAL(2, 19, 0), // ""
+QT_MOC_LITERAL(3, 20, 11), // "onReadyRead"
+QT_MOC_LITERAL(4, 32, 13), // "onCardClicked"
+QT_MOC_LITERAL(5, 46, 6) // "cardId"
 
     },
-    "Memorija\0gameEnd\0\0onReadyRead\0"
+    "Memorija\0mGameEnds\0\0onReadyRead\0"
     "onCardClicked\0cardId"
 };
 #undef QT_MOC_LITERAL
@@ -80,7 +80,7 @@ void Memorija::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         auto *_t = static_cast<Memorija *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->gameEnd(); break;
+        case 0: _t->mGameEnds(); break;
         case 1: _t->onReadyRead(); break;
         case 2: _t->onCardClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
@@ -89,7 +89,7 @@ void Memorija::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (Memorija::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Memorija::gameEnd)) {
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Memorija::mGameEnds)) {
                 *result = 0;
                 return;
             }
@@ -138,7 +138,7 @@ int Memorija::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Memorija::gameEnd()
+void Memorija::mGameEnds()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }

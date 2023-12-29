@@ -15,4 +15,7 @@
         <file>pitanja/kozna.txt</file>
         <file>pitanja/podrunda.txt</file>
     </qresource>
+    <qresource prefix="/results">
+        <file>resources/results.txt</file>
+    </qresource>
 </RCC>

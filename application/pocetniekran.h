@@ -13,6 +13,7 @@
 #include "koznaui.h"
 #include "memorija.h"
 #include <QString>
+#include "infolog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }
@@ -28,6 +29,7 @@ public:
 
 public slots:
     void on_startGameButton_clicked();
+    void on_najboljiRezultatiButton_clicked();
     void on_reckoEnds();
     void on_mojbrojEnds();
     void on_koZnaEnds();
@@ -35,6 +37,7 @@ public slots:
     void on_pogodiStaEnds();
     void on_memorijaEnds();
     void onReadyRead();
+    void onReadyReadBestResults();
     void on_info();
 
 private:
@@ -54,7 +57,7 @@ private:
 
     QStackedWidget* stackedWidget;
 
-    bool connectToServer();
+    bool connectToServer(QString message);
     void processServerMessage(const QString& serverMessage);
 };
 #endif // POCETNIEKRAN_H

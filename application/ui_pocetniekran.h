@@ -33,7 +33,7 @@ public:
     QToolButton *toolButton;
     QSpacerItem *verticalSpacer;
     QGridLayout *gridLayout;
-    QPushButton *pushButton_2;
+    QPushButton *najboljiRezultatiButton;
     QPushButton *pokreniIgruButton;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *verticalSpacer_3;
@@ -71,13 +71,13 @@ public:
 
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
-        pushButton_2->setMinimumSize(QSize(300, 55));
-        pushButton_2->setMaximumSize(QSize(300, 55));
-        pushButton_2->setStyleSheet(QString::fromUtf8("background-color: #800020"));
+        najboljiRezultatiButton = new QPushButton(centralwidget);
+        najboljiRezultatiButton->setObjectName(QString::fromUtf8("najboljiRezultatiButton"));
+        najboljiRezultatiButton->setMinimumSize(QSize(300, 55));
+        najboljiRezultatiButton->setMaximumSize(QSize(300, 55));
+        najboljiRezultatiButton->setStyleSheet(QString::fromUtf8("background-color: #800020"));
 
-        gridLayout->addWidget(pushButton_2, 3, 0, 1, 1);
+        gridLayout->addWidget(najboljiRezultatiButton, 3, 0, 1, 1);
 
         pokreniIgruButton = new QPushButton(centralwidget);
         pokreniIgruButton->setObjectName(QString::fromUtf8("pokreniIgruButton"));
@@ -113,7 +113,7 @@ public:
     {
         PocetniEkran->setWindowTitle(QApplication::translate("PocetniEkran", "PocetniEkran", nullptr));
         toolButton->setText(QApplication::translate("PocetniEkran", "...", nullptr));
-        pushButton_2->setText(QApplication::translate("PocetniEkran", "Podesavanja", nullptr));
+        najboljiRezultatiButton->setText(QApplication::translate("PocetniEkran", "Najbolji rezultati", nullptr));
         pokreniIgruButton->setText(QApplication::translate("PocetniEkran", "Pokreni igru", nullptr));
     } // retranslateUi
 

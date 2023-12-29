@@ -105,6 +105,14 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
+    saveResult("Dida", 12, "Mita", 10);
+    saveResult("Dimitrije", 20, "Markovic", 9);
+    saveResult("Marko", 17, "Nikola", 17);
+    saveResult("Filip", 19, "Jovan", 3);
+
+//    QList<GameResult> gameResults = loadResults();
+//    printResults(gameResults);
+
     startRecko();
 
 //    startWordle();
@@ -1181,4 +1189,52 @@ void Session::generatePogodiSta()
     }
 }
 
+void Session::saveResult(const QString &player1Name, int player1Points,
+                const QString &player2Name, int player2Points) {
+//    QFile file(":/results/resources/results.txt");
+    QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream stream(&file);
+        stream << player1Name << "," << player1Points << ","
+               << player2Name << "," << player2Points << ","
+               << QDateTime::currentDateTime().toString() << "\n";
+        file.close();
+    } else {
+        qDebug() << "Greskoa pri otvaranju fajla" << endl;
+    }
+}
 
+//QList<GameResult> Session::loadResults() {
+//    QList<GameResult> results;
+//    QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+//    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+//        QTextStream stream(&file);
+//        while (!stream.atEnd()) {
+//            QString line = stream.readLine();
+//            QStringList parts = line.split(",");
+//            if (parts.size() == 5) {
+//                GameResult result;
+//                result.player1Name = parts[0];
+//                result.player1Points = parts[1].toInt();
+//                result.player2Name = parts[2];
+//                result.player2Points = parts[3].toInt();
+//                result.dateTime = QDateTime::fromString(parts[4], "yyyy-MM-ddTHH:mm:ss");
+//                results.append(result);
+//            }
+//        }
+//        file.close();
+//    }
+//    return results;
+//}
+
+//void Session::printResults(const QList<GameResult> &results) {
+//    qDebug() << "Printing results:";
+//    for (const auto &result : results) {
+//        qDebug() << "Player 1 Name: " << result.player1Name;
+//        qDebug() << "Player 1 Points: " << result.player1Points;
+//        qDebug() << "Player 2 Name: " << result.player2Name;
+//        qDebug() << "Player 2 Points: " << result.player2Points;
+//        qDebug() << "Date and Time: " << result.dateTime.toString("yyyy-MM-ddTHH:mm:ss");
+//        qDebug() << "---------------------";
+//    }
+//}
