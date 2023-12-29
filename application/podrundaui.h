@@ -24,8 +24,18 @@ public:
     void startGame();
     void resetGame();
 
-    int player1Points = 0;
-    int player2Points = 0;
+    QString getPlayer1();
+    QString getPlayer2();
+    void setPlayer1(QString playerr1);
+    void setPlayer2(QString playerr2);
+
+    int getPlayer1Points();
+    int getPlayer2Points();
+    void setPlayer1Points(int playerr1Points);
+    void setPlayer2Points(int playerr2Points);
+
+    Ui::Podrundaui *getUi();
+    int getTime();
 
 
 private:
@@ -40,8 +50,9 @@ private:
     QTcpSocket* server = nullptr;
     QString player1 = "";
     QString player2 = "";
+    int player1Points = 0;
+    int player2Points = 0;
 
-    Ui::Podrundaui *getUi();
     void on_pbOdgovori();
     void getQuestion();
     void displayQuestion();

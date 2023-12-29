@@ -74,6 +74,59 @@ void Podrundaui::startGame()
     return;
 }
 
+int Podrundaui::getTime()
+{
+    return time;
+}
+
+QString Podrundaui::getPlayer1()
+{
+    return player1;
+}
+
+
+QString Podrundaui::getPlayer2()
+{
+    return player2;
+}
+
+
+void Podrundaui::setPlayer1(QString playerr1)
+{
+    player1 = playerr1;
+}
+
+
+void Podrundaui::setPlayer2(QString playerr2)
+{
+    player2 = playerr2;
+}
+
+
+int Podrundaui::getPlayer1Points()
+{
+    return player1Points;
+}
+
+
+int Podrundaui::getPlayer2Points()
+{
+    return player2Points;
+}
+
+
+void Podrundaui::setPlayer1Points(int playerr1Points)
+{
+    player1Points = playerr1Points;
+}
+
+
+void Podrundaui::setPlayer2Points(int playerr2Points)
+{
+    player2Points = playerr2Points;
+}
+
+
 void Podrundaui::resetGame()
 {
     qDebug() << "udje u reset game\n";

@@ -500,10 +500,10 @@ void KoZnaui::on_podrundaEnds(){
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     //podrunda->close();
 
-    player1Points = podrunda->player1Points;
-    player2Points = podrunda->player2Points;
-    QString poeni_prvog = QString::number(player1Points);
-    QString poeni_drugog = QString::number(player2Points);
+    player1Points = getPlayer1Points();
+    player2Points = getPlayer2Points();
+    QString poeni_prvog = QString::number(getPlayer1Points());
+    QString poeni_drugog = QString::number(getPlayer2Points());
     ui->poeni1->setVisible(true);
     ui->poeni2->setVisible(true);
 
@@ -512,9 +512,9 @@ void KoZnaui::on_podrundaEnds(){
     ui->poeni1->setText(poeni_prvog);
     ui->poeni2->setText(poeni_drugog);
 
-    qDebug() << "poeni 1 podrunda" << podrunda->player1Points;
-    qDebug() << "poeni 1 kozna" << player1Points;
-    qDebug() << "poeni 2 podrunda" << podrunda->player2Points;
+    qDebug() << "poeni 1 podrunda" << podrunda->getPlayer1Points();
+    qDebug() << "poeni 1 kozna" << getPlayer1Points();
+    qDebug() << "poeni 2 podrunda" << podrunda->getPlayer2Points();
     qDebug() << "poeni 2 kozna" << player2Points;
 
     podrunda->~Podrundaui();
