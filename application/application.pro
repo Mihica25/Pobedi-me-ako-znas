@@ -40,7 +40,8 @@ SOURCES += \
     reckoui.cpp \
     podrunda.cpp \
     pogodista.cpp \
-    pogodistaui.cpp
+    pogodistaui.cpp \
+    infolog.cpp
 
 
 
@@ -62,7 +63,8 @@ HEADERS += \
     reckoui.h \
     podrunda.h \
     pogodista.h \
-    pogodistaui.h
+    pogodistaui.h \
+    infolog.h
 
 
 FORMS += \
@@ -74,6 +76,7 @@ FORMS += \
     kozna.ui \
     mojbroj.ui \
     podrundaui.ui \
-    pocetniekran.ui
+    pocetniekran.ui \
+    infolog.ui
 
 RESOURCES += resources.qrc

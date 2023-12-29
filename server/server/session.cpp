@@ -3,6 +3,7 @@
 #include <chrono>
 #include <random>
 #include <QDebug>
+#include <QTime>
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
@@ -40,32 +41,11 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     player1->pointsKoZna = 0;
     player2->pointsKoZna = 0;
 
-    QString filePath = ":/kozna/pitanja/kozna.txt";
 
 
-       if (!QFile::exists(filePath))
-        {
-            qDebug() << "Fajl ne postoji.\n";
-        }
+    generateQuestions();
 
-        // Otvaranje fajla za čitanje
-        QFile file(filePath);
-        //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            qDebug() << "Nije moguće otvoriti fajl za čitanje.\n";
-        }
-
-        // Čitanje linija iz fajla i ispis na ekran
-        QTextStream in(&file);
-        pitanje = in.readLine();
-
-        file.close();
-
-
-    //pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
-
-    qDebug()<<"velicina:"<<pitanje.size();
+      qDebug()<<"velicina:"<<pitanjce.size();
 
     startGame();
 }
@@ -803,6 +783,16 @@ void Session::processMojBrojMessage(const QString& msg){
 void Session::processKoZnaMessage(const QString& msg, int num){
     qDebug() << "Primljenja poruka:" << msg << endl;
 
+    if(msg.startsWith("Ime:") and num == 1){
+        QString user = msg.mid(4);
+        sendMessageToBothPlayers("Ime1:" + user + "\n");
+    }
+
+    if(msg.startsWith("Ime:") and num == 2){
+        QString op = msg.mid(4);
+        sendMessageToBothPlayers("Ime2:" + op + "\n" );
+    }
+
     if(msg.startsWith("P1:")){
         player1->pointsKoZna = msg.mid(3).toInt();
 
@@ -817,7 +807,7 @@ void Session::processKoZnaMessage(const QString& msg, int num){
     if(msg.startsWith("SEND")){
         qDebug()<< "Primljena"<<endl;
 
-        sendMessageToBothPlayers("PITANJE:" + pitanje + "\n");
+        sendMessageToBothPlayers("PITANJE:" + pitanjce + "\n");
     }
     if(msg.startsWith("ANSWER:") and num == 1) {
         QStringList odg = msg.mid(7).split(",");
@@ -970,6 +960,76 @@ QString Session::generateInitialNumbers()
 
     return initialNumbers;
 }
+
+
+void Session::generateQuestions(){
+    QString filePath = ":/kozna/pitanja/kozna.txt";
+
+
+      if (!QFile::exists(filePath))
+        {
+            qDebug() << "Fajl ne postoji.\n";
+        }
+
+        // Otvaranje fajla za čitanje
+        QFile file(filePath);
+        //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qDebug() << "Nije moguće otvoriti fajl za čitanje.\n";
+        }
+
+        // Čitanje linija iz fajla i ispis na ekran
+        QTextStream in(&file);
+        QStringList allQuestions;
+
+        QString line;
+
+        while(!in.atEnd()){
+            line = in.readLine().trimmed();
+            qDebug() << "linije:" << line;
+            allQuestions.append(line);
+
+
+        }
+
+        file.close();
+
+
+//       qsrand(QTime::currentTime().msec());
+
+        QStringList selectedQuestions;
+
+        QVector<int> ids;
+
+
+
+        for(int i = 0; i < allQuestions.size(); ++i){
+            ids.append(i);
+        }
+
+
+
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(ids.begin(),ids.end(),g);
+
+
+
+        for(int i = 0; i < 7; i++){
+            selectedQuestions.append(allQuestions.at(ids.at(i)));
+        }
+
+        pitanjce = selectedQuestions.join("/");
+
+        qDebug() << "pitanjce" << pitanjce;
+
+
+
+
+}
+
 
 
 int Session::checkPodrundaWinner()

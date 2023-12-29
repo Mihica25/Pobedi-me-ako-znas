@@ -72,7 +72,7 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
-    ui->label->setText(player1);
+
 
 
     qDebug()<< "SEND" << endl;
@@ -80,6 +80,9 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     sendMessage(server, "SEND:hhhuhuuhhu\n");
     sendMessage(server, "P1:" + QString::number(player1Points) + "\n");
     sendMessage(server, "P2:" + QString::number(player2Points) + "\n");
+    sendMessage(server, "Ime:" + player1 + "\n");
+
+
 
 
 
@@ -102,6 +105,8 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     tajmer->start(1000);
 
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+
+
 
     //player1Points = 0;
     //player2Points = 0;
@@ -375,7 +380,7 @@ void KoZnaui::updateTime() {
     }
 
     if(time--==0){
-        if(numberOfQuestion == 9)
+        if(numberOfQuestion == 6)
             emit gameEnds();
         else {
             emit timesUp();
@@ -467,6 +472,8 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
         player1Points = serverMessage.mid(7).toInt();
         ui->poeni1->setText(serverMessage.mid(7));
+        //ui->userName->setText(player1);
+
     }
 
     if (serverMessage.startsWith("POENI2:")) {
@@ -477,6 +484,7 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
         player2Points = serverMessage.mid(7).toInt();
         ui->poeni2->setText(serverMessage.mid(7));
+        //ui->opName->setText(player1);
     }
 
     if (serverMessage.startsWith("PODRUNDA")) {
@@ -490,6 +498,16 @@ void KoZnaui::processServerMessage(QString serverMessage){
     if(serverMessage.startsWith("END")) {
         disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
         emit mGameEnds();
+    }
+
+    if(serverMessage.startsWith("Ime1:")){
+
+        ui->userName->setText(serverMessage.mid(5));
+    }
+
+    if(serverMessage.startsWith("Ime2:")){
+
+        ui->opName->setText(serverMessage.mid(5));
     }
 }
 

@@ -5,6 +5,8 @@
 #include "logindialog.h"
 #include <QDebug>
 #include <QTcpSocket>
+#include <QStackedWidget>
+#include <QRect>
 #include "reckoui.h"
 #include "mojbroj.h"
 #include "pogodistaui.h"
@@ -35,6 +37,7 @@ public slots:
     void on_memorijaEnds();
     void onReadyRead();
     void onReadyReadBestResults();
+    void on_info();
 
 private:
     Ui::PocetniEkran *ui;
@@ -50,6 +53,8 @@ private:
     KoZnaui* kozna;
     Memorija* memorija;
     void initConntroler();
+
+    QStackedWidget* stackedWidget;
 
     bool connectToServer(QString message);
     void processServerMessage(const QString& serverMessage);
