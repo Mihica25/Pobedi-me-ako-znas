@@ -19,6 +19,7 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     player2Points = 0;
 
     connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
+    connect(ui->najboljiRezultatiButton, &QPushButton::clicked, this, &PocetniEkran::on_najboljiRezultatiButton_clicked);
 
 }
 
@@ -35,7 +36,7 @@ void PocetniEkran::on_startGameButton_clicked()
         playerName = loginDialog.getName();
 
         // Povezivanje sa serverom
-        if (connectToServer()) {
+        if (connectToServer(playerName)) {
             // Uspesna konekcija
             qDebug() << "Uspesno povezivanje sa serverom!";
             ui->pokreniIgruButton->setText("Ceka se protivnik");
@@ -48,9 +49,18 @@ void PocetniEkran::on_startGameButton_clicked()
     }
 }
 
+void PocetniEkran::on_najboljiRezultatiButton_clicked(){
+    if (connectToServer("SEND_BEST_RESULTS")){
+        qDebug() << "Uspesno povezivanje sa serverom!";
+        connect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyReadBestResults);
+    } else {
+        qDebug() << "Neuspesna konekcija sa serverom!";
+    }
+}
+
 // Proveriti sta je upozorenje koje dobijamo prilikom konektovanja na server ->
 // QMetaObject::connectSlotsByName: No matching signal for on_startGameButton_clicked()
-bool PocetniEkran::connectToServer()
+bool PocetniEkran::connectToServer(QString message)
 {
     // Adresa i port servera
     QString serverAddress = "localhost";
@@ -63,7 +73,6 @@ bool PocetniEkran::connectToServer()
     // Provera da li je uspostavljena konekcija
     if (tcpSocket->waitForConnected()) {
 
-        QString message = playerName;
         tcpSocket->write(message.toUtf8());
         tcpSocket->flush();
 
@@ -170,5 +179,13 @@ void PocetniEkran::on_pogodiStaEnds()
     connect(memorija, &Memorija::mGameEnds, this, &PocetniEkran::on_memorijaEnds);
 
 
+}
+
+void PocetniEkran::onReadyReadBestResults(){
+    QByteArray data = tcpSocket->readAll();
+    QString msg = QString::fromUtf8(data);
+
+    qDebug() << msg << endl;
+    disconnect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyReadBestResults);
 }
 

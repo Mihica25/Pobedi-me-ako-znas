@@ -36,12 +36,17 @@ void Server::newClientConnection()
     if (clientSocket) {
 
         clientSocket->waitForReadyRead();
-        QString username = clientSocket->readAll();
+        QString message = clientSocket->readAll();
 
-        qDebug() << "New client connected." << " Username: " << username;
+        if (message == "SEND_BEST_RESULTS") {
+            qDebug() << "Server received request for best results." << endl;
+            sendBestResults(clientSocket);
+            return;
+        }
+        qDebug() << "New client connected." << " Username: " << message;
 
         // Kreiramo instancu Player-a
-        Player* newPlayer = new Player(clientSocket, username, this);
+        Player* newPlayer = new Player(clientSocket, message, this);
 
         // Dodajemo novog igrača u lobi
         lobby->addPlayer(newPlayer);
@@ -49,11 +54,72 @@ void Server::newClientConnection()
 }
 
 
-void Server::sendMessage(QTcpSocket* socket, QString msg)
-{
+void Server::sendMessage(QTcpSocket* socket, QString msg){
+
     qDebug() << "Sending msg: " << msg;
     socket->write(msg.toUtf8());
     socket->flush();
 
 }
 
+QList<Server::GameResult> Server::loadResults() {
+    QList<GameResult> results;
+    QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream stream(&file);
+        while (!stream.atEnd()) {
+            QString line = stream.readLine();
+            QStringList parts = line.split(",");
+            if (parts.size() == 5) {
+                GameResult result;
+                result.player1Name = parts[0];
+                result.player1Points = parts[1].toInt();
+                result.player2Name = parts[2];
+                result.player2Points = parts[3].toInt();
+                result.dateTime = QDateTime::fromString(parts[4], "yyyy-MM-ddTHH:mm:ss");
+                results.append(result);
+            }
+        }
+        file.close();
+    }
+    return results;
+}
+
+void Server::printResults(const QList<Server::GameResult> &results) {
+    qDebug() << "Printing results:";
+    for (const auto &result : results) {
+        qDebug() << "Player 1 Name: " << result.player1Name;
+        qDebug() << "Player 1 Points: " << result.player1Points;
+        qDebug() << "Player 2 Name: " << result.player2Name;
+        qDebug() << "Player 2 Points: " << result.player2Points;
+        qDebug() << "Date and Time: " << result.dateTime.toString("yyyy-MM-ddTHH:mm:ss");
+        qDebug() << "---------------------";
+    }
+}
+
+void Server::sendBestResults(QTcpSocket *socket) {
+    qDebug() << "sendBestResults()" << endl;
+    QList<Server::GameResult> results = loadResults();
+
+    std::sort(results.begin(), results.end(),
+              [](const Server::GameResult &a, const Server::GameResult &b) {
+                  return (a.player1Points + a.player2Points) > (b.player1Points + b.player2Points);
+              });
+
+    if (results.size() > 10) {
+        results = results.mid(0, 10);
+    }
+
+    QString messageToSend = "BEST_RESULTS:";
+    for (const auto &result : results) {
+        messageToSend += result.player1Name + "," + QString::number(result.player1Points) + ","
+                         + result.player2Name + "," + QString::number(result.player2Points) + ","
+                         + result.dateTime.toString("yyyy-MM-ddTHH:mm:ss") + "\n";
+    }
+
+    qDebug() << messageToSend << endl;
+    socket->write(messageToSend.toUtf8());
+    socket->waitForBytesWritten();
+
+    socket->disconnectFromHost();
+}

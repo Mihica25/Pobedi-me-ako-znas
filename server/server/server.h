@@ -5,6 +5,12 @@
 #include <QTcpServer>
 #include "lobby.h"
 #include <QDebug>
+#include <QFile>
+#include <QDateTime>
+#include <QList>
+#include <QTextStream>
+#include <QDataStream>
+
 
 class Server : public QObject
 {
@@ -25,6 +31,19 @@ private:
 
     void sendMessage(QTcpSocket* socket,QString msg);
 //    QTcpSocket* waitForNewConnection();
+
+    struct GameResult {
+            QString player1Name;
+            int player1Points;
+            QString player2Name;
+            int player2Points;
+            QDateTime dateTime;
+    };
+
+    QList<GameResult> loadResults();
+    void printResults(const QList<GameResult> &results);
+    void sendBestResults(QTcpSocket *socket);
+
 
 };
 

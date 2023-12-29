@@ -70,7 +70,7 @@
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <item row="3" column="0">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="najboljiRezultatiButton">
         <property name="minimumSize">
          <size>
           <width>300</width>
@@ -87,7 +87,7 @@
          <string notr="true">background-color: #800020</string>
         </property>
         <property name="text">
-         <string>Podesavanja</string>
+         <string>Najbolji rezultati</string>
         </property>
        </widget>
       </item>

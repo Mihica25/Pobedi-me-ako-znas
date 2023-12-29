@@ -26,6 +26,7 @@ public:
 
 public slots:
     void on_startGameButton_clicked();
+    void on_najboljiRezultatiButton_clicked();
     void on_reckoEnds();
     void on_mojbrojEnds();
     void on_koZnaEnds();
@@ -33,6 +34,7 @@ public slots:
     void on_pogodiStaEnds();
     void on_memorijaEnds();
     void onReadyRead();
+    void onReadyReadBestResults();
 
 private:
     Ui::PocetniEkran *ui;
@@ -49,7 +51,7 @@ private:
     Memorija* memorija;
     void initConntroler();
 
-    bool connectToServer();
+    bool connectToServer(QString message);
     void processServerMessage(const QString& serverMessage);
 };
 #endif // POCETNIEKRAN_H
