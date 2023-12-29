@@ -5,7 +5,7 @@ Server::Server(QObject *parent) : QObject(parent), tcpServer(nullptr), lobby(nul
     // Inicijalizacija servera i lobby-ja
     tcpServer = new QTcpServer(this);
     lobby = new Lobby(this);
-
+    currentDir = QDir::currentPath();
     connect(tcpServer, &QTcpServer::newConnection, this, &Server::newClientConnection);
 }
 
@@ -65,7 +65,8 @@ void Server::sendMessage(QTcpSocket* socket, QString msg){
 
 QList<Server::GameResult> Server::loadResults() {
     QList<GameResult> results;
-    QFile file(":/results/resources/results.txt");
+    QString resPath = currentDir + "/../server/resources/results.txt";
+    QFile file(resPath);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
         while (!stream.atEnd()) {
