@@ -3,6 +3,7 @@
 #include <chrono>
 #include <random>
 #include <QDebug>
+#include <QTime>
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
@@ -42,6 +43,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
 
     QString filePath = ":/kozna/pitanja/kozna.txt";
 
+    generateQuestions();
 
        if (!QFile::exists(filePath))
         {
@@ -65,7 +67,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
 
     //pitanje = "koloko godina ima rsum?_5_6_7_22_22/Koji mesece ima tacno 28 dana?_Janaur_Februar_Mart_April_Februar/Ko je rekorder evrolige po broju asistencija?_Markus Vilijams_Stefan Jovic_Milos Teodosic_Nik Kalates_Stefan Jovic";
 
-    qDebug()<<"velicina:"<<pitanje.size();
+    qDebug()<<"velicina:"<<pitanjce.size();
 
     startGame();
 }
@@ -962,6 +964,76 @@ QString Session::generateInitialNumbers()
 
     return initialNumbers;
 }
+
+
+void Session::generateQuestions(){
+    QString filePath = "/home/user/pobedi-me-ako-znas/server/server/pitanja/kozna.txt";
+
+
+      if (!QFile::exists(filePath))
+        {
+            qDebug() << "Fajl ne postoji.\n";
+        }
+
+        // Otvaranje fajla za čitanje
+        QFile file(filePath);
+        //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            qDebug() << "Nije moguće otvoriti fajl za čitanje.\n";
+        }
+
+        // Čitanje linija iz fajla i ispis na ekran
+        QTextStream in(&file);
+        QStringList allQuestions;
+
+        QString line;
+
+        while(!in.atEnd()){
+            line = in.readLine().trimmed();
+            qDebug() << "linije:" << line;
+            allQuestions.append(line);
+
+
+        }
+
+        file.close();
+
+
+//       qsrand(QTime::currentTime().msec());
+
+        QStringList selectedQuestions;
+
+        QVector<int> ids;
+
+
+
+        for(int i = 0; i < allQuestions.size(); ++i){
+            ids.append(i);
+        }
+
+
+
+        std::random_device rd;
+        std::mt19937 g(rd());
+
+        std::shuffle(ids.begin(),ids.end(),g);
+
+
+
+        for(int i = 0; i < 7; i++){
+            selectedQuestions.append(allQuestions.at(ids.at(i)));
+        }
+
+        pitanjce = selectedQuestions.join("/");
+
+        qDebug() << "pitanjce" << pitanjce;
+
+
+
+
+}
+
 
 
 int Session::checkPodrundaWinner()
