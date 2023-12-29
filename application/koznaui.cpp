@@ -1,5 +1,6 @@
 #include "koznaui.h"
 #include "ui_kozna.h"
+// #include "ui_kozna_copy.h"
 #include <cstring>
 #include <iostream>
 #include <QDebug>
@@ -30,7 +31,8 @@ KoZnaui::KoZnaui(QWidget *parent)
     numberOfQuestion = 0;
 
     time = 45;
-    ui->labelTimer->setText(QString::number(time));
+    // ui->labelTimer->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
 
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
@@ -38,8 +40,10 @@ KoZnaui::KoZnaui(QWidget *parent)
 
     tajmer->start(1000);
 
-    ui->poeni1->setText("0");
-    ui->poeni2->setText("0");
+    // ui->poeni1->setText("0");
+    ui->lcdPoints1_2->display(0);
+    // ui->poeni2->setText("0");
+    ui->lcdPoints2->display(0);
 
     //this->displayQuestion(numberOfQuestion);
 
@@ -63,8 +67,10 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     player1Points = player1Points1;
     player2Points = player2Points2;
     ui->setupUi(this);
-    ui->poeni1->setText(QString::number(player1Points));
-    ui->poeni2->setText(QString::number(player2Points));
+    // ui->poeni1->setText(QString::number(player1Points));
+    ui->lcdPoints1_2->display(player1Points);
+    // ui->poeni2->setText(QString::number(player2Points));
+    ui->lcdPoints2->display(player2Points);
 
 
     QPixmap bkgnd(":/background/resources/ko_zna.png");
@@ -96,7 +102,8 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
 
     numberOfQuestion = 0;
     time = 45;
-    ui->labelTimer->setText(QString::number(time));
+    // ui->labelTimer->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
 
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &KoZnaui::timesUp, this, &KoZnaui::on_timesUp);
@@ -224,7 +231,7 @@ void KoZnaui::on_pushButtonAns4() {
     else{
         ui->pushButtonAns4->setStyleSheet("background-color: red");
         displayAnswer();
-    };
+    }
     //time = 2;
 }
 
@@ -357,7 +364,8 @@ QString KoZnaui::getCorrectAnswer() {
 
 void KoZnaui::on_timesUp() {
     time = 45;
-    ui->labelTimer->setText(QString::number(time));
+    // ui->labelTimer->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
     tajmer->start();
     //qDebug() << "Isteklo vreme";
     displayQuestion(++numberOfQuestion);
@@ -376,7 +384,8 @@ void KoZnaui::on_gameEnds(){
 
 void KoZnaui::updateTime() {
     if (time >= 0){
-        ui->labelTimer->setText(QString::number(time));
+        // ui->labelTimer->setText(QString::number(time));
+        ui->lbTimer->setText(QString::number(time));
     }
 
     if(time--==0){
@@ -414,8 +423,8 @@ void KoZnaui::restartColor() {
     ui->pushButtonAns2->setStyleSheet("background-color: white");
     ui->pushButtonAns3->setStyleSheet("background-color: white");
     ui->pushButtonAns4->setStyleSheet("background-color: white");
-    ui->poeni1->setStyleSheet("background-color: white");
-    ui->poeni2->setStyleSheet("background-color: white");
+    ui->lcdPoints1_2->setStyleSheet("background-color: transparent");
+    ui->lcdPoints2->setStyleSheet("background-color: transparent");
 }
 
 //to da sredim mozda mi ne treba
@@ -441,22 +450,26 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
     if (serverMessage.startsWith("ANSWERP1:")) {
         if(serverMessage.mid(9) == "true"){
-            ui->poeni1->setStyleSheet("background-color: green");
+            // ui->poeni1->setStyleSheet("background-color: green");
+            ui->lcdPoints1_2->setStyleSheet("background-color: green");
 
         }
         else if(serverMessage.mid(9) == "false"){
-            ui->poeni1->setStyleSheet("background-color: red");
+            // ui->poeni1->setStyleSheet("background-color: red");
+            ui->lcdPoints1_2->setStyleSheet("background-color: red");
         }
     }
 
     if (serverMessage.startsWith("ANSWERP22:")) {
         qDebug() <<"poruka o odgovoru" << serverMessage.mid(10);
         if(serverMessage.mid(10) == "true"){
-            ui->poeni2->setStyleSheet("background-color: green");
+            // ui->poeni2->setStyleSheet("background-color: green");
+            ui->lcdPoints2->setStyleSheet("background-color: green");
 
         }
         else{
-            ui->poeni2->setStyleSheet("background-color: red");
+            // ui->poeni2->setStyleSheet("background-color: red");
+            ui->lcdPoints2->setStyleSheet("background-color: red");
         }
     }
 
@@ -471,7 +484,8 @@ void KoZnaui::processServerMessage(QString serverMessage){
         //qDebug() << serverMessage.mid(7) << endl;
 
         player1Points = serverMessage.mid(7).toInt();
-        ui->poeni1->setText(serverMessage.mid(7));
+        // ui->poeni1->setText(serverMessage.mid(7));
+        ui->lcdPoints1_2->display(player1Points);
         //ui->userName->setText(player1);
 
     }
@@ -483,7 +497,8 @@ void KoZnaui::processServerMessage(QString serverMessage){
         //qDebug() << po << endl;
 
         player2Points = serverMessage.mid(7).toInt();
-        ui->poeni2->setText(serverMessage.mid(7));
+        // ui->poeni2->setText(serverMessage.mid(7));
+        ui->lcdPoints2->display(player2Points);
         //ui->opName->setText(player1);
     }
 
@@ -502,12 +517,14 @@ void KoZnaui::processServerMessage(QString serverMessage){
 
     if(serverMessage.startsWith("Ime1:")){
 
-        ui->userName->setText(serverMessage.mid(5));
+        // ui->userName->setText(serverMessage.mid(5));
+        ui->lePlayer1_2->setText(serverMessage.mid(5));
     }
 
     if(serverMessage.startsWith("Ime2:")){
 
-        ui->opName->setText(serverMessage.mid(5));
+        // ui->opName->setText(serverMessage.mid(5));
+        ui->lePlayer2->setText(serverMessage.mid(5));
     }
 }
 
@@ -520,15 +537,19 @@ void KoZnaui::on_podrundaEnds(){
 
     player1Points = podrunda->player1Points;
     player2Points = podrunda->player2Points;
-    QString poeni_prvog = QString::number(player1Points);
-    QString poeni_drugog = QString::number(player2Points);
-    ui->poeni1->setVisible(true);
-    ui->poeni2->setVisible(true);
+    // QString poeni_prvog = QString::number(player1Points);
+    // QString poeni_drugog = QString::number(player2Points);
+    // ui->poeni1->setVisible(true);
+    ui->lcdPoints1_2->setVisible(true);
+    // ui->poeni2->setVisible(true);
+    ui->lcdPoints2->setVisible(true);
 
     QApplication::processEvents();
 
-    ui->poeni1->setText(poeni_prvog);
-    ui->poeni2->setText(poeni_drugog);
+    // ui->poeni1->setText(poeni_prvog);
+    ui->lcdPoints1_2->display(player1Points);
+    // ui->poeni2->setText(poeni_drugog);
+    ui->lcdPoints2->display(player2Points);
 
     qDebug() << "poeni 1 podrunda" << podrunda->player1Points;
     qDebug() << "poeni 1 kozna" << player1Points;
