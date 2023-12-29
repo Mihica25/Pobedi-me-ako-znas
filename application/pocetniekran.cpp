@@ -105,9 +105,14 @@ void PocetniEkran::processServerMessage(const QString& serverMessage) {
 
 void PocetniEkran::initConntroler(){
 
+    stackedWidget = new QStackedWidget(this);
+    setCentralWidget(stackedWidget);
+
     recko = new ReckoUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, 0);
-    this->close();
-    recko->show();
+    recko->setAutoFillBackground(true);
+    stackedWidget->addWidget(recko);
+    stackedWidget->removeWidget(this);
+    stackedWidget->setCurrentWidget(recko);
     connect(recko, &ReckoUI::mGameEnds, this, &PocetniEkran::on_reckoEnds, Qt::UniqueConnection);
 }
 
@@ -116,8 +121,10 @@ void PocetniEkran::on_reckoEnds(){
     qDebug() << "Player1: " << recko->getPlayer1Points() << endl;
     qDebug() << "Player2: " << recko->getPlayer2Points() << endl;
     mojbroj= new Mojbroj(nullptr, tcpSocket, playerName, opponentName, turn, recko->getPlayer1Points(), recko->getPlayer2Points());
-    recko->close(); //dodato
-    mojbroj->show();
+    mojbroj->setAutoFillBackground(true);
+    stackedWidget->addWidget(mojbroj);
+    stackedWidget->removeWidget(recko);
+    stackedWidget->setCurrentWidget(mojbroj);
     connect(mojbroj, &Mojbroj::mGameEnds, this, &PocetniEkran::on_mojbrojEnds, Qt::UniqueConnection);
 
     return;
@@ -128,8 +135,10 @@ void PocetniEkran::on_mojbrojEnds(){
     qDebug() << "Player1: " << mojbroj->getPlayer1Points() << endl;
     qDebug() << "Player2: " << mojbroj->getPlayer2Points() << endl;
     kozna = new KoZnaui(nullptr, tcpSocket, playerName, opponentName, turn, mojbroj->getPlayer1Points(), mojbroj->getPlayer2Points());
-    mojbroj->close();
-    kozna->show();
+    kozna->setAutoFillBackground(true);
+    stackedWidget->addWidget(kozna);
+    stackedWidget->removeWidget(mojbroj);
+    stackedWidget->setCurrentWidget(mojbroj);
     connect(kozna, &KoZnaui::mGameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
 
 
@@ -142,8 +151,10 @@ void PocetniEkran::on_koZnaEnds(){
     qDebug() << "Player1: " << kozna->getPlayer1Points() << endl;
     qDebug() << "Player2: " << kozna->getPlayer2Points() << endl;
     pogodiSta = new PogodiStaUI(nullptr, tcpSocket, playerName, opponentName, turn, 0, kozna->getPlayer1Points(), kozna->getPlayer2Points());
-    kozna->close();
-    pogodiSta->show();
+    pogodiSta->setAutoFillBackground(true);
+    stackedWidget->addWidget(pogodiSta);
+    stackedWidget->removeWidget(kozna);
+    stackedWidget->setCurrentWidget(pogodiSta);
     connect(pogodiSta, &PogodiStaUI::mGameEnds, this, &PocetniEkran::on_pogodiStaEnds);
 }
 
@@ -155,6 +166,11 @@ void PocetniEkran::on_memorijaEnds(){
     qDebug() << "PocetniEkran::on_memorijaEnds()" << endl;
     qDebug() << "Player1: " << memorija->getPlayer1Points() << endl;
     qDebug() << "Player2: " << memorija->getPlayer2Points() << endl;
+
+    stackedWidget->removeWidget(memorija);
+    ui->setupUi(this);
+    connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
+    connect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
 }
 
 
@@ -165,8 +181,10 @@ void PocetniEkran::on_pogodiStaEnds()
     qDebug() << "Player1: " << pogodiSta->getPlayer1Points() << endl;
     qDebug() << "Player2: " << pogodiSta->getPlayer2Points() << endl;
     memorija = new Memorija(nullptr, tcpSocket, playerName, opponentName, turn, pogodiSta->getPlayer1Points(), pogodiSta->getPlayer2Points());
-    pogodiSta->close();
-    memorija->show();
+    memorija->setAutoFillBackground(true);
+    stackedWidget->addWidget(memorija);
+    stackedWidget->removeWidget(pogodiSta);
+    stackedWidget->setCurrentWidget(memorija);
     connect(memorija, &Memorija::mGameEnds, this, &PocetniEkran::on_memorijaEnds);
 
 

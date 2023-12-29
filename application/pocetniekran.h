@@ -5,6 +5,8 @@
 #include "logindialog.h"
 #include <QDebug>
 #include <QTcpSocket>
+#include <QStackedWidget>
+#include <QRect>
 #include "reckoui.h"
 #include "mojbroj.h"
 #include "pogodistaui.h"
@@ -48,6 +50,8 @@ private:
     KoZnaui* kozna;
     Memorija* memorija;
     void initConntroler();
+
+    QStackedWidget* stackedWidget;
 
     bool connectToServer();
     void processServerMessage(const QString& serverMessage);
