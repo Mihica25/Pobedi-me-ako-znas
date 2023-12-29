@@ -105,24 +105,8 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-    saveResult("Dida", 12, "Mita", 10);
-    saveResult("Dimitrije", 20, "Markovic", 9);
-    saveResult("Marko", 17, "Nikola", 17);
-    saveResult("Filip", 19, "Jovan", 3);
-
-//    QList<GameResult> gameResults = loadResults();
-//    printResults(gameResults);
 
     startRecko();
-
-//    startWordle();
-//    startPogodiSta();
-//    startKoZnaZna();
-//    startMemorija();
-//    startMojBroj();
-
-    // Svako implemenitra komunikaciju izmedju servera i klijenta za svoju igru
-    // Takodje moramo razmisliti gde implementirati komunikaciju na klijentskoj strani
 
     return;
 }
@@ -226,6 +210,8 @@ void Session::stopMemorija(){
 
     disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyReadMemorija);
     disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyReadMemorija);
+
+    saveResult(player1->getPlayerUsername(), player1->getPoints(), player2->getPlayerUsername(), player2->getPoints());
 
     return;
 }

@@ -32,10 +32,11 @@ public:
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
     QLabel *poeni1;
-    QLabel *label;
+    QLabel *userName;
     QSpacerItem *horizontalSpacer;
     QLabel *labelTimer;
     QSpacerItem *horizontalSpacer_2;
+    QLabel *opName;
     QLabel *poeni2;
     QSpacerItem *verticalSpacer_2;
     QVBoxLayout *verticalLayout;
@@ -79,10 +80,10 @@ public:
 
         horizontalLayout->addWidget(poeni1);
 
-        label = new QLabel(widget);
-        label->setObjectName(QString::fromUtf8("label"));
+        userName = new QLabel(widget);
+        userName->setObjectName(QString::fromUtf8("userName"));
 
-        horizontalLayout->addWidget(label);
+        horizontalLayout->addWidget(userName);
 
         horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -99,6 +100,11 @@ public:
         horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout->addItem(horizontalSpacer_2);
+
+        opName = new QLabel(widget);
+        opName->setObjectName(QString::fromUtf8("opName"));
+
+        horizontalLayout->addWidget(opName);
 
         poeni2 = new QLabel(widget);
         poeni2->setObjectName(QString::fromUtf8("poeni2"));
@@ -210,8 +216,9 @@ public:
     {
         KoZnaui->setWindowTitle(QApplication::translate("KoZnaui", "KoZnaui", nullptr));
         poeni1->setText(QString());
-        label->setText(QApplication::translate("KoZnaui", "TextLabel", nullptr));
+        userName->setText(QString());
         labelTimer->setText(QString());
+        opName->setText(QString());
         poeni2->setText(QString());
         labQuestion->setText(QString());
         pushButtonAns4->setText(QString());

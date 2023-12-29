@@ -41,7 +41,8 @@ SOURCES += \
     podrunda.cpp \
     pogodista.cpp \
     pogodistaui.cpp \
-    infolog.cpp
+    infolog.cpp \
+    resultdialog.cpp
 
 
 
@@ -64,7 +65,8 @@ HEADERS += \
     podrunda.h \
     pogodista.h \
     pogodistaui.h \
-    infolog.h
+    infolog.h \
+    resultdialog.h
 
 
 FORMS += \
@@ -77,6 +79,7 @@ FORMS += \
     mojbroj.ui \
     podrundaui.ui \
     pocetniekran.ui \
-    infolog.ui
+    infolog.ui \
+    resultdialog.ui
 
 RESOURCES += resources.qrc

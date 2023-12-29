@@ -13,6 +13,8 @@
 #include "koznaui.h"
 #include "memorija.h"
 #include <QString>
+#include "infolog.h"
+#include "resultdialog.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PocetniEkran; }

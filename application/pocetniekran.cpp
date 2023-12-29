@@ -211,6 +211,9 @@ void PocetniEkran::onReadyReadBestResults(){
     QByteArray data = tcpSocket->readAll();
     QString msg = QString::fromUtf8(data);
 
+    ResultDialog *resultDialog = new ResultDialog(this);
+    resultDialog->showResults(msg);
+
     qDebug() << msg << endl;
     disconnect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyReadBestResults);
 }
