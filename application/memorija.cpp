@@ -240,7 +240,7 @@ void Memorija::opponentsView(int card){
         turnedCardsOp.clear();
 
         if(pairsFound == totalPairs){
-            sendMessage(server, "MEMORIJA_END\n");
+            sendMessage(server, "MEMORIJA_END:" + QString::number(player1Points) + ":" + QString::number(player2Points) + "\n");
         }
     }
 }

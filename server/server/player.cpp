@@ -31,3 +31,8 @@ void Player::addPoints(int p){
     points += p;
 }
 
+void Player::setPoints(int p)
+{
+    points = p;
+}
+

@@ -1,9 +1,16 @@
 <RCC>
     <qresource prefix="/guess_img">
-        <file>resources/guessing_images/londonsko oko,mesto.jpg</file>
-        <file>resources/guessing_images/luvr,mesto.jpg</file>
-        <file>resources/guessing_images/majkl dzordan, osoba.jpg</file>
-        <file>resources/guessing_images/nikola tesla, osoba.jpg</file>
+        <file>resources/guessing_images/1.jpg</file>
+        <file>resources/guessing_images/10.jpg</file>
+        <file>resources/guessing_images/11.jpg</file>
+        <file>resources/guessing_images/2.jpg</file>
+        <file>resources/guessing_images/3.jpg</file>
+        <file>resources/guessing_images/4.jpg</file>
+        <file>resources/guessing_images/5.jpg</file>
+        <file>resources/guessing_images/6.jpg</file>
+        <file>resources/guessing_images/7.jpg</file>
+        <file>resources/guessing_images/8.jpg</file>
+        <file>resources/guessing_images/9.jpg</file>
     </qresource>
     <qresource prefix="/background">
         <file>resources/start_menu.png</file>

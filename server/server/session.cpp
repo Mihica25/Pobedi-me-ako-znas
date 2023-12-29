@@ -602,6 +602,12 @@ void Session::processMemorijaMessage(const QString& request){
     }else if(request.startsWith("POINTS2")){
         sendMessageToPlayer1("UPDATE_POINTS\n");
     }else if (request.startsWith("MEMORIJA_END")){
+        QStringList data = request.split(":");
+        int p1points = data[1].toInt();
+        int p2points = data[2].toInt();
+        player1->setPoints(p1points);
+        player2->setPoints(p2points);
+        qDebug() << "p1 points: " + data[1] + "\np2 points: " + data[2];
         sendMessageToBothPlayers("MEMORIJA_END\n");
         stopMemorija();
     }

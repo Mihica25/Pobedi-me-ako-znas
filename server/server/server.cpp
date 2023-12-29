@@ -64,7 +64,7 @@ void Server::sendMessage(QTcpSocket* socket, QString msg){
 
 QList<Server::GameResult> Server::loadResults() {
     QList<GameResult> results;
-    QFile file("/home/user/Desktop/pobedi-me-ako-znas/server/server/resources/results.txt");
+    QFile file(":/results/resources/results.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
         while (!stream.atEnd()) {
