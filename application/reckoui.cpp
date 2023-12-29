@@ -112,6 +112,8 @@ void ReckoUI::restartGame(){
 
 ReckoUI::~ReckoUI()
 {
+    qDebug() << "~ReckoUI()" << endl;
+    delete recko;
     delete ui;
 }
 

@@ -7,8 +7,6 @@
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
-//    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
-//    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
     player1->playerId = 1;
     player2->playerId = 2;
     reckoWords = reckoChoosenWords;
@@ -52,9 +50,7 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
 
 Session::~Session()
 {
-//    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
-//    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
-
+    qDebug() << "~Session()" << endl;
     delete player1;
     delete player2;
 }
@@ -81,17 +77,6 @@ void Session::sendMessageToBothPlayers(QString message)
     sendMessageToPlayer2(message);
 }
 
-//void Session::player1ReadyRead()
-//{
-//    // Obrada podataka koji stižu od prvog igrača
-//    qDebug() << "Data received from Player 1: " << player1->tcpSocket->readAll();
-//}
-
-//void Session::player2ReadyRead()
-//{
-//    // Obrada podataka koji stižu od drugog igrača
-//    qDebug() << "Data received from Player 2: " << player2->tcpSocket->readAll();
-//}
 
 void Session::startGame(){
 

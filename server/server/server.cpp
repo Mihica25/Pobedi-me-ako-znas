@@ -16,6 +16,7 @@ Server::~Server()
     }
 
     delete lobby;
+    delete tcpServer;
 }
 
 void Server::startServer(int port)
