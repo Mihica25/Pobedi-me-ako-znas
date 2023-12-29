@@ -775,6 +775,16 @@ void Session::processMojBrojMessage(const QString& msg){
 void Session::processKoZnaMessage(const QString& msg, int num){
     qDebug() << "Primljenja poruka:" << msg << endl;
 
+    if(msg.startsWith("Ime:") and num == 1){
+        QString user = msg.mid(4);
+        sendMessageToBothPlayers("Ime1:" + user + "\n");
+    }
+
+    if(msg.startsWith("Ime:") and num == 2){
+        QString op = msg.mid(4);
+        sendMessageToBothPlayers("Ime2:" + op + "\n" );
+    }
+
     if(msg.startsWith("P1:")){
         player1->pointsKoZna = msg.mid(3).toInt();
 

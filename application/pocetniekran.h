@@ -35,6 +35,7 @@ public slots:
     void on_pogodiStaEnds();
     void on_memorijaEnds();
     void onReadyRead();
+    void on_info();
 
 private:
     Ui::PocetniEkran *ui;

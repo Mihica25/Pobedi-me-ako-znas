@@ -1,5 +1,6 @@
 #include "pocetniekran.h"
 #include "ui_pocetniekran.h"
+#include "infolog.h"
 
 
 PocetniEkran::PocetniEkran(QWidget *parent)
@@ -19,6 +20,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     player2Points = 0;
 
     connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
+    connect(ui->toolButton, &QToolButton::clicked, this, &PocetniEkran::on_info);
+
 
 }
 
@@ -47,6 +50,15 @@ void PocetniEkran::on_startGameButton_clicked()
         }
     }
 }
+
+void PocetniEkran::on_info()
+{
+        InfoLog *il = new InfoLog(this);
+        il->show();
+}
+
+
+
 
 // Proveriti sta je upozorenje koje dobijamo prilikom konektovanja na server ->
 // QMetaObject::connectSlotsByName: No matching signal for on_startGameButton_clicked()
