@@ -1,5 +1,6 @@
 #include "reckoui.h"
 #include "ui_reckoui.h"
+// #include "ui_reckoui_copy.h"
 
 ReckoUI::ReckoUI(QWidget *parent) :
     QMainWindow(parent),
@@ -18,7 +19,7 @@ ReckoUI::ReckoUI(QWidget *parent) :
 
 
     time = 60;
-    ui->leTimer->setText(QString::number(time));
+    // ui->leTimer->setText(QString::number(time));
 
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     connect(this, &ReckoUI::timesUp, this, &ReckoUI::on_timesUp);
@@ -47,16 +48,21 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
     setUpBackground();
     setUpRows();
     time = 60;
-    ui->mTimer->setText(QString::number(time));
-    ui->label->hide();
-    ui->leBodovi->hide();
-    ui->leTimer->hide();
+    // ui->mTimer->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
+    // ui->label->hide();
+    // ui->leBodovi->hide();
+    // ui->leTimer->hide();
     if(turn){
-        ui->p1Name->setText(player1);
-        ui->p2Name->setText(player2);
+        // ui->p1Name->setText(player1);
+        ui->lePlayer1->setText(player1);
+        // ui->p2Name->setText(player2);
+        ui->lePlayer2->setText(player2);
     } else {
-        ui->p1Name->setText(player2);
-        ui->p2Name->setText(player1);
+        // ui->p1Name->setText(player2);
+        ui->lePlayer1->setText(player2);
+        // ui->p2Name->setText(player1);
+        ui->lePlayer2->setText(player1);
     }
 
     startGame();
@@ -83,7 +89,8 @@ void ReckoUI::restartGame(){
     disconnect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     disconnect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
     time = 60;
-    ui->mTimer->setText(QString::number(time));
+    // ui->mTimer->setText(QString::number(time));
+    ui->lbTimer->setText(QString::number(time));
     if(turn){
         disconnect(ui->pbPotvrdi1 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi1Multiplayer);
         disconnect(ui->pbPotvrdi2 , &QPushButton::clicked, this, &ReckoUI::on_pbPotvrdi2Multiplayer);
@@ -360,7 +367,8 @@ void ReckoUI::clearRow(int index){
 void ReckoUI::updateTime()
 {
     if (time >= 0){
-        ui->mTimer->setText(QString::number(time));
+        // ui->mTimer->setText(QString::number(time));
+        ui->lbTimer->setText(QString::number(time));
     }
 
     if(time--==0){
@@ -389,7 +397,7 @@ void ReckoUI::on_mTimesUp()
 void ReckoUI::on_gameEnds(){
     tajmer->stop();
     ukupni_bodovi += bodovi;
-    ui->leBodovi->setText(QString::number(ukupni_bodovi));
+    // ui->leBodovi->setText(QString::number(ukupni_bodovi));
 //    showSolution(recko);
     qDebug() << "Game ends";
 
@@ -478,10 +486,12 @@ void ReckoUI::processServerMessage(QString serverMessage){
             qDebug() << "Received points: " << points;
             if(turn == playerNo){
                 player1Points += points;
-                ui->pl1Points->display(player1Points);
+                // ui->pl1Points->display(player1Points);
+                ui->lcdPoints1->display(player1Points);
             } else {
                 player2Points += points;
-                ui->pl2Points->display(player2Points);
+                // ui->pl2Points->display(player2Points);
+                ui->lcdPoints2->display(player2Points);
             }
         }
         qDebug() << "Current points for player 1: " << player1Points << endl;
