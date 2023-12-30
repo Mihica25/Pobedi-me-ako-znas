@@ -39,8 +39,7 @@ Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe
                     2.4.3.4.2. Ukoliko su rešenja oba igrača jednako udaljena od tačnog odgovora, poeni se dodeljuju bržem
                 2.4.3.5 Prikazuje se tačan odogovor iz podrunde i prelazi na korak 3
         2.5. Prikazuje se tačan odgovor
-    3. Prelazi se na slučaj upotrebe „Čuvanje rezultata”
-    4. Aplikacija prelazi na igru "Pogodi šta"
+    3. Aplikacija prelazi na igru "Pogodi šta"
   
     
 
