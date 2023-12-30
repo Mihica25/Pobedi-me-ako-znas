@@ -17,6 +17,12 @@ Kolekcija različitih vrsta igrica u kojima se takmiče dva igrača. Pobednik je
 - 7. Nakon toga, pokrenuti klijentsku aplikaciju dva puta, desnim klikom na *application* projekat pa zatim *Run*
 
 
+## :movie_camera: Demo snimak :
+- Pobedi me ako znas: [link](https://www.youtube.com/watch?v=71DeRVvVqTM)
+
+
+
+
 Članovi:
  - <a href="https://gitlab.com/tasketa">Tamara Stamatović 82/2019</a>
  - <a href="https://gitlab.com/Mihica">Mihaela Filipović 82/2020</a>
