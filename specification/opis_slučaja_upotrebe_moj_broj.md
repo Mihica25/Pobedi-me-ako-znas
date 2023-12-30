@@ -47,7 +47,7 @@ Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotre
       6.2. Ukoliko je završena druga runda
         6.2.1. Prelazi se na korak 7.
     7. Aplikacija prelazi na slučaj upotrebe "Čuvanje rezultata".
-    8. Prelazi se na slučaj upotrebe Igru "Pogodi šta".
+    8. Prelazi se na slučaj upotrebe Igru "Ko Zna".
   
 
 ### Alternativni tokovi:
@@ -55,11 +55,6 @@ Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotre
 A1 - **Neočekivani izlaz iz aplikacije.** Ukoliko u bilo kojem koraku korisnik isključi aplikaciju,
 sve zapamćene informacije se poništavaju i aplikacija završava rad.
 Slučaj upotrebe se završava.
-
-A2 - **Neočekivani izlaz protivnika iz aplikacije.** Ukoliko u bilo kojem koraku protivnik isključi
-aplikaciju, sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
-
 
 ### Podtokovi:
 
