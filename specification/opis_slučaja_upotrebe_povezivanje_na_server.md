@@ -1,23 +1,26 @@
 # Slučaj upotrebe: Povezivanje na server
 ## Kratak opis:
-Prilikom pokretanja klijentskog dela aplikacije, nakon prikazivanja glavnog menija, aplikacija pokusava da uspostavi konekciju sa serverom.
+Klikom na dugmad "Prikazi najbolje rezultate" ili "Pokreni igru", aplikacija pokusava da uspostavi konekciju sa serverom.
 ## Akteri:
 /
 ## Preduslovi:
  /
 ## Postuslovi:
- Klijentska aplikacija je povezana na server, klijent postaje vidljiv serveru i moze startovati partiju sa drugim klijentom.
+Ako je stisnuto dugme "Pokreni igru", klijentska aplikacija je povezana na server, klijent postaje vidljiv serveru i moze startovati partiju sa drugim klijentom.
+Ako je stisnuto dugme "Najbolji rezultati", klijentska aplikacija je povezna na server i sprena da prihvati najbolje rezultate koje server treba poslati.
 ## Osnovni tok:
 ```
-1. Prilikom pokretanja klijentske aplikacije, aplikacija salje TCP zahtev serveru radi uspostavljanja konekcije.
-2. Server prihvata zahtev za uspostavljanje konekcije i dodaje klijenta u listu onlajn klijenata.
-3. TCP konekcija izmedju Klijenta i Servera je uspostavljena.
+1. Klikom na dugmad "Prikazi najbolje rezultate" ili "Pokreni igru", aplikacija salje TCP zahtev serveru radi uspostavljanja konekcije.
+2. Server prihvata zahtev za uspostavljanje konekcije.
+3.TCP konekcija izmedju Klijenta i Servera je uspostavljena
+    3.1. Ako je konekcija uspostavljena zbog igranja igre, klijent se dodaje u lobby (listu igraca koji cekaju na igru)
+    3.2. Ako je konekcija uspostavljena zbog dohvatanja najboljih rezultata, server ucitava podatke, salje ih klijentu i zatvara TCP konekciju.
 
 ```
 ### Alternativni tokovi:
 
 ```
-A1 – Nemogucnost ostvarivanja veze sa serverom. Klijentska aplikacija pokusava automatski ponovo da uspostavi vezu.
+A1 – Nemogucnost ostvarivanja veze sa serverom. Pokusaj ostvarivanja veze se prekida i ceka se ponovni zahtev klijenta za uspostavu konekcije.
 
 ```
 
