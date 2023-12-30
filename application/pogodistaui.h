@@ -28,6 +28,17 @@ public:
     bool isReadyToStart = false;
     int getPlayer1Points();
     int getPlayer2Points();
+    void setPlayer1Points(int playerPoints1);
+    void setPlayer2Points(int playerPoints2);
+    QString getPlayer1();
+    QString getPlayer2();
+    void setPlayer1(QString player1);
+    void setPlayer2(QString player2);
+    int getTime();
+    Ui::PogodiStaUI *getUi();
+    int getRoundNumber();
+    int getPixelSize();
+
 
 signals:
     void gameEnds();

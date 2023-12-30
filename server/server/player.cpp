@@ -16,7 +16,8 @@ Player::~Player()
 {
     // Osigurajte da se resursi oslobode prilikom uništavanja objekta
     qDebug() << "~Player()" << endl;
-    delete tcpSocket;
+    // delete tcpSocket;
+	// proveriti test sa zakomentarisanim delete
 }
 
 

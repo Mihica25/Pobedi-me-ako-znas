@@ -90,6 +90,18 @@ int Memorija::getPlayer2Points()
     return player2Points;
 }
 
+QString Memorija::getPlayer1() {
+    return player1;
+}
+
+QString Memorija::getPlayer2() {
+    return player2;
+}
+
+Ui::Memorija *Memorija::getUi() {
+    return ui;
+}
+
 void Memorija::setUpBackground(){
     QPixmap background(":background/resources/igra_memorije.png");
     background.scaled(this->size(), Qt::IgnoreAspectRatio);

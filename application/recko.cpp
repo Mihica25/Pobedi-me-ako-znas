@@ -21,6 +21,10 @@ void Recko::newWordle(){
 //    qDebug() << "recko.cpp: " << wordle;
 }
 
+QStringList Recko::getQuizWords() {
+    return quizWords;
+}
+
 void Recko::incrementRow(){
     currentRow++;
 }

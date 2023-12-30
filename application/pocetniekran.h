@@ -28,6 +28,10 @@ public:
     PocetniEkran(QWidget *parent = nullptr);
     ~PocetniEkran();
 
+    int getPlayer1Points();
+    int getPlayer2Points();
+    Ui::PocetniEkran *getUi();
+
 public slots:
     void on_startGameButton_clicked();
     void on_najboljiRezultatiButton_clicked();
@@ -49,6 +53,8 @@ private:
     bool turn;
     int player1Points = 0;
     int player2Points = 0;
+    InfoLog *il;
+    ResultDialog* resultDialog;
     ReckoUI* recko;
     Mojbroj* mojbroj;
     PogodiStaUI* pogodiSta;

@@ -13,6 +13,21 @@ MojBrojLogic::MojBrojLogic()
     availableOperations = {"+", "-", "*", "/", "(", ")"};
 }
 
+GamePhase MojBrojLogic::getCurrentRound()
+{
+    return currentRound;
+}
+
+int MojBrojLogic::getTargetNumber()
+{
+    return targetNumber;
+}
+
+void MojBrojLogic::setTargetNumber(int tn)
+{
+    targetNumber = tn;
+}
+
 bool MojBrojLogic::endGame()
 {
     targetNumber = 0;

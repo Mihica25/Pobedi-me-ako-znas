@@ -8,6 +8,8 @@
 
 Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent) : QObject(parent), player1(player1), player2(player2)
 {
+//    connect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
+//    connect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
     player1->playerId = 1;
     player2->playerId = 2;
     reckoWords = reckoChoosenWords;
@@ -49,9 +51,24 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     startGame();
 }
 
+
+Player* Session::getPlayer1()
+{
+    return player1;
+}
+
+
+Player* Session::getPlayer2()
+{
+    return player2;
+}
+
+
 Session::~Session()
 {
-    qDebug() << "~Session()" << endl;
+//    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
+//    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
+
     delete player1;
     delete player2;
 }
@@ -78,6 +95,17 @@ void Session::sendMessageToBothPlayers(QString message)
     sendMessageToPlayer2(message);
 }
 
+//void Session::player1ReadyRead()
+//{
+//    // Obrada podataka koji stižu od prvog igrača
+//    qDebug() << "Data received from Player 1: " << player1->tcpSocket->readAll();
+//}
+
+//void Session::player2ReadyRead()
+//{
+//    // Obrada podataka koji stižu od drugog igrača
+//    qDebug() << "Data received from Player 2: " << player2->tcpSocket->readAll();
+//}
 
 void Session::startGame(){
 
@@ -91,8 +119,16 @@ void Session::startGame(){
 
     sendMessageToBothPlayers("START");
 
-
     startRecko();
+
+//    startWordle();
+//    startPogodiSta();
+//    startKoZnaZna();
+//    startMemorija();
+//    startMojBroj();
+
+    // Svako implemenitra komunikaciju izmedju servera i klijenta za svoju igru
+    // Takodje moramo razmisliti gde implementirati komunikaciju na klijentskoj strani
 
     return;
 }
@@ -942,13 +978,21 @@ QString Session::generateInitialNumbers()
 
 void Session::generateQuestions(){
     QString filePath = ":/kozna/pitanja/kozna.txt";
+    QStringList allQuestions;
 
 
       if (!QFile::exists(filePath))
         {
-            qDebug() << "Fajl ne postoji.\n";
+            qDebug() << "Fajl ne postojiiiiiii.\n";
+            QString pitanjce = "a_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f";
+            QString line = "a_b_c_d_e_f\n";
+            for (int i = 0; i < 7; i++)
+            {
+                allQuestions.append(line);
+            }
         }
-
+      else
+      {
         // Otvaranje fajla za čitanje
         QFile file(filePath);
         //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
@@ -959,7 +1003,7 @@ void Session::generateQuestions(){
 
         // Čitanje linija iz fajla i ispis na ekran
         QTextStream in(&file);
-        QStringList allQuestions;
+        //QStringList allQuestions;
 
         QString line;
 
@@ -972,7 +1016,7 @@ void Session::generateQuestions(){
         }
 
         file.close();
-
+      }
 
 //       qsrand(QTime::currentTime().msec());
 

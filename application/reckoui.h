@@ -27,6 +27,12 @@ public:
     int getPlayer1Points();
     int getPlayer2Points();
 
+    QString getPlayer1();
+    QString getPlayer2();
+
+    Ui::ReckoUI *getUi();
+    int getTime();
+
 signals:
     void timesUp();
     void gameEnds();

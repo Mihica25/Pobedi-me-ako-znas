@@ -24,13 +24,16 @@ public:
     int submitSolution(const QString& solution, const QString& indicator);
     QPair<QString,QString> deleteLastInput();
 
-    int targetNumber;
     QVector<int> availableNumbers;
     QVector<QString> currentExpression;
+    GamePhase getCurrentRound();
+    int getTargetNumber();
+    void setTargetNumber(int tn);
 
 private:
     QVector<QString> availableOperations;
     GamePhase currentRound;
+    int targetNumber;
 
     QString vectorToString(const QVector<QString>& vec);
     bool validateExpression(const QString& expression) const;

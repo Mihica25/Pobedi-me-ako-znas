@@ -27,25 +27,18 @@ public:
     void displayQuestion(int questionNumber);
     void generisiPitanja(QString pitanje);
 
-    QTimer* tajmer;
-    int numberOfQuestion;
-    int time;
-    int bodovi = 0;
-    int brojPitanja = 0;
-    int ukupni_bodovi = 0;
-    bool multiplayer = false;
-    QTcpSocket* server = nullptr;
-    QTcpSocket* serverp = nullptr;
-    QString player1 = "";
-    QString player2 = "";
-    bool playerId = false;
-    bool playerNo = false;
-    int player1Points = 0;
-    int player2Points = 0;
-    QVector<QStringList> pitanja;
+
     Podrundaui* podrunda;
     int getPlayer1Points();
     int getPlayer2Points();
+
+    QString getPlayer1();
+    QString getPlayer2();
+
+    int getTime();
+
+    void disableUi();
+    void enableUi();
 
 public slots:
     void on_timesUp();
@@ -64,13 +57,30 @@ public slots:
 
     void on_podrundaEnds();
 
+    Ui::KoZnaui *getUI();
+
 private:
     Ui::KoZnaui *ui;
 
+    QTimer* tajmer;
+    int numberOfQuestion;
+    int time;
+    int bodovi = 0;
+    int brojPitanja = 0;
+    int ukupni_bodovi = 0;
+    bool multiplayer = false;
+    QTcpSocket* server = nullptr;
+    QTcpSocket* serverp = nullptr;
+    QString player1 = "";
+    QString player2 = "";
+    bool playerId = false;
+    bool playerNo = false;
+    int player1Points = 0;
+    int player2Points = 0;
+    QVector<QStringList> pitanja;
+
 
     void displayAnswer();
-    void disableUi();
-    void enableUi();
     void restartColor();
     void startGame();
     void sendMessage(QTcpSocket* socket, QString msg);

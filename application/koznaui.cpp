@@ -1,6 +1,5 @@
 #include "koznaui.h"
 #include "ui_kozna.h"
-// #include "ui_kozna_copy.h"
 #include <cstring>
 #include <iostream>
 #include <QDebug>
@@ -80,7 +79,6 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
     this->setPalette(palette);
 
 
-
     qDebug()<< "SEND" << endl;
 
     sendMessage(server, "SEND:hhhuhuuhhu\n");
@@ -113,8 +111,6 @@ KoZnaui::KoZnaui(QWidget *parent, QTcpSocket* tcpSocket,
 
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
 
-
-
     //player1Points = 0;
     //player2Points = 0;
 
@@ -127,6 +123,23 @@ int KoZnaui::getPlayer1Points(){
 int KoZnaui::getPlayer2Points(){
     return player2Points;
 }
+
+QString KoZnaui::getPlayer1()
+{
+    return player1;
+}
+
+
+QString KoZnaui::getPlayer2()
+{
+    return player2;
+}
+
+int KoZnaui::getTime()
+{
+    return time;
+}
+
 KoZnaui::~KoZnaui()
 {
     delete ui;
@@ -417,6 +430,11 @@ void KoZnaui::enableUi() {
     ui->DALJE1->setEnabled(true);
 }
 
+Ui::KoZnaui *KoZnaui::getUI()
+{
+    return ui;
+}
+
 
 void KoZnaui::restartColor() {
     ui->pushButtonAns1->setStyleSheet("background-color: white");
@@ -535,8 +553,8 @@ void KoZnaui::on_podrundaEnds(){
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     //podrunda->close();
 
-    player1Points = podrunda->player1Points;
-    player2Points = podrunda->player2Points;
+    player1Points = podrunda->getPlayer1Points();
+    player2Points = podrunda->getPlayer2Points();
     // QString poeni_prvog = QString::number(player1Points);
     // QString poeni_drugog = QString::number(player2Points);
     // ui->poeni1->setVisible(true);
@@ -551,9 +569,9 @@ void KoZnaui::on_podrundaEnds(){
     // ui->poeni2->setText(poeni_drugog);
     ui->lcdPoints2->display(player2Points);
 
-    qDebug() << "poeni 1 podrunda" << podrunda->player1Points;
-    qDebug() << "poeni 1 kozna" << player1Points;
-    qDebug() << "poeni 2 podrunda" << podrunda->player2Points;
+    qDebug() << "poeni 1 podrunda" << podrunda->getPlayer1Points();
+    qDebug() << "poeni 1 kozna" << getPlayer1Points();
+    qDebug() << "poeni 2 podrunda" << podrunda->getPlayer2Points();
     qDebug() << "poeni 2 kozna" << player2Points;
 
 //    podrunda->~Podrundaui();

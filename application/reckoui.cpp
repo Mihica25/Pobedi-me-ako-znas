@@ -68,6 +68,16 @@ ReckoUI::ReckoUI(QWidget *parent, QTcpSocket* tcpSocket,
     startGame();
 }
 
+Ui::ReckoUI *ReckoUI::getUi()
+{
+    return ui;
+}
+
+int ReckoUI::getTime(){
+    return time;
+}
+
+
 void ReckoUI::startGame(){
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     connect(tajmer, SIGNAL(timeout()), this, SLOT(updateTime()));
@@ -543,6 +553,14 @@ void ReckoUI::sendMessage(QTcpSocket* socket, QString msg)
     socket->write(msg.toUtf8());
     socket->flush();
 
+}
+
+QString ReckoUI::getPlayer1() {
+    return player1;
+}
+
+QString ReckoUI::getPlayer2() {
+    return player2;
 }
 
 int ReckoUI::getPlayer1Points(){
