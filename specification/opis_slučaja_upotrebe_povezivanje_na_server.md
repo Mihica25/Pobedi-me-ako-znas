@@ -2,7 +2,8 @@
 ## Kratak opis:
 Klikom na dugmad "Prikazi najbolje rezultate" ili "Pokreni igru", aplikacija pokusava da uspostavi konekciju sa serverom.
 ## Akteri:
-/
+Igrac, Aplikacija i Server.
+
 ## Preduslovi:
  /
 ## Postuslovi:
