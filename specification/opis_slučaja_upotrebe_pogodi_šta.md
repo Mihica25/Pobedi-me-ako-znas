@@ -9,7 +9,7 @@ Igrači pokušavaju da pogode zamućenu zagonetnu sliku, pri čemu kako runde pr
 Partija je pokrenuta i otvoren je prozor za igru
 
 ## Postuslovi
-Nakon što se igra završi, prelazi se na igru "Ko Zna" 
+Nakon što se igra završi, prelazi se na igru "Memorija" 
 i podaci o zarađenim poenima se ažuriraju.
 
 ## Osnovni tok:
@@ -38,7 +38,7 @@ i podaci o zarađenim poenima se ažuriraju.
             3.4.3.3 Prelazi na korak 3.1
 4. Ako su prosle sve runde i nije pogodjeno rešenje
     4.1 Aplikacija prikazuje tačan odgovor
-    4.2 Prelazi na slučaj upotrebe "Ko Zna"
+    4.2 Prelazi na slučaj upotrebe "Memorija"
 
 ```
 
@@ -48,13 +48,6 @@ A1 - Neocekivani izlaz iz aplikacije. Ako u bilo kom trenutku korisnik isključi
 sve zapamćene informacije se poništavaju i aplikacija završava rad.
 Slučaj upotrebe se završava.
 
-A2 - Neočekivani izlaz protivnika iz aplikacije. Ako u bilo kom trenutku protivnik isključi
-aplikaciju, sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
-
-A3 - Neočekivani izlaz iz aplikacije. Ako u bilo kom trenutku se prekine konekcija sa serverom na bilo čijoj strani,
-sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
 ```
 ### Podtokovi:
 ```
