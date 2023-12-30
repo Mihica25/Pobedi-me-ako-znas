@@ -56,4 +56,27 @@ TEST_CASE("Gameplay Mechanics") {
 }
 
 
+TEST_CASE("Button_Podrunda Enabling") {
+    QMainWindow *m = new QMainWindow();
+    QTcpSocket *socket = new QTcpSocket(m);
+    Podrundaui *podrunda = new Podrundaui(m, socket, "Player1", "Player2", 0, 0);
 
+    podrunda->enableUI();
+
+    // Check if the button is enabled
+    REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == true);
+    REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == true);
+}
+
+
+TEST_CASE("Button_Podrunda Disabling") {
+    QMainWindow *m = new QMainWindow();
+    QTcpSocket *socket = new QTcpSocket(m);
+    Podrundaui *podrunda = new Podrundaui(m, socket, "Player1", "Player2", 0, 0);
+
+    podrunda->disableUI();
+
+    // Check if the button is disabled
+    REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == false);
+    REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == false);
+}
