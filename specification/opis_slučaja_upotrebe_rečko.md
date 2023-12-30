@@ -48,11 +48,6 @@ A1 - **Neočekivani izlaz iz aplikacije.** Ukoliko u bilo kojem koraku korisnik 
 sve zapamćene informacije se poništavaju i aplikacija završava rad.
 Slučaj upotrebe se završava.
 
-A2 - **Neočekivani izlaz protivnika iz aplikacije.** Ukoliko u bilo kojem koraku protivnik isključi
-aplikaciju, sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
-
-
 ### Podtokovi:
 
 /
