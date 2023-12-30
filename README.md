@@ -1,6 +1,6 @@
 # Pobedi me ako znaš
 
-Kolekcija različitih vrsta igrica u kojima se takmiče dva igrača. Pobednik je onaj koji na kraju sakupi više poena.
+- Projekat „Pobedi me ako znaš“ predstavlja kviz koji obuhvata različite vrste igara koje testiraju znanje i veštine u različitim oblastima. Dva igrača se se suočavaju sa izazovnim pitanjima i zadacima, boreći se da osvoje što više poena u igrama.
 
 ## :hammer: Instalacija :
 - Preuzeti i instalirati [*Qt* i *Qt Creator*](https://www.qt.io/download).
@@ -8,9 +8,9 @@ Kolekcija različitih vrsta igrica u kojima se takmiče dva igrača. Pobednik je
 
 
 ## :wrench: Preuzimanje i pokretanje :
-- 1. U terminalu se pozicionirati u zeljeni direktorijum
+- 1. U terminalu se pozicionirati u željeni direktorijum
 - 2. Klonirati repozitorijum komandom: `$ git clone git@gitlab.com:matf-bg-ac-rs/course-rs/projects-2023-2024/pobedi-me-ako-znas.git`
-- 3. Otvoriti okruzenje *Qt Creator* i u njemu otvoriti game projekat
+- 3. Otvoriti okruženje *Qt Creator* i u njemu otvoriti game projekat
 - 4. Desni klik na *game* projekat pa onda *Clean*
 - 5. Desni klik na *game* projekat pa onda *Build*
 - 6. Nakon toga, pokrenuti server desnim klikom na *server* projekat pa zatim *Run*
@@ -18,7 +18,7 @@ Kolekcija različitih vrsta igrica u kojima se takmiče dva igrača. Pobednik je
 
 
 ## :movie_camera: Demo snimak :
-- Pobedi me ako znas: [link](https://www.youtube.com/watch?v=71DeRVvVqTM)
+- Pobedi me ako znaš: [link](https://www.youtube.com/watch?v=71DeRVvVqTM)
 
 
 
