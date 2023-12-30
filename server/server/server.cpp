@@ -61,7 +61,7 @@ void Server::sendMessage(QTcpSocket* socket, QString msg){
 
 QList<Server::GameResult> Server::loadResults() {
     QList<GameResult> results;
-    QString resPath = currentDir + "/../server/resources/results.txt";
+    QString resPath = currentDir + "/../../../pobedi-me-ako-znas/server/server/resources/results.txt";
     QFile file(resPath);
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);

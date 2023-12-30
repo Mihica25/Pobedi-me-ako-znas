@@ -21,7 +21,6 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     submit_mojbroj = 0;
     gameEnd_mojbroj = 0;
     currentDir = QDir::currentPath();
-
     QString answer1 = "";
     QString answer2 = "";
     player1->pointsKoZna = 0;
@@ -1083,8 +1082,7 @@ void Session::generatePogodiSta()
 
 void Session::saveResult(const QString &player1Name, int player1Points,
                 const QString &player2Name, int player2Points) {
-
-    QString resPath = currentDir + "/../server/resources/results.txt";
+    QString resPath = currentDir + "/../../../pobedi-me-ako-znas/server/server/resources/results.txt";
     QFile file(resPath);
     qDebug() << "Res path: " + resPath;
     qDebug() << "file exist: " + QString::number(file.exists());
