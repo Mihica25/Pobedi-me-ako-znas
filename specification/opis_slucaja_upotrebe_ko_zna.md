@@ -14,7 +14,7 @@ Igrači
 
 ### Preduslovi:
 
-Završen je prethodni slučaj upotrebe, Igra "Pogodi šta" .
+Završen je prethodni slučaj upotrebe, Igra "Moj broj" .
   
 ### Postuslovi:
 
@@ -40,7 +40,7 @@ Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe
                 2.4.3.5 Prikazuje se tačan odogovor iz podrunde i prelazi na korak 3
         2.5. Prikazuje se tačan odgovor
     3. Prelazi se na slučaj upotrebe „Čuvanje rezultata”
-    4. Aplikacija prelazi na igru "Memorija"
+    4. Aplikacija prelazi na igru "Pogodi šta"
   
     
 
@@ -49,11 +49,6 @@ Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe
 A1 - **Neočekivani izlaz iz aplikacije.** Ukoliko u bilo kojem koraku korisnik isključi aplikaciju,
 sve zapamćene informacije se poništavaju i aplikacija završava rad.
 Slučaj upotrebe se završava.
-
-A2 - **Neočekivani izlaz protivnika iz aplikacije.** Ukoliko u bilo kojem koraku protivnik isključi
-aplikaciju, sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
-
 
 ### Podtokovi:
 
