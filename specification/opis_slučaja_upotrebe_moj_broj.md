@@ -46,8 +46,7 @@ Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotre
         6.1.1. Prelazi se na korak 2.
       6.2. Ukoliko je završena druga runda
         6.2.1. Prelazi se na korak 7.
-    7. Aplikacija prelazi na slučaj upotrebe "Čuvanje rezultata".
-    8. Prelazi se na slučaj upotrebe Igru "Ko Zna".
+    7. Prelazi se na slučaj upotrebe Igru "Ko Zna".
   
 
 ### Alternativni tokovi:
