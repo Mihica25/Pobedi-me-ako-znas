@@ -24,6 +24,10 @@ TEST_CASE("PogodiStaUI Constructor", "[PogodiStaUI]") {
     SECTION("UI is properly initialized") {
         REQUIRE(pogodista->getUi() != nullptr);
     }
+
+    delete m;
+    delete socket;
+    delete pogodista;
 }
 
 
@@ -44,6 +48,29 @@ TEST_CASE("PogodiStaUI startGame Method", "[PogodiStaUI]") {
         REQUIRE(pogodista->getPixelSize() == 32);
     }
 
+    delete m;
+    delete socket;
+    delete pogodista;
+
+}
+
+TEST_CASE("PogodiSta getAnswer Method", "[PogodiSta]") {
+    PogodiSta *pogodista = new PogodiSta(0, "info", "answer");
+
+    //pogodista->setAnswer("answer");
+    REQUIRE(pogodista->getAnswer() == "answer");
+
+    delete pogodista;
+}
+
+
+TEST_CASE("PogodiSta getInfo Method", "[PogodiSta]") {
+    PogodiSta *pogodista = new PogodiSta(0, "info", "answer");
+
+    //pogodista->setInfo("info");
+    REQUIRE(pogodista->getInfo() == "info");
+
+    delete pogodista;
 }
 
 
@@ -56,4 +83,6 @@ TEST_CASE("PogodiSta calculatePoints Method", "[PogodiSta]") {
         int points = pogodista->calculatePoints(roundNumber);
         REQUIRE(points == 25);
     }
+
+    delete pogodista;
 }

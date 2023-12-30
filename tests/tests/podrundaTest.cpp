@@ -30,6 +30,9 @@ TEST_CASE("Podrundaui Constructor", "[Podrundaui]") {
         REQUIRE(podrundaui->getUi() != nullptr);
     }
 
+    delete m;
+    delete socket;
+    delete podrundaui;
 }
 
 
@@ -53,6 +56,10 @@ TEST_CASE("Gameplay Mechanics") {
         REQUIRE(podrundaui->getUi()->labTimer->text().isEmpty());
         REQUIRE(podrundaui->getUi()->labTacanOdgovor->text().isEmpty());
     }
+
+    delete m;
+    delete socket;
+    delete podrundaui;
 }
 
 
@@ -66,6 +73,10 @@ TEST_CASE("Button_Podrunda Enabling") {
     // Check if the button is enabled
     REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == true);
     REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == true);
+
+    delete m;
+    delete socket;
+    delete podrunda;
 }
 
 
@@ -79,4 +90,8 @@ TEST_CASE("Button_Podrunda Disabling") {
     // Check if the button is disabled
     REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == false);
     REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == false);
+
+    delete m;
+    delete socket;
+    delete podrunda;
 }

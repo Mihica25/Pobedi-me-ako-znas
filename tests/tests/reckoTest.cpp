@@ -28,6 +28,10 @@ TEST_CASE("Recko Constructor", "[Recko]") {
         REQUIRE(recko->getUi() != nullptr);
     }
 
+    delete m;
+    delete socket;
+    delete recko;
+
 }
 
 TEST_CASE("Row Functionality") {
@@ -39,6 +43,8 @@ TEST_CASE("Row Functionality") {
 
     recko->incrementRow();
     REQUIRE(recko->getCurrentRow() == 3);
+
+    delete recko;
 }
 
 
@@ -53,4 +59,6 @@ TEST_CASE("Wordle check") {
     SECTION("Wordle should be in quizWords") {
         REQUIRE(std::find(words.begin(), words.end(), selectedWord) != words.end());
     }
+
+    delete recko;
 }

@@ -23,6 +23,9 @@ TEST_CASE("KoZnaui Constructor") {
 
         REQUIRE(kozna->getTime() == 45);
     }
+    delete kozna;
+    delete socket;
+    delete m;
 }
 
 
@@ -38,6 +41,10 @@ TEST_CASE("Button_KoZna Enabling") {
     REQUIRE(kozna->getUI()->pushButtonAns2->isEnabled() == true);
     REQUIRE(kozna->getUI()->pushButtonAns3->isEnabled() == true);
     REQUIRE(kozna->getUI()->pushButtonAns4->isEnabled() == true);
+
+    delete kozna;
+    delete socket;
+    delete m;
 }
 
 
@@ -53,6 +60,10 @@ TEST_CASE("Button_KoZna Disabling") {
     REQUIRE(kozna->getUI()->pushButtonAns2->isEnabled() == false);
     REQUIRE(kozna->getUI()->pushButtonAns3->isEnabled() == false);
     REQUIRE(kozna->getUI()->pushButtonAns4->isEnabled() == false);
+
+    delete kozna;
+    delete socket;
+    delete m;
 }
 
 

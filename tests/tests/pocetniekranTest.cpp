@@ -18,4 +18,5 @@ TEST_CASE("PocetniEkran Constructor", "[PocetniEkran]") {
         REQUIRE(pocetniekran->getUi() != nullptr);
     }
 
+    delete pocetniekran;
 }

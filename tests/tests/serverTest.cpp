@@ -22,6 +22,14 @@ TEST_CASE("Session creation and message sending", "[session]") {
         REQUIRE(session.getPlayer1()->getPlayerUsername() == "Player1");
         REQUIRE(session.getPlayer2()->getPlayerUsername() == "Player2");
     }
+
+    delete m;
+    delete socket;
+    delete m1;
+    delete socket1;
+    delete player1;
+    delete player2;
+
 }
 
 
@@ -54,6 +62,13 @@ TEST_CASE("Lobby management", "[lobby]") {
         lobby.addPlayer(player2);
         REQUIRE(lobby.getPlayersCount() == 0);
     }
+
+    delete m;
+    delete socket;
+    delete m1;
+    delete socket1;
+    delete player1;
+    delete player2;
 }
 
 
