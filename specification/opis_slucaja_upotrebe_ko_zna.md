@@ -18,7 +18,7 @@ Završen je prethodni slučaj upotrebe, Igra "Moj broj" .
   
 ### Postuslovi:
 
-Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe igru "Memorija".
+Rezultati partije igre "Ko zna" se obračunavaju. Prelazi se na slučaj upotrebe igru "Pogodi šta".
 
 ### Osnovni tok:
 

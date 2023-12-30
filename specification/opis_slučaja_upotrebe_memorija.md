@@ -13,7 +13,7 @@ Dva igrača
 
 ### Preduslovi:
 
-Završen je prethodni slučaj upotrebe, Igra "Ko zna" .
+Završen je prethodni slučaj upotrebe, Igra "Pogodi Šta" .
   
 ### Postuslovi:
 
@@ -41,11 +41,6 @@ Završen je prethodni slučaj upotrebe, Igra "Ko zna" .
 A1 - **Neočekivani izlaz iz aplikacije.** Ukoliko u bilo kojem koraku korisnik isključi aplikaciju,
 sve zapamćene informacije se poništavaju i aplikacija završava rad.
 Slučaj upotrebe se završava.
-
-A2 - **Neočekivani izlaz protivnika iz aplikacije.** Ukoliko u bilo kojem koraku protivnik isključi
-aplikaciju, sve zapamćene informacije se poništavaju i aplikacija prikazuje glavni meni.
-Slučaj upotrebe se završava.
-
 
 ### Podtokovi:
 
