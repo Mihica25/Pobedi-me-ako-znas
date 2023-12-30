@@ -10,14 +10,11 @@ Kolekcija različitih vrsta igrica u kojima se takmiče dva igrača. Pobednik je
 ## :wrench: Preuzimanje i pokretanje :
 - 1. U terminalu se pozicionirati u zeljeni direktorijum
 - 2. Klonirati repozitorijum komandom: `$ git clone git@gitlab.com:matf-bg-ac-rs/course-rs/projects-2023-2024/pobedi-me-ako-znas.git`
-- 3. Otvoriti okruzenje *Qt Creator* i u njemu otvoriti server projekat
-- 4. Stisnuti *Build* u menu bar-u, pa zatim *Clean All*
-- 5. Nakon ciscenja, stisnuti u donjem levom uglu *Build*
-- 6. Nakon toga, pokrenuti server klikom na dugme *Run*
-- 7. Otvoriti okruzenje *Qt Creator* i u njemu otvoriti application projekat
-- 8. Stisnuti *Build* u menu bar-u, pa zatim *Clean All*
-- 9. Nakon ciscenja, stisnuti u donjem levom uglu *Build*
-- 10. Nakon toga, pokrenuti dva puta klijentski aplikaciju na isti nacin (Klikom na dugme *Run*)
+- 3. Otvoriti okruzenje *Qt Creator* i u njemu otvoriti game projekat
+- 4. Desni klik na *game* projekat pa onda *Clean*
+- 5. Desni klik na *game* projekat pa onda *Build*
+- 6. Nakon toga, pokrenuti server desnim klikom na *server* projekat pa zatim *Run*
+- 7. Nakon toga, pokrenuti klijentsku aplikaciju dva puta, desnim klikom na *application* projekat pa zatim *Run*
 
 
 Članovi:
