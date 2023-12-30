@@ -17,7 +17,7 @@ Završen je prethodni slučaj upotrebe, Igra "Rečko" .
   
 ### Postuslovi:
 
-Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotrebe Igru "Pogodi šta".
+Rezultati partije igre "Moj broj" se obračunavaju. Prelazi se na slučaj upotrebe Igru "Ko Zna".
 
 ### Osnovni tok:
 
