@@ -1,6 +1,5 @@
 #include "memorija.h"
 #include "ui_memorija.h"
-// #include "ui_memorija_copy.h"
 #include <QWidget>
 #include <QMessageBox>
 #include <QObject>
@@ -11,19 +10,6 @@
 #include <QDebug>
 #include <QEventLoop>
 #include <QTimer>
-
-/*
-Memorija::Memorija(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Memorija)
-{
-    ui->setupUi(this);
-
-    setUpBackground();
-
-    //initializeGame();
-}
-*/
 
 Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
                  QString firstPlayer, QString secondPlayer, bool red,
@@ -42,29 +28,19 @@ Memorija::Memorija(QWidget *parent, QTcpSocket* tcpSocket,
     ui->setupUi(this);
 
     if(playerNo){
-        // ui->userName1->setText(firstPlayer);
         ui->lePlayer1->setText(firstPlayer);
-        // ui->userName2->setText(secondPlayer);
         ui->lePlayer2->setText(secondPlayer);
-        // ui->user1points->setText(QString::number(player1Points));
         ui->lcdPoints1->display(player1Points);
-        // ui->user2points->setText(QString::number(player2Points));
         ui->lcdPoints2->display(player2Points);
     }else{
-        // ui->userName1->setText(secondPlayer);
         ui->lePlayer1->setText(secondPlayer);
-        // ui->userName2->setText(firstPlayer);
         ui->lePlayer2->setText(firstPlayer);
-        // ui->user1points->setText(QString::number(player1Points));
         ui->lcdPoints1->display(player1Points);
-        // ui->user2points->setText(QString::number(player2Points));
         ui->lcdPoints2->display(player2Points);
     }
 
-
     setUpBackground();
 
-//    this->show();
     startMemorija();
 }
 
@@ -122,27 +98,22 @@ void Memorija::initializeGame(QVector<int> &cardIdsVector)
 
     QGridLayout *gridLayout = ui->gridLayout;
 
-    // Create instances of your CardWidget class and populate the grid
     for (int row = 0; row < numRows; ++row) {
         for (int col = 0; col < numCols; ++col) {
 
-            // Access the existing placeholder widget directly from the UI
             QWidget *placeholder = gridLayout->itemAtPosition(row, col)->widget();
 
-            // Create an instance of your CardWidget class
             int cardId = cardIdsVector[indeks];
 
             CardWidget *cardWidget = new CardWidget(cardId,indeks, placeholder);
             cardWidget->show();
 
-            // Connect the cardClicked signal to the onCardClicked slot
             connect(cardWidget, &CardWidget::clicked, this, &Memorija::onCardClicked);
 
             if(cardIdToWidget.contains(indeks)){
                 delete cardIdToWidget[indeks];
             }
 
-            // Map cardId to the corresponding CardWidget
             cardIdToWidget[indeks] = cardWidget;
             indeks++;
         }
@@ -186,12 +157,10 @@ void Memorija::onCardClicked(int idReveal){
             ++pairsFound;
             if(playerNo){
                 ++player1Points;
-                // ui->user1points->setText(QString::number(player1Points));
                 ui->lcdPoints1->display(player1Points);
                 sendMessage(server, "POINTS1\n");
             }else{
                 ++player2Points;
-                // ui->user2points->setText(QString::number(player2Points));
                 ui->lcdPoints2->display(player2Points);
                 sendMessage(server,"POINTS2\n");
             }
@@ -214,14 +183,8 @@ void Memorija::onCardClicked(int idReveal){
         }
         resetTurnedCards();
 
-        if(pairsFound == totalPairs){
-            if(playerNo){
-                sendMessage(server,"TOTAL_POINTS_MEM_1:" + QString::number(player1Points) + "\n");
-            }else{
-                sendMessage(server,"TOTAL_POINTS_MEM_2:" + QString::number(player2Points) + "\n");
-            }
-            //close window??
-        }
+        //if(pairsFound == totalPairs){
+        //}
 
     }
 
@@ -333,11 +296,9 @@ void Memorija::processServerMessage(QString serverMessage){
 
         if(playerNo){
             ++player2Points;
-            // ui->user2points->setText(QString::number(player2Points));
             ui->lcdPoints2->display(player2Points);
         }else{
             ++player1Points;
-            // ui->user1points->setText(QString::number(player1Points));
             ui->lcdPoints1->display(player1Points);
         }
      } else if(serverMessage.startsWith("TURNCARD:")){

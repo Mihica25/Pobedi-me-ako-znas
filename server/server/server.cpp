@@ -2,7 +2,6 @@
 
 Server::Server(QObject *parent) : QObject(parent), tcpServer(nullptr), lobby(nullptr)
 {
-    // Inicijalizacija servera i lobby-ja
     tcpServer = new QTcpServer(this);
     lobby = new Lobby(this);
     currentDir = QDir::currentPath();
@@ -31,7 +30,6 @@ void Server::startServer(int port)
 
 void Server::newClientConnection()
 {
-    // Čekamo na novu konekciju
     QTcpSocket* clientSocket = tcpServer->nextPendingConnection();
 
     if (clientSocket) {
@@ -46,10 +44,8 @@ void Server::newClientConnection()
         }
         qDebug() << "New client connected." << " Username: " << message;
 
-        // Kreiramo instancu Player-a
         Player* newPlayer = new Player(clientSocket, message, this);
 
-        // Dodajemo novog igrača u lobi
         lobby->addPlayer(newPlayer);
     }
 }

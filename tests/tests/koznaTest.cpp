@@ -33,7 +33,6 @@ TEST_CASE("Button_KoZna Enabling") {
 
     kozna->enableUi();
 
-    // Check if the button is enabled
     REQUIRE(kozna->getUI()->pushButtonAns1->isEnabled() == true);
     REQUIRE(kozna->getUI()->pushButtonAns2->isEnabled() == true);
     REQUIRE(kozna->getUI()->pushButtonAns3->isEnabled() == true);
@@ -49,7 +48,6 @@ TEST_CASE("Button_KoZna Disabling") {
 
     kozna->disableUi();
 
-    // Check if the button is disabled
     REQUIRE(kozna->getUI()->pushButtonAns1->isEnabled() == false);
     REQUIRE(kozna->getUI()->pushButtonAns2->isEnabled() == false);
     REQUIRE(kozna->getUI()->pushButtonAns3->isEnabled() == false);

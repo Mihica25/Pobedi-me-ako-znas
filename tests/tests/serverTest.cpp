@@ -33,7 +33,6 @@ TEST_CASE("Server initialization and connection handling", "[server]") {
         REQUIRE_NOTHROW(server.startServer(8080));
     }
 
-    // Additional tests for server functionalities like handling connections
 }
 
 

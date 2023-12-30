@@ -50,20 +50,16 @@ void ResultDialog::showResults(QString &data) {
 QVector<ResultDialog::GameResult> ResultDialog::parseBestResults(QString &data) {
     QVector<ResultDialog::GameResult> results;
 
-    // Provera da li data ima odgovarajući prefiks
     if (!data.startsWith("BEST_RESULTS:")) {
         qDebug() << "Invalid data format";
         return results;
     }
 
-    // Uklanjanje prefiksa
     QString resultsData = data.mid(QString("BEST_RESULTS:").length());
 
-    // Podela podataka na pojedinačne rezultate
     QStringList resultList = resultsData.split("\n");
 
     for (const QString &resultStr : resultList) {
-        // Podela pojedinačnih podataka o rezultatu
         QStringList resultData = resultStr.split(",");
 
         if (resultData.size() == 5) {

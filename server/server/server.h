@@ -30,7 +30,6 @@ private:
     Lobby *lobby;
     QString currentDir;
     void sendMessage(QTcpSocket* socket,QString msg);
-//    QTcpSocket* waitForNewConnection();
 
     struct GameResult {
             QString player1Name;

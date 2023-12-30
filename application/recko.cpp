@@ -18,7 +18,6 @@ void Recko::readQuizWords(){
 void Recko::newWordle(){
     srand(time(NULL));
     wordle = quizWords[rand() % quizWords.length()];
-//    qDebug() << "recko.cpp: " << wordle;
 }
 
 QStringList Recko::getQuizWords() {

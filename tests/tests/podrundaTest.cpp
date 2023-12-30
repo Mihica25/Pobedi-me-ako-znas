@@ -34,7 +34,6 @@ TEST_CASE("Podrundaui Constructor", "[Podrundaui]") {
 
 
 TEST_CASE("Gameplay Mechanics") {
-    //QWidget parent;
     auto m = std::make_unique<QMainWindow>();
     auto socket = std::make_unique<QTcpSocket>(m.get());
     auto podrundaui = std::make_unique<Podrundaui>(m.get(), socket.get(), "Player1", "Player2", 0, 0);
@@ -64,7 +63,6 @@ TEST_CASE("Button_Podrunda Enabling") {
 
     podrunda->enableUI();
 
-    // Check if the button is enabled
     REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == true);
     REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == true);
 
@@ -78,7 +76,6 @@ TEST_CASE("Button_Podrunda Disabling") {
 
     podrunda->disableUI();
 
-    // Check if the button is disabled
     REQUIRE(podrunda->getUi()->pbOdgovori->isEnabled() == false);
     REQUIRE(podrunda->getUi()->teOdgovor->isEnabled() == false);
 }

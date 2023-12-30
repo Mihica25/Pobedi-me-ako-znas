@@ -26,7 +26,6 @@ public:
 private:
     QStringList quizWords;
     int currentRow = 1;
-//    QVector<char> currentCombination;
 
 };
 

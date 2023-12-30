@@ -31,7 +31,6 @@ TEST_CASE("BlockWholeWindow Method") {
 
     memorija->blockWholeWindow(true);
 
-    // Check if the widgets are disabled
     REQUIRE(memorija->getUi()->widget_1->isEnabled() == false);
     REQUIRE(memorija->getUi()->widget_2->isEnabled() == false);
     REQUIRE(memorija->getUi()->widget_3->isEnabled() == false);

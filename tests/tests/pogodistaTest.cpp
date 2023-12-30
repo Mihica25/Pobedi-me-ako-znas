@@ -47,7 +47,6 @@ TEST_CASE("PogodiStaUI startGame Method", "[PogodiStaUI]") {
 TEST_CASE("PogodiSta getAnswer Method", "[PogodiSta]") {
     auto pogodista = std::make_unique<PogodiSta>(0, "info", "answer");
 
-    //pogodista->setAnswer("answer");
     REQUIRE(pogodista->getAnswer() == "answer");
 }
 
@@ -55,7 +54,6 @@ TEST_CASE("PogodiSta getAnswer Method", "[PogodiSta]") {
 TEST_CASE("PogodiSta getInfo Method", "[PogodiSta]") {
     auto pogodista = std::make_unique<PogodiSta>(0, "info", "answer");
 
-    //pogodista->setInfo("info");
     REQUIRE(pogodista->getInfo() == "info");
 }
 
@@ -64,7 +62,7 @@ TEST_CASE("PogodiSta calculatePoints Method", "[PogodiSta]") {
     auto pogodista = std::make_unique<PogodiSta>(0, "info", "answer");
 
     SECTION("Funkcije") {
-        int roundNumber = 5;  // Example round number
+        int roundNumber = 5;
         int points = pogodista->calculatePoints(roundNumber);
         REQUIRE(points == 25);
     }

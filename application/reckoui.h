@@ -83,7 +83,6 @@ private:
     void restartGame();
     QString getWord();
     void colorRow(QString result);
-//    void waitMyTurn();
     void processServerMessage(QString serverMessage);
     void writeWord(QString word);
     void clearAllRows();

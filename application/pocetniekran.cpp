@@ -47,20 +47,16 @@ int PocetniEkran::getPlayer2Points(){
 
 void PocetniEkran::on_startGameButton_clicked()
 {
-    // Prikazi CustomDialog za unos imena
     loginDialog loginDialog(this);
     if (loginDialog.exec() == QDialog::Accepted) {
         playerName = loginDialog.getName();
 
-        // Povezivanje sa serverom
         if (connectToServer(playerName)) {
-            // Uspesna konekcija
             qDebug() << "Uspesno povezivanje sa serverom!";
             ui->pokreniIgruButton->setText("Ceka se protivnik");
             qDebug() << "Namestili smo tekst";
             connect(tcpSocket, &QTcpSocket::readyRead, this, &PocetniEkran::onReadyRead);
         } else {
-            // Neuspesna konekcija
             qDebug() << "Neuspesna konekcija sa serverom!";
         }
     }
@@ -81,29 +77,23 @@ void PocetniEkran::on_info()
         il->show();
 }
 
-// Proveriti sta je upozorenje koje dobijamo prilikom konektovanja na server ->
-// QMetaObject::connectSlotsByName: No matching signal for on_startGameButton_clicked()
 bool PocetniEkran::connectToServer(QString message)
 {
-    // Adresa i port servera
     QString serverAddress = "localhost";
     int serverPort = 8000;
 
-    // Kreiranje socket-a za komunikaciju sa serverom
     tcpSocket = new QTcpSocket(this);
     tcpSocket->connectToHost(serverAddress, serverPort);
 
-    // Provera da li je uspostavljena konekcija
     if (tcpSocket->waitForConnected()) {
 
         tcpSocket->write(message.toUtf8());
         tcpSocket->flush();
 
-        return true;  // Uspesna konekcija
+        return true;
     } else {
         qDebug() << "Greska, neuspesna konekcija sa serverom!";
-//        delete tcpSocket;
-        return false;  // Neuspesna konekcija
+        return false;
     }
 }
 
@@ -173,10 +163,6 @@ void PocetniEkran::on_mojbrojEnds(){
     stackedWidget->removeWidget(mojbroj);
     stackedWidget->setCurrentWidget(mojbroj);
     connect(kozna, &KoZnaui::mGameEnds, this, &PocetniEkran::on_koZnaEnds, Qt::UniqueConnection);
-
-
-
-    //naredna igra
 }
 
 void PocetniEkran::on_koZnaEnds(){
@@ -219,8 +205,6 @@ void PocetniEkran::on_pogodiStaEnds()
     stackedWidget->removeWidget(pogodiSta);
     stackedWidget->setCurrentWidget(memorija);
     connect(memorija, &Memorija::mGameEnds, this, &PocetniEkran::on_memorijaEnds);
-
-
 }
 
 void PocetniEkran::onReadyReadBestResults(){

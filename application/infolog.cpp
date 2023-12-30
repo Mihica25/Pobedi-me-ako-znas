@@ -13,10 +13,6 @@ InfoLog::InfoLog(QWidget *parent)
     palette.setColor(QPalette::Text, Qt::white);
     ui->textEdit->setPalette(palette);
 
-
-
-
-
     connect(ui->tb1, &QToolButton::clicked, this, &InfoLog::cancel);
 
 }

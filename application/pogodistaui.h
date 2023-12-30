@@ -46,7 +46,6 @@ signals:
 
 private slots:
     void updateTimer();
-    // void updateAnswTimer();
     void onGuessSubmit();
     void on_gameEnds();
     void onReadyRead();
@@ -58,7 +57,6 @@ private:
     QTcpSocket* server = nullptr;
     QTimer *gameTimer;
     int gameTime;
-    // QTimer *answerTimer;
     int answerTime = 0;
     const int pixelStep = 8;
     int pixelSize;
