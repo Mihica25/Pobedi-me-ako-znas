@@ -4,7 +4,7 @@
 
 ### Kratak opis:
 
-Igrač započinje jednu partiju igre. Ima 6 pokušaja da pogodi koja je tajna reč od 5 slova, pri čemu dobija povratnu informaciju o pogođenim slovima bilo da su na pravom ili pogrešnom mestu.
+Igrač započinje jednu partiju igre. Ima 5 pokušaja da pogodi koja je tajna reč od 5 slova, pri čemu dobija povratnu informaciju o pogođenim slovima bilo da su na pravom ili pogrešnom mestu.
   
 
 ### Akteri:
@@ -17,7 +17,7 @@ Započet je niz igara.
   
 ### Postuslovi:
 
-Rezultati partije igre "Rečko" se čuvaju. Prelazi se na slučaj upotrebe Igru "Moj broj".
+Prelazi se na slučaj upotrebe Igru "Moj broj".
 
 ### Osnovni tok:
 
@@ -36,8 +36,10 @@ Rezultati partije igre "Rečko" se čuvaju. Prelazi se na slučaj upotrebe Igru 
             4.3.1. Aplikacija ispisuje obaveštenje da je reč uspešno otkrivena.
             4.3.2. Prelazi se na korak 6.
     5. Aplikacija ispisuje obaveštenje da reč nije otkrivena.
-    6. Prelazi se na slučaj upotrebe „Čuvanje rezultata”.
-    7. Aplikacija prelazi na slučaj upotrebe "Moj broj".
+    6. Aplikacija ispisuje klijentima tačnu reč.
+    7. Aplikacija proverava koja se runda završila
+        7.1. Ako se završila prva onda se prelazi na korak 2.
+        7.2. Ako se završila druga runda onda se prelazi na slučaj upotrebe "Moj broj".
   
 
 ### Alternativni tokovi:
@@ -64,7 +66,7 @@ Slučaj upotrebe se završava.
 
 DI1. Postoje dve runde igre.
 
-DI2. Vremensko ograničenje jedne runde je 120s.
+DI2. Vremensko ograničenje jedne runde je 60s.
 
 
 
