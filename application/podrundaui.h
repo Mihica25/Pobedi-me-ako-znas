@@ -34,6 +34,9 @@ public:
     void setPlayer1Points(int playerr1Points);
     void setPlayer2Points(int playerr2Points);
 
+    void disableUI();
+    void enableUI();
+
     Ui::Podrundaui *getUi();
     int getTime();
 
@@ -59,8 +62,6 @@ private:
     void getGuess();
     void displayAnswer();
     void notifyServer(QTcpSocket* socket, QString msg);
-    void disableUI();
-    void enableUI();
     bool isNumberGuessed();
     void setBackground();
     void adjustResultLabel();

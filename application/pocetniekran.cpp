@@ -18,6 +18,8 @@ PocetniEkran::PocetniEkran(QWidget *parent)
     player1Points = 0;
     player2Points = 0;
 
+    opponentName = "";
+
     connect(ui->pokreniIgruButton, &QPushButton::clicked, this, &PocetniEkran::on_startGameButton_clicked);
 
 }
@@ -25,6 +27,18 @@ PocetniEkran::PocetniEkran(QWidget *parent)
 PocetniEkran::~PocetniEkran()
 {
     delete ui;
+}
+
+Ui::PocetniEkran *PocetniEkran::getUi(){
+    return ui;
+}
+
+int PocetniEkran::getPlayer1Points(){
+    return player1Points;
+}
+
+int PocetniEkran::getPlayer2Points(){
+    return player2Points;
 }
 
 void PocetniEkran::on_startGameButton_clicked()

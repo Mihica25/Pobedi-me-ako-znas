@@ -26,6 +26,10 @@ public:
     PocetniEkran(QWidget *parent = nullptr);
     ~PocetniEkran();
 
+    int getPlayer1Points();
+    int getPlayer2Points();
+    Ui::PocetniEkran *getUi();
+
 public slots:
     void on_startGameButton_clicked();
     void on_reckoEnds();

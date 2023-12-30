@@ -24,6 +24,8 @@ public:
     void sendMessageToPlayer1(QString message);
     void sendMessageToPlayer2(QString message);
     void sendMessageToBothPlayers(QString message);
+    Player* getPlayer1();
+    Player* getPlayer2();
 
 
 private slots:

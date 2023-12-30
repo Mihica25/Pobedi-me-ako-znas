@@ -18,6 +18,8 @@ public:
     int getCurrentRow();
     void setCurrentRow(int row);
 
+    QStringList getQuizWords();
+
 
     QString wordle = "";
 

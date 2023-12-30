@@ -6,6 +6,7 @@
 #include "../../application/podrundaui.h"
 #include "../../application/ui_podrundaui.h"
 
+
 TEST_CASE("Podrundaui Constructor", "[Podrundaui]") {
     QMainWindow *m = new QMainWindow();
     QTcpSocket *socket = new QTcpSocket(m);
@@ -13,9 +14,6 @@ TEST_CASE("Podrundaui Constructor", "[Podrundaui]") {
 
     SECTION("Constructor Initialization") {
 
-
-        //REQUIRE(podrundaui->getServer() == socket);
-        //REQUIRE(podrundaui->isMultiplayer() == true);
         REQUIRE(podrundaui->getPlayer1() == "Player1");
         REQUIRE(podrundaui->getPlayer2() == "Player2");
         REQUIRE(podrundaui->getPlayer1Points() == 0);
@@ -31,7 +29,6 @@ TEST_CASE("Podrundaui Constructor", "[Podrundaui]") {
     SECTION("UI is properly initialized") {
         REQUIRE(podrundaui->getUi() != nullptr);
     }
-
 
 }
 
@@ -57,4 +54,6 @@ TEST_CASE("Gameplay Mechanics") {
         REQUIRE(podrundaui->getUi()->labTacanOdgovor->text().isEmpty());
     }
 }
+
+
 

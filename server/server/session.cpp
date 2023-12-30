@@ -50,10 +50,25 @@ Session::Session(Player *player1, Player *player2, QStringList reckoChoosenWords
     startGame();
 }
 
+
+Player* Session::getPlayer1()
+{
+    return player1;
+}
+
+
+Player* Session::getPlayer2()
+{
+    return player2;
+}
+
+
 Session::~Session()
 {
 //    disconnect(player1->tcpSocket, &QTcpSocket::readyRead, this, &Session::player1ReadyRead);
 //    disconnect(player2->tcpSocket, &QTcpSocket::readyRead, this, &Session::player2ReadyRead);
+
+    qDebug() << "Desktrukor sesije" << endl;
 
     delete player1;
     delete player2;
@@ -447,6 +462,7 @@ void Session::processPodrundaMessage(const QString& msg, const int num)
         if (!QFile::exists(filePath))
         {
             qDebug() << "Fajl ne postoji.\n";
+
         }
 
         // Otvaranje fajla za čitanje
@@ -946,24 +962,33 @@ QString Session::generateInitialNumbers()
 
 void Session::generateQuestions(){
     QString filePath = ":/kozna/pitanja/kozna.txt";
+    QStringList allQuestions;
 
 
       if (!QFile::exists(filePath))
         {
-            qDebug() << "Fajl ne postoji.\n";
+            qDebug() << "Fajl ne postojiiiiiii.\n";
+            QString pitanjce = "a_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f/na_b_c_d_e_f";
+            QString line = "a_b_c_d_e_f\n";
+            for (int i = 0; i < 7; i++)
+            {
+                allQuestions.append(line);
+            }
         }
-
+      else
+      {
         // Otvaranje fajla za čitanje
         QFile file(filePath);
         //qDebug() << "Greška prilikom otvaranja fajla:" << file.errorString();
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Nije moguće otvoriti fajl za čitanje.\n";
+
         }
 
         // Čitanje linija iz fajla i ispis na ekran
         QTextStream in(&file);
-        QStringList allQuestions;
+        //QStringList allQuestions;
 
         QString line;
 
@@ -976,7 +1001,7 @@ void Session::generateQuestions(){
         }
 
         file.close();
-
+      }
 
 //       qsrand(QTime::currentTime().msec());
 

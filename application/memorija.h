@@ -24,6 +24,13 @@ public:
     int getPlayer1Points();
     int getPlayer2Points();
 
+    QString getPlayer1();
+    QString getPlayer2();
+
+    Ui::Memorija *getUi();
+    void blockWholeWindow(bool block);
+
+
 signals:
     void mGameEnds();
 
@@ -64,7 +71,6 @@ private:
     void opponentsView(int card);
     void switchTurns(bool isPlayersTurn);
 
-    void blockWholeWindow(bool block);
 
     void sendMessage(QTcpSocket* socket, QString msg);
     void processServerMessage(QString serverMessage);

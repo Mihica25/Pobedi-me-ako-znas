@@ -13,7 +13,7 @@ Player::Player(QTcpSocket* socket, const QString& username, QObject *parent, boo
 Player::~Player()
 {
     // Osigurajte da se resursi oslobode prilikom uništavanja objekta
-    delete tcpSocket;
+    //delete tcpSocket;
 }
 
 

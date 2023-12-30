@@ -50,6 +50,62 @@ PogodiStaUI::PogodiStaUI(QWidget *parent, QTcpSocket *tcpSocket, QString player_
     startGame();
 }
 
+Ui::PogodiStaUI *PogodiStaUI::getUi()
+{
+    return ui;
+}
+
+
+int PogodiStaUI::getTime()
+{
+    return gameTime;
+}
+
+QString PogodiStaUI::getPlayer1()
+{
+    return player1;
+}
+
+
+QString PogodiStaUI::getPlayer2()
+{
+    return player2;
+}
+
+
+void PogodiStaUI::setPlayer1(QString playerr1)
+{
+    player1 = playerr1;
+}
+
+
+void PogodiStaUI::setPlayer2(QString playerr2)
+{
+    player2 = playerr2;
+}
+
+
+void PogodiStaUI::setPlayer1Points(int playerr1Points)
+{
+    player1Points = playerr1Points;
+}
+
+
+void PogodiStaUI::setPlayer2Points(int playerr2Points)
+{
+    player2Points = playerr2Points;
+}
+
+int PogodiStaUI::getRoundNumber()
+{
+    return roundNumber;
+}
+
+int PogodiStaUI::getPixelSize()
+{
+    return pixelSize;
+}
+
 PogodiStaUI::~PogodiStaUI()
 {
     delete ui;

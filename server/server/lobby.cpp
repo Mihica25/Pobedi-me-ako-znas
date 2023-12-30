@@ -66,7 +66,9 @@ QStringList Lobby::chooseRandomWords(const QStringList &wordList) {
 
     if (wordList.size() < 2) {
         qDebug() << "Nedovoljno reči za izbor.";
-        return chosenWords;
+        QStringList stringList;
+        stringList << "NISKA" << "OBLAK";
+        return stringList;
     }
 
     int index1 = QRandomGenerator::global()->bounded(wordList.size());

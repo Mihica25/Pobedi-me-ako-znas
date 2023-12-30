@@ -115,6 +115,23 @@ int KoZnaui::getPlayer1Points(){
 int KoZnaui::getPlayer2Points(){
     return player2Points;
 }
+
+QString KoZnaui::getPlayer1()
+{
+    return player1;
+}
+
+
+QString KoZnaui::getPlayer2()
+{
+    return player2;
+}
+
+int KoZnaui::getTime()
+{
+    return time;
+}
+
 KoZnaui::~KoZnaui()
 {
     delete ui;
@@ -401,6 +418,11 @@ void KoZnaui::enableUi() {
     ui->pushButtonAns3->setEnabled(true);
     ui->pushButtonAns4->setEnabled(true);
     ui->DALJE1->setEnabled(true);
+}
+
+Ui::KoZnaui *KoZnaui::getUI()
+{
+    return ui;
 }
 
 

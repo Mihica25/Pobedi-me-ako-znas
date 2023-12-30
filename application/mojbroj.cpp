@@ -378,7 +378,7 @@ void Mojbroj::setNumbers()
     ui->pushButton_num5->setText(QString::number(initialNumbers[4]));
     ui->pushButton_num6->setText(QString::number(initialNumbers[5]));
 
-    int targetNumber = m_mojbroj->targetNumber;
+    int targetNumber = m_mojbroj->getTargetNumber();
 
     ui->textEdit->clear();
     ui->textEdit->setText(QString::number(targetNumber));
@@ -468,7 +468,7 @@ void Mojbroj::processServerMessage(QString serverMessage){
         QStringList lines = result.split("-");
         int lines_size = lines.size();
 
-        m_mojbroj->targetNumber = lines[0].toInt();
+        m_mojbroj->setTargetNumber(lines[0].toInt());
 
         QVector<int> availableNumbers;
         for (int i=1; i<lines_size; i++)
