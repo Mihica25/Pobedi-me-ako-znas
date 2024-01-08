@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/ServerApplication_autogen/mocs_compilation.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/mocs_compilation.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/mocs_compilation.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/lobby.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/lobby.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/lobby.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/main.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/main.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/main.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/player.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/player.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/player.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/server.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/server.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/server.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/session.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/session.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/session.cpp"
+},
+{
+  "directory": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build -I/home/user/Desktop/pobedi-me-ako-znas/server/server -I/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/include -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtNetwork    -fPIC -std=gnu++17 -o CMakeFiles/ServerApplication.dir/ServerApplication_autogen/EWIEGA46WW/qrc_resources.cpp.o -c /home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/EWIEGA46WW/qrc_resources.cpp",
+  "file": "/home/user/Desktop/pobedi-me-ako-znas/server/server/build/ServerApplication_autogen/EWIEGA46WW/qrc_resources.cpp"
+}
+]
