@@ -17,8 +17,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_loginDialog
 {
-public:
-
+  public:
     void setupUi(QDialog *loginDialog)
     {
         if (loginDialog->objectName().isEmpty())
@@ -34,11 +33,13 @@ public:
     {
         loginDialog->setWindowTitle(QApplication::translate("loginDialog", "Dialog", nullptr));
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class loginDialog: public Ui_loginDialog {};
+namespace Ui
+{
+class loginDialog : public Ui_loginDialog
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_KoZnaui
 {
-public:
+  public:
     QWidget *widget;
     QVBoxLayout *verticalLayout_2;
     QGridLayout *gridLayout_2;
@@ -120,7 +120,7 @@ public:
         lePlayer1_2->setFont(font1);
         lePlayer1_2->setAutoFillBackground(false);
         lePlayer1_2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                     "color: rgb(255, 255, 255);"));
         lePlayer1_2->setAlignment(Qt::AlignCenter);
         lePlayer1_2->setReadOnly(true);
 
@@ -142,7 +142,7 @@ public:
         lePlayer2->setFont(font1);
         lePlayer2->setAutoFillBackground(false);
         lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer2->setAlignment(Qt::AlignCenter);
         lePlayer2->setReadOnly(true);
 
@@ -153,9 +153,7 @@ public:
 
         verticalLayout_5->addWidget(lcdPoints2);
 
-
         gridLayout_2->addWidget(frame, 0, 0, 1, 1);
-
 
         verticalLayout_2->addLayout(gridLayout_2);
 
@@ -198,7 +196,6 @@ public:
 
         gridLayout->addWidget(pushButtonAns1, 0, 0, 1, 1);
 
-
         verticalLayout_2->addLayout(gridLayout);
 
         DALJE1 = new QPushButton(widget);
@@ -231,11 +228,13 @@ public:
         pushButtonAns1->setText(QString());
         DALJE1->setText(QApplication::translate("KoZnaui", "DALJE", nullptr));
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class KoZnaui: public Ui_KoZnaui {};
+namespace Ui
+{
+class KoZnaui : public Ui_KoZnaui
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

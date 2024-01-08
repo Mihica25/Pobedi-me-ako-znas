@@ -1,38 +1,39 @@
 #include "resultdialog.h"
 #include "ui_resultdialog.h"
 
-
-ResultDialog::ResultDialog(QWidget *parent) : QDialog(parent) {
+ResultDialog::ResultDialog(QWidget *parent) : QDialog(parent)
+{
     mainLayout = new QVBoxLayout(this);
 
     setWindowTitle("Best Results");
     setFixedSize(250, 300);
 
-
     setLayout(mainLayout);
-
-
 }
 
-ResultDialog::~ResultDialog() {
-
+ResultDialog::~ResultDialog()
+{
 }
 
-void ResultDialog::clearLayout(QLayout *layout) {
+void ResultDialog::clearLayout(QLayout *layout)
+{
     QLayoutItem *item;
-    while ((item = layout->takeAt(0)) != nullptr) {
+    while ((item = layout->takeAt(0)) != nullptr)
+    {
         delete item->widget();
         delete item;
     }
 }
 
-void ResultDialog::showResults(QString &data) {
+void ResultDialog::showResults(QString &data)
+{
     clearLayout(mainLayout);
 
     QVector<ResultDialog::GameResult> results = parseBestResults(data);
     QString resultText;
-    for (const auto &result : results) {
-    resultText += QString("%1 vs %2 - %3:%4\n")
+    for (const auto &result : results)
+    {
+        resultText += QString("%1 vs %2 - %3:%4\n")
                           .arg(result.player1Name)
                           .arg(result.player2Name)
                           .arg(result.player1Points)
@@ -47,10 +48,12 @@ void ResultDialog::showResults(QString &data) {
     exec();
 }
 
-QVector<ResultDialog::GameResult> ResultDialog::parseBestResults(QString &data) {
+QVector<ResultDialog::GameResult> ResultDialog::parseBestResults(QString &data)
+{
     QVector<ResultDialog::GameResult> results;
 
-    if (!data.startsWith("BEST_RESULTS:")) {
+    if (!data.startsWith("BEST_RESULTS:"))
+    {
         qDebug() << "Invalid data format";
         return results;
     }
@@ -59,10 +62,12 @@ QVector<ResultDialog::GameResult> ResultDialog::parseBestResults(QString &data) 
 
     QStringList resultList = resultsData.split("\n");
 
-    for (const QString &resultStr : resultList) {
+    for (const QString &resultStr : resultList)
+    {
         QStringList resultData = resultStr.split(",");
 
-        if (resultData.size() == 5) {
+        if (resultData.size() == 5)
+        {
             ResultDialog::GameResult result;
             result.player1Name = resultData[0];
             result.player1Points = resultData[1].toInt();
@@ -71,7 +76,9 @@ QVector<ResultDialog::GameResult> ResultDialog::parseBestResults(QString &data) 
             result.dateTime = QDateTime::fromString(resultData[4], "yyyy-MM-ddTHH:mm:ss");
 
             results.append(result);
-        } else {
+        }
+        else
+        {
             qDebug() << "Invalid result data format:" << resultStr;
         }
     }

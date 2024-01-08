@@ -2,15 +2,16 @@
 #define MOJBROJ_H
 
 #include "mojbrojlogic.h"
-#include <QWidget>
+#include <QGraphicsBlurEffect>
 #include <QKeyEvent>
 #include <QPushButton>
-#include <QGraphicsBlurEffect>
 #include <QTimer>
+#include <QWidget>
 
 #include <QTcpSocket>
 
-namespace Ui {
+namespace Ui
+{
 class Mojbroj;
 }
 
@@ -18,15 +19,16 @@ class Mojbroj : public QWidget
 {
     Q_OBJECT
 
-public:
+  public:
     explicit Mojbroj(QWidget *parent = nullptr);
-    explicit Mojbroj(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString player1 = "", QString player2 = "", bool red = false, int player1Points = 0, int player2Points = 0);
+    explicit Mojbroj(QWidget *parent = nullptr, QTcpSocket *tcpSocket = nullptr, QString player1 = "",
+                     QString player2 = "", bool red = false, int player1Points = 0, int player2Points = 0);
     ~Mojbroj();
 
     int getPlayer1Points();
     int getPlayer2Points();
 
-private:
+  private:
     Ui::Mojbroj *ui;
     MojBrojLogic *m_mojbroj;
     QTimer *timer;
@@ -35,7 +37,7 @@ private:
     int bodovi = 0;
     int ukupni_bodovi = 0;
     bool multiplayer = false;
-    QTcpSocket* server = nullptr;
+    QTcpSocket *server = nullptr;
     QString player1 = "";
     QString player2 = "";
     bool turn = false;
@@ -49,11 +51,10 @@ private:
     void setNumbers();
     void setButtonStatus(bool enabled);
 
-
     void processServerMessage(QString serverMessage);
-    void sendMessage(QTcpSocket* socket, QString msg);
+    void sendMessage(QTcpSocket *socket, QString msg);
 
-private slots:
+  private slots:
     void buttonPressedNum();
     void buttonPressedOp();
     void buttonPressedSubmit();
@@ -61,18 +62,17 @@ private slots:
     void buttonPressedNextGame();
     void del();
 
-public slots:
+  public slots:
     void on_timesUp();
     void on_gameEnd();
     void updateTime();
-    //server
+    // server
     void onReadyRead();
 
-signals:
+  signals:
     void timesUp();
     void gameEnd();
     void mGameEnds();
-
 };
 
 #endif // MOJBROJ_H

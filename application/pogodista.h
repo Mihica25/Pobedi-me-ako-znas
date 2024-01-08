@@ -3,15 +3,15 @@
 
 #include <QDir>
 #include <QFileInfoList>
-#include <QRandomGenerator>
 #include <QPixmap>
+#include <QRandomGenerator>
 #include <QString>
 
 class PogodiSta : public QObject
 {
     Q_OBJECT
 
-public:
+  public:
     PogodiSta();
     PogodiSta(int index, QString info_m, QString answ);
 
@@ -26,7 +26,8 @@ public:
     void setAnswer(const QString &newAnswer);
 
     void setInfo(const QString &newInfo);
-private:
+
+  private:
     QString answer;
     QString info;
     QPixmap guessingImage;

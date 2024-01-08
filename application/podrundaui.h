@@ -1,14 +1,15 @@
 #ifndef PODRUNDAUI_H
 #define PODRUNDAUI_H
 
-#include <QWidget>
 #include "podrunda.h"
-#include <QTimer>
-#include <string>
 #include <QString>
 #include <QTcpSocket>
+#include <QTimer>
+#include <QWidget>
+#include <string>
 
-namespace Ui {
+namespace Ui
+{
 class Podrundaui;
 }
 
@@ -16,9 +17,10 @@ class Podrundaui : public QWidget
 {
     Q_OBJECT
 
-public:
+  public:
     explicit Podrundaui(QWidget *parent = nullptr);
-    explicit Podrundaui(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString player1 = "", QString player2 = "", int player1Points = 0, int player2Points = 0);
+    explicit Podrundaui(QWidget *parent = nullptr, QTcpSocket *tcpSocket = nullptr, QString player1 = "",
+                        QString player2 = "", int player1Points = 0, int player2Points = 0);
     ~Podrundaui();
 
     void startGame();
@@ -40,17 +42,16 @@ public:
     Ui::Podrundaui *getUi();
     int getTime();
 
-
-private:
+  private:
     Ui::Podrundaui *ui;
 
-    Podrunda* podrunda = nullptr;
-    QTimer* timer;
+    Podrunda *podrunda = nullptr;
+    QTimer *timer;
     int time = 60;
     int bodovi = 0;
     int ukupni_bodovi = 0;
     bool multiplayer = false;
-    QTcpSocket* server = nullptr;
+    QTcpSocket *server = nullptr;
     QString player1 = "";
     QString player2 = "";
     int player1Points = 0;
@@ -61,7 +62,7 @@ private:
     void displayQuestion();
     void getGuess();
     void displayAnswer();
-    void notifyServer(QTcpSocket* socket, QString msg);
+    void notifyServer(QTcpSocket *socket, QString msg);
     bool isNumberGuessed();
     void setBackground();
     void adjustResultLabel();
@@ -69,25 +70,23 @@ private:
     void on_pbOdgovoriMultiplayer();
     void processServerMessage(QString serverMessage);
 
-    //std::pair<QString, double> getAnswerQuestion() const;
-    //void setAnswerQuestion(QString pitanje, double odgovor);
+    // std::pair<QString, double> getAnswerQuestion() const;
+    // void setAnswerQuestion(QString pitanje, double odgovor);
 
-    //std::pair<QString, double> answerQuestion;
-    //Podrunda podrunda;
-    //QTimer *timer;
-    //int time;
+    // std::pair<QString, double> answerQuestion;
+    // Podrunda podrunda;
+    // QTimer *timer;
+    // int time;
 
-signals:
+  signals:
     void timesUp();
     void gameEnded();
 
-public slots:
+  public slots:
     void updateTime();
     void on_timesUp();
     void on_gameEnded();
     void onReadyRead();
-
-
 };
 
 #endif // PODRUNDAUI_H

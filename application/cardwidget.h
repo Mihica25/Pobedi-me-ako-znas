@@ -1,35 +1,35 @@
 #ifndef CARDWIDGET_H
 #define CARDWIDGET_H
 
-#include <QWidget>
-#include <QPixmap>
 #include <QMouseEvent>
+#include <QPixmap>
+#include <QWidget>
 
-class CardWidget : public QWidget{
+class CardWidget : public QWidget
+{
     Q_OBJECT
 
-public:
-    explicit CardWidget(int id, int idR,QWidget *parent = nullptr);
+  public:
+    explicit CardWidget(int id, int idR, QWidget *parent = nullptr);
 
     int getId() const;
 
-signals:
+  signals:
     void clicked(int idR);
 
-public slots:
+  public slots:
     void reveal();
     void hide();
 
-protected:
+  protected:
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
 
-private:
+  private:
     int cardId;
     QPixmap cardImage;
     bool isRevealed;
     int idReveal;
-
 };
 
 #endif // CARDWIDGET_H

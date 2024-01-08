@@ -20,38 +20,35 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_Podrunda_t {
+struct qt_meta_stringdata_Podrunda_t
+{
     QByteArrayData data[1];
     char stringdata0[9];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Podrunda_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
-static const qt_meta_stringdata_Podrunda_t qt_meta_stringdata_Podrunda = {
-    {
-QT_MOC_LITERAL(0, 0, 8) // "Podrunda"
+#define QT_MOC_LITERAL(idx, ofs, len)                                                                                  \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(                                                           \
+        len, qptrdiff(offsetof(qt_meta_stringdata_Podrunda_t, stringdata0) + ofs - idx * sizeof(QByteArrayData)))
+static const qt_meta_stringdata_Podrunda_t qt_meta_stringdata_Podrunda = {{
+                                                                              QT_MOC_LITERAL(0, 0, 8) // "Podrunda"
 
-    },
-    "Podrunda"
-};
+                                                                          },
+                                                                          "Podrunda"};
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_Podrunda[] = {
 
- // content:
-       8,       // revision
-       0,       // classname
-       0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
-       0,    0, // enums/sets
-       0,    0, // constructors
-       0,       // flags
-       0,       // signalCount
+    // content:
+    8,    // revision
+    0,    // classname
+    0, 0, // classinfo
+    0, 0, // methods
+    0, 0, // properties
+    0, 0, // enums/sets
+    0, 0, // constructors
+    0,    // flags
+    0,    // signalCount
 
-       0        // eod
+    0 // eod
 };
 
 void Podrunda::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,15 +59,9 @@ void Podrunda::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject Podrunda::staticMetaObject = { {
-    &QObject::staticMetaObject,
-    qt_meta_stringdata_Podrunda.data,
-    qt_meta_data_Podrunda,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
-
+QT_INIT_METAOBJECT const QMetaObject Podrunda::staticMetaObject = {
+    {&QObject::staticMetaObject, qt_meta_stringdata_Podrunda.data, qt_meta_data_Podrunda, qt_static_metacall, nullptr,
+     nullptr}};
 
 const QMetaObject *Podrunda::metaObject() const
 {
@@ -79,9 +70,10 @@ const QMetaObject *Podrunda::metaObject() const
 
 void *Podrunda::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname)
+        return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_Podrunda.stringdata0))
-        return static_cast<void*>(this);
+        return static_cast<void *>(this);
     return QObject::qt_metacast(_clname);
 }
 

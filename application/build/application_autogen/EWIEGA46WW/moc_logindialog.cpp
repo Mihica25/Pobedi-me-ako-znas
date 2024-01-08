@@ -20,38 +20,36 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_loginDialog_t {
+struct qt_meta_stringdata_loginDialog_t
+{
     QByteArrayData data[1];
     char stringdata0[12];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_loginDialog_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
+#define QT_MOC_LITERAL(idx, ofs, len)                                                                                  \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(                                                           \
+        len, qptrdiff(offsetof(qt_meta_stringdata_loginDialog_t, stringdata0) + ofs - idx * sizeof(QByteArrayData)))
 static const qt_meta_stringdata_loginDialog_t qt_meta_stringdata_loginDialog = {
     {
-QT_MOC_LITERAL(0, 0, 11) // "loginDialog"
+        QT_MOC_LITERAL(0, 0, 11) // "loginDialog"
 
     },
-    "loginDialog"
-};
+    "loginDialog"};
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_loginDialog[] = {
 
- // content:
-       8,       // revision
-       0,       // classname
-       0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
-       0,    0, // enums/sets
-       0,    0, // constructors
-       0,       // flags
-       0,       // signalCount
+    // content:
+    8,    // revision
+    0,    // classname
+    0, 0, // classinfo
+    0, 0, // methods
+    0, 0, // properties
+    0, 0, // enums/sets
+    0, 0, // constructors
+    0,    // flags
+    0,    // signalCount
 
-       0        // eod
+    0 // eod
 };
 
 void loginDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,15 +60,9 @@ void loginDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject loginDialog::staticMetaObject = { {
-    &QDialog::staticMetaObject,
-    qt_meta_stringdata_loginDialog.data,
-    qt_meta_data_loginDialog,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
-
+QT_INIT_METAOBJECT const QMetaObject loginDialog::staticMetaObject = {
+    {&QDialog::staticMetaObject, qt_meta_stringdata_loginDialog.data, qt_meta_data_loginDialog, qt_static_metacall,
+     nullptr, nullptr}};
 
 const QMetaObject *loginDialog::metaObject() const
 {
@@ -79,9 +71,10 @@ const QMetaObject *loginDialog::metaObject() const
 
 void *loginDialog::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname)
+        return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_loginDialog.stringdata0))
-        return static_cast<void*>(this);
+        return static_cast<void *>(this);
     return QDialog::qt_metacast(_clname);
 }
 

@@ -1,7 +1,6 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 
-
 loginDialog::loginDialog(QWidget *parent) : QDialog(parent)
 {
     nameLineEdit = new QLineEdit(this);

@@ -1,38 +1,36 @@
 #ifndef SESSION_H
 #define SESSION_H
 
-#include <QTcpServer>
-#include <QDebug>
 #include "player.h"
-#include <string>
-#include <QDir>
-#include <QFileDialog>
-#include <QTextStream>
-#include <QString>
-#include <QRandomGenerator>
-#include <QStringList>
-#include <QVector>
-#include <QFile>
 #include <QDateTime>
+#include <QDebug>
+#include <QDir>
+#include <QFile>
+#include <QFileDialog>
 #include <QList>
-
+#include <QRandomGenerator>
+#include <QString>
+#include <QStringList>
+#include <QTcpServer>
+#include <QTextStream>
+#include <QVector>
+#include <string>
 
 class Session : public QObject
 {
     Q_OBJECT
 
-public:
+  public:
     Session(Player *player1, Player *player2, QStringList reckoChoosenWords, QObject *parent = nullptr);
     ~Session();
 
     void sendMessageToPlayer1(QString message);
     void sendMessageToPlayer2(QString message);
     void sendMessageToBothPlayers(QString message);
-    Player* getPlayer1();
-    Player* getPlayer2();
+    Player *getPlayer1();
+    Player *getPlayer2();
 
-
-private slots:
+  private slots:
     void player1ReadyReadRecko();
     void player2ReadyReadRecko();
     void player1ReadyReadMojBroj();
@@ -46,7 +44,7 @@ private slots:
     void player1ReadyReadMemorija();
     void player2ReadyReadMemorija();
 
-private:
+  private:
     Player *player1;
     Player *player2;
     QStringList reckoWords;
@@ -87,26 +85,25 @@ private:
 
     void shuffleQVector(QVector<int> &vector);
     QVector<int> generateCardIds();
-    void processMemorijaMessage(const QString& request);
-    void processReckoMessage(const QString& msg);
-    QString checkReckoSolution(const QString& word);
-    void processMojBrojMessage(const QString& msg);
-    void checkMojBrojSolution(const QString& pt1, const QString& pt2);
+    void processMemorijaMessage(const QString &request);
+    void processReckoMessage(const QString &msg);
+    QString checkReckoSolution(const QString &word);
+    void processMojBrojMessage(const QString &msg);
+    void checkMojBrojSolution(const QString &pt1, const QString &pt2);
 
     QString generateTargetNumber();
     QString generateInitialNumbers();
     void generateQuestions();
 
-    void processPogodiStaMessage(const QString& msg, Player* player);
+    void processPogodiStaMessage(const QString &msg, Player *player);
     void generatePogodiSta();
 
-    void processKoZnaMessage(const QString& msg, int num);
-    QString checkKoZnaSolution(const QString& word);
+    void processKoZnaMessage(const QString &msg, int num);
+    QString checkKoZnaSolution(const QString &word);
     int checkPodrundaWinner();
-    void processPodrundaMessage(const QString& msg, const int num);
+    void processPodrundaMessage(const QString &msg, const int num);
 
     void saveResult(const QString &player1Name, int player1Points, const QString &player2Name, int player2Points);
-
 };
 
 #endif // SESSION_H

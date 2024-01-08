@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_MainWindow
 {
-public:
+  public:
     QWidget *centralWidget;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -55,11 +55,13 @@ public:
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+namespace Ui
+{
+class MainWindow : public Ui_MainWindow
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

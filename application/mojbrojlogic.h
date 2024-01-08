@@ -1,9 +1,9 @@
 #ifndef MOJBROJLOGIC_H
 #define MOJBROJLOGIC_H
 
-#include <QVector>
-#include <QString>
 #include <QPair>
+#include <QString>
+#include <QVector>
 
 enum class GamePhase
 {
@@ -14,15 +14,15 @@ enum class GamePhase
 
 class MojBrojLogic
 {
-public:
+  public:
     MojBrojLogic();
-    ~MojBrojLogic()=default;
+    ~MojBrojLogic() = default;
 
     bool endGame();
     void chooseNumber(int number);
-    void chooseOperation(const QString& operation);
-    int submitSolution(const QString& solution, const QString& indicator);
-    QPair<QString,QString> deleteLastInput();
+    void chooseOperation(const QString &operation);
+    int submitSolution(const QString &solution, const QString &indicator);
+    QPair<QString, QString> deleteLastInput();
 
     QVector<int> availableNumbers;
     QVector<QString> currentExpression;
@@ -30,15 +30,14 @@ public:
     int getTargetNumber();
     void setTargetNumber(int tn);
 
-private:
+  private:
     QVector<QString> availableOperations;
     GamePhase currentRound;
     int targetNumber;
 
-    QString vectorToString(const QVector<QString>& vec);
-    bool validateExpression(const QString& expression) const;
-    int evaluateExpression(const QString& expression) const;
-
+    QString vectorToString(const QVector<QString> &vec);
+    bool validateExpression(const QString &expression) const;
+    int evaluateExpression(const QString &expression) const;
 };
 
 #endif // MOJBROJLOGIC_H

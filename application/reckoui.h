@@ -1,14 +1,15 @@
 #ifndef RECKOUI_H
 #define RECKOUI_H
 
-#include <QMainWindow>
 #include "recko.h"
-#include <string>
+#include <QMainWindow>
 #include <QString>
-#include <QTimer>
 #include <QTcpSocket>
+#include <QTimer>
+#include <string>
 
-namespace Ui {
+namespace Ui
+{
 class ReckoUI;
 }
 
@@ -16,9 +17,10 @@ class ReckoUI : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     explicit ReckoUI(QWidget *parent = nullptr);
-    explicit ReckoUI(QWidget *parent = nullptr, QTcpSocket* tcpSocket = nullptr, QString p1Username = "", QString p2Username = "", bool red = false, int p1Points = 0, int p2Points = 0);
+    explicit ReckoUI(QWidget *parent = nullptr, QTcpSocket *tcpSocket = nullptr, QString p1Username = "",
+                     QString p2Username = "", bool red = false, int p1Points = 0, int p2Points = 0);
     ~ReckoUI();
 
     void setUpBackground();
@@ -33,35 +35,33 @@ public:
     Ui::ReckoUI *getUi();
     int getTime();
 
-signals:
+  signals:
     void timesUp();
     void gameEnds();
     void mGameEnds();
 
-public slots :
+  public slots:
     void on_timesUp();
     void updateTime();
     void on_gameEnds();
     void onReadyRead();
     void on_mTimesUp();
 
-
-private:
+  private:
     Ui::ReckoUI *ui;
-    Recko* recko = nullptr;
-    QTimer* tajmer;
+    Recko *recko = nullptr;
+    QTimer *tajmer;
     int time = 60;
     int bodovi = 0;
     int ukupni_bodovi = 0;
     bool multiplayer = false;
-    QTcpSocket* server = nullptr;
+    QTcpSocket *server = nullptr;
     QString player1 = "";
     QString player2 = "";
     bool turn = false;
     bool playerNo = false;
     int player1Points = 0;
     int player2Points = 0;
-
 
     void on_pbPotvrdi1();
     void on_pbPotvrdi2();
@@ -75,11 +75,11 @@ private:
     void on_pbPotvrdi4Multiplayer();
     void on_pbPotvrdi5Multiplayer();
 
-    void disableRow(int index,bool disable = true);
+    void disableRow(int index, bool disable = true);
     void setUpRows();
     void disableSolution();
     void showSolution(QString word);
-    void sendMessage(QTcpSocket* socket, QString msg);
+    void sendMessage(QTcpSocket *socket, QString msg);
     void restartGame();
     QString getWord();
     void colorRow(QString result);

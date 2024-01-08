@@ -1,18 +1,16 @@
 #include "podrundaui.h"
-#include "ui_podrundaui.h"
 #include "podrunda.h"
+#include "ui_podrundaui.h"
 #include <QDebug>
 
-Podrundaui::Podrundaui(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::Podrundaui)
+Podrundaui::Podrundaui(QWidget *parent) : QWidget(parent), ui(new Ui::Podrundaui)
 {
     getUi()->setupUi(this);
     setBackground();
 
     Podrunda podrunda;
 
-    connect(getUi()->pbOdgovori , &QPushButton::clicked, this, &Podrundaui::on_pbOdgovori);
+    connect(getUi()->pbOdgovori, &QPushButton::clicked, this, &Podrundaui::on_pbOdgovori);
 
     timer = new QTimer(this);
     time = 20;
@@ -22,18 +20,13 @@ Podrundaui::Podrundaui(QWidget *parent) :
     connect(this, &Podrundaui::timesUp, this, &Podrundaui::on_timesUp);
     connect(this, &Podrundaui::gameEnded, this, &Podrundaui::on_gameEnded);
 
-
     timer->start(1000);
     this->getQuestion();
 }
 
-Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
-                 QString playerr1, QString playerr2,
-                 int playerr1Points, int playerr2Points):
-    QWidget(parent),
-    ui(new Ui::Podrundaui),
-    podrunda(new Podrunda()),
-    timer(new QTimer(this))
+Podrundaui::Podrundaui(QWidget *parent, QTcpSocket *tcpSocket, QString playerr1, QString playerr2, int playerr1Points,
+                       int playerr2Points)
+    : QWidget(parent), ui(new Ui::Podrundaui), podrunda(new Podrunda()), timer(new QTimer(this))
 {
 
     server = tcpSocket;
@@ -59,13 +52,12 @@ Podrundaui::Podrundaui(QWidget *parent, QTcpSocket* tcpSocket,
     startGame();
 }
 
-
 void Podrundaui::startGame()
 {
     connect(server, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
     timer->start(1000);
 
-    connect(getUi()->pbOdgovori , &QPushButton::clicked, this, &Podrundaui::on_pbOdgovoriMultiplayer);
+    connect(getUi()->pbOdgovori, &QPushButton::clicked, this, &Podrundaui::on_pbOdgovoriMultiplayer);
 
     this->getQuestion();
 
@@ -82,48 +74,40 @@ QString Podrundaui::getPlayer1()
     return player1;
 }
 
-
 QString Podrundaui::getPlayer2()
 {
     return player2;
 }
-
 
 void Podrundaui::setPlayer1(QString playerr1)
 {
     player1 = playerr1;
 }
 
-
 void Podrundaui::setPlayer2(QString playerr2)
 {
     player2 = playerr2;
 }
-
 
 int Podrundaui::getPlayer1Points()
 {
     return player1Points;
 }
 
-
 int Podrundaui::getPlayer2Points()
 {
     return player2Points;
 }
-
 
 void Podrundaui::setPlayer1Points(int playerr1Points)
 {
     player1Points = playerr1Points;
 }
 
-
 void Podrundaui::setPlayer2Points(int playerr2Points)
 {
     player2Points = playerr2Points;
 }
-
 
 void Podrundaui::resetGame()
 {
@@ -138,7 +122,6 @@ void Podrundaui::resetGame()
     enableUI();
 }
 
-
 Podrundaui::~Podrundaui()
 {
     delete ui;
@@ -146,30 +129,26 @@ Podrundaui::~Podrundaui()
     delete timer;
 }
 
-
 Ui::Podrundaui *Podrundaui::getUi()
 {
     return ui;
 }
 
-
 void Podrundaui::setBackground()
 {
     getUi()->setupUi(this);
     QPixmap bkgnd(":background/resources/ko_zna.png");
-    bkgnd  = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 }
-
 
 void Podrundaui::on_pbOdgovori()
 {
     disableUI();
     displayAnswer();
 }
-
 
 void Podrundaui::on_pbOdgovoriMultiplayer()
 {
@@ -186,12 +165,10 @@ void Podrundaui::on_pbOdgovoriMultiplayer()
     disableUI();
 }
 
-
 void Podrundaui::getQuestion()
 {
     notifyServer(server, "PITANJE!\n");
 }
-
 
 void Podrundaui::displayQuestion()
 {
@@ -204,16 +181,14 @@ void Podrundaui::displayQuestion()
     notifyServer(server, "RESENJE:" + resenje.toUtf8() + "\n");
 }
 
-
 void Podrundaui::displayAnswer()
 {
-    if(isNumberGuessed())
+    if (isNumberGuessed())
     {
         const QString tacno = "Bravo, odgovorili ste tacno!";
         getUi()->labTacanOdgovor->setText(tacno);
         getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
         getUi()->labTacanOdgovor->setStyleSheet("background-color:green");
-
     }
     else
     {
@@ -224,7 +199,6 @@ void Podrundaui::displayAnswer()
         getUi()->labTacanOdgovor->setText(netacno);
         getUi()->labTacanOdgovor->setAlignment(Qt::AlignCenter);
         getUi()->labTacanOdgovor->setStyleSheet("background-color:red");
-
     }
 
     timer->stop();
@@ -234,13 +208,11 @@ void Podrundaui::displayAnswer()
     disableUI();
 }
 
-
 void Podrundaui::disableUI()
 {
     getUi()->pbOdgovori->setDisabled(true);
     getUi()->teOdgovor->setDisabled(true);
 }
-
 
 void Podrundaui::enableUI()
 {
@@ -249,20 +221,17 @@ void Podrundaui::enableUI()
     getUi()->teOdgovor->setAlignment(Qt::AlignCenter);
 }
 
-
-void Podrundaui::notifyServer(QTcpSocket* socket, QString msg)
+void Podrundaui::notifyServer(QTcpSocket *socket, QString msg)
 {
     qDebug() << "Sending msg: " << msg;
     socket->write(msg.toUtf8());
     socket->flush();
 }
 
-
 void Podrundaui::getGuess()
 {
     podrunda->guess = getUi()->teOdgovor->toPlainText().toDouble();
 }
-
 
 bool Podrundaui::isNumberGuessed()
 {
@@ -274,7 +243,6 @@ bool Podrundaui::isNumberGuessed()
         return false;
 }
 
-
 void Podrundaui::updateTime()
 {
     if (time >= 0)
@@ -283,11 +251,11 @@ void Podrundaui::updateTime()
         getUi()->labTimer->setText(QString::number(time));
     }
 
-    if(--time == 0){
+    if (--time == 0)
+    {
         emit timesUp();
     }
 }
-
 
 void Podrundaui::on_timesUp()
 {
@@ -303,8 +271,8 @@ void Podrundaui::on_timesUp()
     emit gameEnded();
 }
 
-
-void Podrundaui::on_gameEnded(){
+void Podrundaui::on_gameEnded()
+{
     timer->stop();
 
     QString nula = "0";
@@ -328,14 +296,12 @@ void Podrundaui::on_gameEnded(){
     this->close();
 }
 
-
 void Podrundaui::adjustResultLabel()
 {
     QFontMetrics metrics(getUi()->labTacanOdgovor->font());
     QSize textSize = metrics.size(Qt::TextSingleLine, getUi()->labTacanOdgovor->text());
     getUi()->labTacanOdgovor->setFixedSize(textSize);
 }
-
 
 void Podrundaui::onReadyRead()
 {
@@ -344,13 +310,14 @@ void Podrundaui::onReadyRead()
 
     QStringList receivedMessages = msg.split('\n');
 
-    for (const QString& receivedMessage : receivedMessages) {
-        if (!receivedMessage.isEmpty()) {
+    for (const QString &receivedMessage : receivedMessages)
+    {
+        if (!receivedMessage.isEmpty())
+        {
             processServerMessage(receivedMessage);
         }
     }
 }
-
 
 void Podrundaui::processServerMessage(QString serverMessage)
 {
@@ -429,24 +396,24 @@ void Podrundaui::processServerMessage(QString serverMessage)
         disableUI();
         time = 3;
     }
-    else if(serverMessage.startsWith("POENI1"))
+    else if (serverMessage.startsWith("POENI1"))
     {
         QString poeni = serverMessage.mid(7);
         player1Points = poeni.toInt();
     }
-    else if(serverMessage.startsWith("POENI2"))
+    else if (serverMessage.startsWith("POENI2"))
     {
         QString poeni = serverMessage.mid(7);
         player2Points = poeni.toInt();
     }
-    else if(serverMessage.startsWith("POENI3"))
+    else if (serverMessage.startsWith("POENI3"))
     {
         QString poeni1 = serverMessage.mid(7);
         player1Points = poeni1.toInt();
         QString poeni2 = serverMessage.mid(7);
         player2Points = poeni2.toInt();
     }
-    else if(serverMessage.startsWith("ISTEKLO"))
+    else if (serverMessage.startsWith("ISTEKLO"))
     {
         qDebug() << "isteklo vreme\n";
 

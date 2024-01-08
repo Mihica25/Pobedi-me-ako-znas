@@ -4,12 +4,14 @@
 #include "../../application/memorija.h"
 #include "ui_memorija.h"
 
-TEST_CASE("Memorija Constructor", "[Memorija]") {
+TEST_CASE("Memorija Constructor", "[Memorija]")
+{
     auto m = std::make_unique<QMainWindow>();
     auto socket = std::make_unique<QTcpSocket>(m.get());
     auto memorija = std::make_unique<Memorija>(m.get(), socket.get(), "Player1", "Player2", true, 0, 0);
 
-    SECTION("Constructor Initialization") {
+    SECTION("Constructor Initialization")
+    {
 
         REQUIRE(memorija->getPlayer1() == "Player1");
         REQUIRE(memorija->getPlayer2() == "Player2");
@@ -17,14 +19,14 @@ TEST_CASE("Memorija Constructor", "[Memorija]") {
         REQUIRE(memorija->getPlayer2Points() == 0);
     }
 
-
-    SECTION("UI is properly initialized") {
+    SECTION("UI is properly initialized")
+    {
         REQUIRE(memorija->getUi() != nullptr);
     }
-
 }
 
-TEST_CASE("BlockWholeWindow Method") {
+TEST_CASE("BlockWholeWindow Method")
+{
     auto m = std::make_unique<QMainWindow>();
     auto socket = std::make_unique<QTcpSocket>(m.get());
     auto memorija = std::make_unique<Memorija>(m.get(), socket.get(), "Player1", "Player2", true, 0, 0);
@@ -51,5 +53,4 @@ TEST_CASE("BlockWholeWindow Method") {
     REQUIRE(memorija->getUi()->widget_18->isEnabled() == false);
     REQUIRE(memorija->getUi()->widget_19->isEnabled() == false);
     REQUIRE(memorija->getUi()->widget_20->isEnabled() == false);
-
 }

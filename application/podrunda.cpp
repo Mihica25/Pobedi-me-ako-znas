@@ -1,7 +1,6 @@
 #include "podrunda.h"
 #include <QTimer>
 
-
 Podrunda::Podrunda()
 {
     std::pair<QString, double> getAnswerQuestion();

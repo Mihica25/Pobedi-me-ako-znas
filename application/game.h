@@ -1,12 +1,11 @@
 #ifndef GAME_H
 #define GAME_H
 
-
 class Game
 {
 
-public:
-    Game()=default;
+  public:
+    Game() = default;
     ~Game() = default;
 
     Game *m_nextGame;

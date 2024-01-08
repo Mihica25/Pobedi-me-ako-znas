@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_Memorija
 {
-public:
+  public:
     QWidget *layoutWidget;
     QGridLayout *gridLayout;
     QWidget *widget_7;
@@ -185,7 +185,7 @@ public:
         lePlayer1->setFont(font);
         lePlayer1->setAutoFillBackground(false);
         lePlayer1->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer1->setAlignment(Qt::AlignCenter);
         lePlayer1->setReadOnly(true);
 
@@ -207,7 +207,7 @@ public:
         lePlayer2->setFont(font);
         lePlayer2->setAutoFillBackground(false);
         lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer2->setAlignment(Qt::AlignCenter);
         lePlayer2->setReadOnly(true);
 
@@ -218,7 +218,6 @@ public:
 
         verticalLayout_2->addWidget(lcdPoints2);
 
-
         retranslateUi(Memorija);
 
         QMetaObject::connectSlotsByName(Memorija);
@@ -228,11 +227,13 @@ public:
     {
         Memorija->setWindowTitle(QApplication::translate("Memorija", "Form", nullptr));
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class Memorija: public Ui_Memorija {};
+namespace Ui
+{
+class Memorija : public Ui_Memorija
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

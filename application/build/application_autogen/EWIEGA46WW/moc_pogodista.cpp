@@ -20,38 +20,35 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_PogodiSta_t {
+struct qt_meta_stringdata_PogodiSta_t
+{
     QByteArrayData data[1];
     char stringdata0[10];
 };
-#define QT_MOC_LITERAL(idx, ofs, len) \
-    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_PogodiSta_t, stringdata0) + ofs \
-        - idx * sizeof(QByteArrayData)) \
-    )
-static const qt_meta_stringdata_PogodiSta_t qt_meta_stringdata_PogodiSta = {
-    {
-QT_MOC_LITERAL(0, 0, 9) // "PogodiSta"
+#define QT_MOC_LITERAL(idx, ofs, len)                                                                                  \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(                                                           \
+        len, qptrdiff(offsetof(qt_meta_stringdata_PogodiSta_t, stringdata0) + ofs - idx * sizeof(QByteArrayData)))
+static const qt_meta_stringdata_PogodiSta_t qt_meta_stringdata_PogodiSta = {{
+                                                                                QT_MOC_LITERAL(0, 0, 9) // "PogodiSta"
 
-    },
-    "PogodiSta"
-};
+                                                                            },
+                                                                            "PogodiSta"};
 #undef QT_MOC_LITERAL
 
 static const uint qt_meta_data_PogodiSta[] = {
 
- // content:
-       8,       // revision
-       0,       // classname
-       0,    0, // classinfo
-       0,    0, // methods
-       0,    0, // properties
-       0,    0, // enums/sets
-       0,    0, // constructors
-       0,       // flags
-       0,       // signalCount
+    // content:
+    8,    // revision
+    0,    // classname
+    0, 0, // classinfo
+    0, 0, // methods
+    0, 0, // properties
+    0, 0, // enums/sets
+    0, 0, // constructors
+    0,    // flags
+    0,    // signalCount
 
-       0        // eod
+    0 // eod
 };
 
 void PogodiSta::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,15 +59,9 @@ void PogodiSta::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     Q_UNUSED(_a);
 }
 
-QT_INIT_METAOBJECT const QMetaObject PogodiSta::staticMetaObject = { {
-    &QObject::staticMetaObject,
-    qt_meta_stringdata_PogodiSta.data,
-    qt_meta_data_PogodiSta,
-    qt_static_metacall,
-    nullptr,
-    nullptr
-} };
-
+QT_INIT_METAOBJECT const QMetaObject PogodiSta::staticMetaObject = {
+    {&QObject::staticMetaObject, qt_meta_stringdata_PogodiSta.data, qt_meta_data_PogodiSta, qt_static_metacall, nullptr,
+     nullptr}};
 
 const QMetaObject *PogodiSta::metaObject() const
 {
@@ -79,9 +70,10 @@ const QMetaObject *PogodiSta::metaObject() const
 
 void *PogodiSta::qt_metacast(const char *_clname)
 {
-    if (!_clname) return nullptr;
+    if (!_clname)
+        return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_PogodiSta.stringdata0))
-        return static_cast<void*>(this);
+        return static_cast<void *>(this);
     return QObject::qt_metacast(_clname);
 }
 

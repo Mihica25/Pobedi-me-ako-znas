@@ -26,7 +26,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_ReckoUI
 {
-public:
+  public:
     QWidget *centralwidget;
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
@@ -154,7 +154,6 @@ public:
 
         horizontalLayout_2->addWidget(lineEdit_5);
 
-
         horizontalLayout->addLayout(horizontalLayout_2);
 
         pbPotvrdi1 = new QPushButton(verticalLayoutWidget);
@@ -162,7 +161,6 @@ public:
         pbPotvrdi1->setMinimumSize(QSize(0, 50));
 
         horizontalLayout->addWidget(pbPotvrdi1);
-
 
         verticalLayout->addLayout(horizontalLayout);
 
@@ -216,7 +214,6 @@ public:
 
         horizontalLayout_10->addWidget(lineEdit_25);
 
-
         horizontalLayout_9->addLayout(horizontalLayout_10);
 
         pbPotvrdi2 = new QPushButton(verticalLayoutWidget);
@@ -224,7 +221,6 @@ public:
         pbPotvrdi2->setMinimumSize(QSize(0, 50));
 
         horizontalLayout_9->addWidget(pbPotvrdi2);
-
 
         verticalLayout->addLayout(horizontalLayout_9);
 
@@ -278,7 +274,6 @@ public:
 
         horizontalLayout_12->addWidget(lineEdit_30);
 
-
         horizontalLayout_11->addLayout(horizontalLayout_12);
 
         pbPotvrdi3 = new QPushButton(verticalLayoutWidget);
@@ -286,7 +281,6 @@ public:
         pbPotvrdi3->setMinimumSize(QSize(0, 50));
 
         horizontalLayout_11->addWidget(pbPotvrdi3);
-
 
         verticalLayout->addLayout(horizontalLayout_11);
 
@@ -340,7 +334,6 @@ public:
 
         horizontalLayout_14->addWidget(lineEdit_35);
 
-
         horizontalLayout_13->addLayout(horizontalLayout_14);
 
         pbPotvrdi4 = new QPushButton(verticalLayoutWidget);
@@ -348,7 +341,6 @@ public:
         pbPotvrdi4->setMinimumSize(QSize(0, 50));
 
         horizontalLayout_13->addWidget(pbPotvrdi4);
-
 
         verticalLayout->addLayout(horizontalLayout_13);
 
@@ -402,7 +394,6 @@ public:
 
         horizontalLayout_16->addWidget(lineEdit_40);
 
-
         horizontalLayout_15->addLayout(horizontalLayout_16);
 
         pbPotvrdi5 = new QPushButton(verticalLayoutWidget);
@@ -410,7 +401,6 @@ public:
         pbPotvrdi5->setMinimumSize(QSize(0, 50));
 
         horizontalLayout_15->addWidget(pbPotvrdi5);
-
 
         verticalLayout->addLayout(horizontalLayout_15);
 
@@ -478,7 +468,7 @@ public:
         lePlayer1->setFont(font);
         lePlayer1->setAutoFillBackground(false);
         lePlayer1->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer1->setAlignment(Qt::AlignCenter);
         lePlayer1->setReadOnly(true);
 
@@ -537,7 +527,7 @@ public:
         lePlayer2->setFont(font);
         lePlayer2->setAutoFillBackground(false);
         lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer2->setAlignment(Qt::AlignCenter);
         lePlayer2->setReadOnly(true);
 
@@ -572,11 +562,13 @@ public:
         pbPotvrdi5->setText(QApplication::translate("ReckoUI", "Potvrdi", nullptr));
         lbTimer->setText(QString());
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class ReckoUI: public Ui_ReckoUI {};
+namespace Ui
+{
+class ReckoUI : public Ui_ReckoUI
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -4,10 +4,10 @@ Recko::Recko()
 {
     readQuizWords();
     newWordle();
-
 }
 
-void Recko::readQuizWords(){
+void Recko::readQuizWords()
+{
     QFile quizWordsFile("/home/user/Desktop/pobedi-me-ako-znas/application/resources/QuizWords.txt");
     quizWordsFile.open(QIODevice::ReadOnly);
     QByteArray words = quizWordsFile.readAll();
@@ -15,23 +15,28 @@ void Recko::readQuizWords(){
     quizWordsFile.close();
 }
 
-void Recko::newWordle(){
+void Recko::newWordle()
+{
     srand(time(NULL));
     wordle = quizWords[rand() % quizWords.length()];
 }
 
-QStringList Recko::getQuizWords() {
+QStringList Recko::getQuizWords()
+{
     return quizWords;
 }
 
-void Recko::incrementRow(){
+void Recko::incrementRow()
+{
     currentRow++;
 }
 
-int Recko::getCurrentRow(){
+int Recko::getCurrentRow()
+{
     return currentRow;
 }
 
-void Recko::setCurrentRow(int row){
+void Recko::setCurrentRow(int row)
+{
     currentRow = row;
 }

@@ -1,6 +1,7 @@
 #include "player.h"
 
-Player::Player(QTcpSocket* socket, const QString& username, QObject *parent, bool ready) : QObject(parent), tcpSocket(socket), username(username), points(0)
+Player::Player(QTcpSocket *socket, const QString &username, QObject *parent, bool ready)
+    : QObject(parent), tcpSocket(socket), username(username), points(0)
 {
     qDebug() << "Kreiran je igrac: " << username;
     podrunda_time = -1;
@@ -9,14 +10,12 @@ Player::Player(QTcpSocket* socket, const QString& username, QObject *parent, boo
     pointsKoZna = 0;
     playerId = 0;
     isReady = ready;
-
 }
 
 Player::~Player()
 {
     qDebug() << "~Player()" << endl;
 }
-
 
 QString Player::getPlayerUsername() const
 {
@@ -28,7 +27,8 @@ int Player::getPoints() const
     return points;
 }
 
-void Player::addPoints(int p){
+void Player::addPoints(int p)
+{
     points += p;
 }
 
@@ -36,4 +36,3 @@ void Player::setPoints(int p)
 {
     points = p;
 }
-

@@ -21,7 +21,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_PogodiStaUI
 {
-public:
+  public:
     QLabel *lbImage;
     QLabel *lbTimer;
     QLabel *lbInfo;
@@ -139,7 +139,7 @@ public:
         lePlayer1->setFont(font2);
         lePlayer1->setAutoFillBackground(false);
         lePlayer1->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer1->setAlignment(Qt::AlignCenter);
         lePlayer1->setReadOnly(true);
 
@@ -161,7 +161,7 @@ public:
         lePlayer2->setFont(font2);
         lePlayer2->setAutoFillBackground(false);
         lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer2->setAlignment(Qt::AlignCenter);
         lePlayer2->setReadOnly(true);
 
@@ -171,7 +171,6 @@ public:
         lcdPoints2->setObjectName(QString::fromUtf8("lcdPoints2"));
 
         verticalLayout_2->addWidget(lcdPoints2);
-
 
         retranslateUi(PogodiStaUI);
 
@@ -185,11 +184,13 @@ public:
         lbTimer->setText(QString());
         lbInfo->setText(QString());
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class PogodiStaUI: public Ui_PogodiStaUI {};
+namespace Ui
+{
+class PogodiStaUI : public Ui_PogodiStaUI
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

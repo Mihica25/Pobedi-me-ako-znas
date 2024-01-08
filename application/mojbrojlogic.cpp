@@ -1,11 +1,10 @@
 #include "mojbrojlogic.h"
 
+#include <QDebug>
 #include <QRandomGenerator>
 #include <QRegularExpression>
 #include <QStack>
 #include <QTextStream>
-#include <QDebug>
-
 
 MojBrojLogic::MojBrojLogic()
 {
@@ -36,14 +35,14 @@ bool MojBrojLogic::endGame()
 
     switch (currentRound)
     {
-        case GamePhase::Round1:
-            currentRound = GamePhase::Round2;
-            return false;
-        case GamePhase::Round2:
-            currentRound = GamePhase::End;
-            return true;
-        default:
-            return true;
+    case GamePhase::Round1:
+        currentRound = GamePhase::Round2;
+        return false;
+    case GamePhase::Round2:
+        currentRound = GamePhase::End;
+        return true;
+    default:
+        return true;
     }
 
     return true;
@@ -51,22 +50,23 @@ bool MojBrojLogic::endGame()
 
 void MojBrojLogic::chooseNumber(int number)
 {
-    if(availableNumbers.contains(number))
+    if (availableNumbers.contains(number))
     {
         currentExpression += QString::number(number);
         availableNumbers.removeOne(number);
-    } else
+    }
+    else
     {
         qDebug() << "Broj" << number << "nije dostupan. Izaberite drugi!";
     }
 }
 
-void MojBrojLogic::chooseOperation(const QString& operation)
+void MojBrojLogic::chooseOperation(const QString &operation)
 {
     currentExpression.append(operation);
 }
 
-QPair<QString,QString> MojBrojLogic::deleteLastInput()
+QPair<QString, QString> MojBrojLogic::deleteLastInput()
 {
     if (!currentExpression.isEmpty())
     {
@@ -76,25 +76,23 @@ QPair<QString,QString> MojBrojLogic::deleteLastInput()
         bool isInt;
         int intValue = lastElement.toInt(&isInt);
 
-        if(isInt)
+        if (isInt)
         {
             availableNumbers.append(intValue);
         }
 
-        QPair<QString, QString> pair(vectorToString(currentExpression),lastElement);
+        QPair<QString, QString> pair(vectorToString(currentExpression), lastElement);
         return pair;
-
     }
 
-    QPair<QString, QString> pair(vectorToString(currentExpression),"");
+    QPair<QString, QString> pair(vectorToString(currentExpression), "");
     return pair;
 }
 
-
-QString MojBrojLogic::vectorToString(const QVector<QString>& vec)
+QString MojBrojLogic::vectorToString(const QVector<QString> &vec)
 {
     QString result;
-    for (const QString& str : vec)
+    for (const QString &str : vec)
     {
         result += str;
     }
@@ -102,14 +100,13 @@ QString MojBrojLogic::vectorToString(const QVector<QString>& vec)
     return result;
 }
 
-bool MojBrojLogic::validateExpression(const QString& expression) const
+bool MojBrojLogic::validateExpression(const QString &expression) const
 {
     QRegularExpression consecutiveOperationsRegex("[+\\-*\\/]{2,}");
     if (consecutiveOperationsRegex.match(expression).hasMatch())
     {
         return false;
     }
-
 
     QRegularExpression startEndOperationRegex("^[+\\-*\\/]|[+\\-*\\/]$");
     if (startEndOperationRegex.match(expression).hasMatch())
@@ -124,12 +121,14 @@ bool MojBrojLogic::validateExpression(const QString& expression) const
         if (token == '(')
         {
             brackets.push(token);
-        } else if (token == ')')
+        }
+        else if (token == ')')
         {
             if (brackets.isEmpty())
             {
                 return false;
-            } else
+            }
+            else
             {
                 brackets.pop();
             }
@@ -144,7 +143,7 @@ bool MojBrojLogic::validateExpression(const QString& expression) const
     return true;
 }
 
-int MojBrojLogic::evaluateExpression(const QString& expression) const
+int MojBrojLogic::evaluateExpression(const QString &expression) const
 {
 
     if (!validateExpression(expression))
@@ -152,21 +151,27 @@ int MojBrojLogic::evaluateExpression(const QString& expression) const
         return -1;
     }
 
-    auto priority = [](QChar op)
-    {
-        if (op == '*' || op == '/') return 2;
-        if (op == '+' || op == '-') return 1;
+    auto priority = [](QChar op) {
+        if (op == '*' || op == '/')
+            return 2;
+        if (op == '+' || op == '-')
+            return 1;
         return 0;
     };
 
-    auto applyOperation = [](int a, int b, QChar op)
-    {
-        switch (op.toLatin1()) {
-            case '+': return a + b;
-            case '-': return a - b;
-            case '*': return a * b;
-            case '/': return a / b;
-            default: return 0; // Invalid operation
+    auto applyOperation = [](int a, int b, QChar op) {
+        switch (op.toLatin1())
+        {
+        case '+':
+            return a + b;
+        case '-':
+            return a - b;
+        case '*':
+            return a * b;
+        case '/':
+            return a / b;
+        default:
+            return 0; // Invalid operation
         }
     };
 
@@ -181,14 +186,16 @@ int MojBrojLogic::evaluateExpression(const QString& expression) const
         stream >> token;
         if (token.isDigit())
         {
-            stream.seek(stream.pos()-1);
+            stream.seek(stream.pos() - 1);
             int number;
             stream >> number;
             numbers.push(number);
-        } else if (token == '(')
+        }
+        else if (token == '(')
         {
             operations.push(token);
-        } else if (token == ')')
+        }
+        else if (token == ')')
         {
             while (!operations.isEmpty() && operations.top() != '(')
             {
@@ -201,7 +208,8 @@ int MojBrojLogic::evaluateExpression(const QString& expression) const
                 numbers.push(applyOperation(a, b, op));
             }
             operations.pop();
-        } else if (token == '+' || token == '-' || token == '*' || token == '/')
+        }
+        else if (token == '+' || token == '-' || token == '*' || token == '/')
         {
             while (!operations.isEmpty() && priority(operations.top()) >= priority(token))
             {
@@ -231,8 +239,8 @@ int MojBrojLogic::evaluateExpression(const QString& expression) const
     return numbers.top();
 }
 
-//Done
-int MojBrojLogic::submitSolution(const QString& solution, const QString& indicator)
+// Done
+int MojBrojLogic::submitSolution(const QString &solution, const QString &indicator)
 {
     if (indicator == "-1179")
     {

@@ -7,7 +7,7 @@
 class Podrunda : public QObject
 {
     Q_OBJECT
-public:
+  public:
     explicit Podrunda();
     std::pair<QString, double> getAnswerQuestion() const;
     void setAnswerQuestion(QString pitanje, double odgovor);
@@ -16,16 +16,11 @@ public:
     double guess;
     int dobio_poene;
 
-signals:
+  signals:
 
+  public slots:
 
-public slots:
-
-
-
-private:
-
-
+  private:
 };
 
 #endif // PODRUNDA_H

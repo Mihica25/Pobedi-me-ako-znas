@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_Mojbroj
 {
-public:
+  public:
     QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_3;
@@ -133,7 +133,6 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer_8);
 
-
         verticalLayout_3->addLayout(horizontalLayout_3);
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -206,7 +205,6 @@ public:
 
         horizontalLayout_numbers->addItem(horizontalSpacer_16);
 
-
         verticalLayout_3->addLayout(horizontalLayout_numbers);
 
         horizontalLayout_5 = new QHBoxLayout();
@@ -225,7 +223,6 @@ public:
 
         horizontalLayout_5->addItem(horizontalSpacer_10);
 
-
         verticalLayout_3->addLayout(horizontalLayout_5);
 
         horizontalLayout_6 = new QHBoxLayout();
@@ -243,7 +240,6 @@ public:
         horizontalSpacer_12 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
         horizontalLayout_6->addItem(horizontalSpacer_12);
-
 
         verticalLayout_3->addLayout(horizontalLayout_6);
 
@@ -309,7 +305,6 @@ public:
 
         horizontalLayout_14->addItem(horizontalSpacer_30);
 
-
         verticalLayout_3->addLayout(horizontalLayout_14);
 
         verticalLayout_4 = new QVBoxLayout();
@@ -350,7 +345,6 @@ public:
 
         horizontalLayout_8->addItem(horizontalSpacer_18);
 
-
         verticalLayout_4->addLayout(horizontalLayout_8);
 
         horizontalLayout_10 = new QHBoxLayout();
@@ -371,9 +365,7 @@ public:
 
         horizontalLayout_10->addItem(horizontalSpacer_20);
 
-
         verticalLayout_4->addLayout(horizontalLayout_10);
-
 
         verticalLayout_3->addLayout(verticalLayout_4);
 
@@ -405,7 +397,6 @@ public:
 
         horizontalLayout_opponent->addItem(horizontalSpacer_32);
 
-
         verticalLayout_3->addLayout(horizontalLayout_opponent);
 
         verticalSpacer_5 = new QSpacerItem(20, 200, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -428,7 +419,7 @@ public:
         lePlayer1->setFont(font1);
         lePlayer1->setAutoFillBackground(false);
         lePlayer1->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer1->setAlignment(Qt::AlignCenter);
         lePlayer1->setReadOnly(true);
 
@@ -487,7 +478,7 @@ public:
         lePlayer2->setFont(font1);
         lePlayer2->setAutoFillBackground(false);
         lePlayer2->setStyleSheet(QString::fromUtf8("background-color: transparent;\n"
-"color: rgb(255, 255, 255);"));
+                                                   "color: rgb(255, 255, 255);"));
         lePlayer2->setAlignment(Qt::AlignCenter);
         lePlayer2->setReadOnly(true);
 
@@ -497,7 +488,6 @@ public:
         lcdPoints2->setObjectName(QString::fromUtf8("lcdPoints2"));
 
         verticalLayout_2->addWidget(lcdPoints2);
-
 
         retranslateUi(Mojbroj);
 
@@ -530,11 +520,13 @@ public:
         label_round->setText(QApplication::translate("Mojbroj", "Round 1", nullptr));
         lbTimer->setText(QString());
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class Mojbroj: public Ui_Mojbroj {};
+namespace Ui
+{
+class Mojbroj : public Ui_Mojbroj
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

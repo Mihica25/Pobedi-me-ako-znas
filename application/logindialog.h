@@ -2,11 +2,12 @@
 #define LOGINDIALOG_H
 
 #include <QDialog>
-#include <QVBoxLayout>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QVBoxLayout>
 
-namespace Ui {
+namespace Ui
+{
 class loginDialog;
 }
 
@@ -14,14 +15,13 @@ class loginDialog : public QDialog
 {
     Q_OBJECT
 
-public:
+  public:
     explicit loginDialog(QWidget *parent = nullptr);
     ~loginDialog();
 
-
     QString getName() const;
 
-private:
+  private:
     QLineEdit *nameLineEdit;
     QPushButton *okButton;
     QPushButton *cancelButton;

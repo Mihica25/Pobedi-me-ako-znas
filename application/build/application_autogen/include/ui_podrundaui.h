@@ -20,7 +20,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_Podrundaui
 {
-public:
+  public:
     QLabel *label;
     QPushButton *pbOdgovori;
     QTextEdit *teOdgovor;
@@ -72,15 +72,20 @@ public:
         Podrundaui->setWindowTitle(QApplication::translate("Podrundaui", "Podrundaui", nullptr));
         label->setText(QString());
         pbOdgovori->setText(QApplication::translate("Podrundaui", "Odgovori", nullptr));
-        labPitanje->setText(QApplication::translate("Podrundaui", "<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">PITANJE</span></p></body></html>", nullptr));
+        labPitanje->setText(QApplication::translate(
+            "Podrundaui",
+            "<html><head/><body><p align=\"center\"><span style=\" color:#ffffff;\">PITANJE</span></p></body></html>",
+            nullptr));
         labTacanOdgovor->setText(QString());
         labTimer->setText(QString());
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class Podrundaui: public Ui_Podrundaui {};
+namespace Ui
+{
+class Podrundaui : public Ui_Podrundaui
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

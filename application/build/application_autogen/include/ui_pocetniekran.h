@@ -25,7 +25,7 @@ QT_BEGIN_NAMESPACE
 
 class Ui_PocetniEkran
 {
-public:
+  public:
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
@@ -62,7 +62,6 @@ public:
 
         horizontalLayout->addWidget(toolButton);
 
-
         verticalLayout->addLayout(horizontalLayout);
 
         verticalSpacer = new QSpacerItem(20, 400, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -91,7 +90,6 @@ public:
 
         gridLayout->addItem(verticalSpacer_2, 1, 0, 1, 1);
 
-
         verticalLayout->addLayout(gridLayout);
 
         verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -116,11 +114,13 @@ public:
         najboljiRezultatiButton->setText(QApplication::translate("PocetniEkran", "Najbolji rezultati", nullptr));
         pokreniIgruButton->setText(QApplication::translate("PocetniEkran", "Pokreni igru", nullptr));
     } // retranslateUi
-
 };
 
-namespace Ui {
-    class PocetniEkran: public Ui_PocetniEkran {};
+namespace Ui
+{
+class PocetniEkran : public Ui_PocetniEkran
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE
