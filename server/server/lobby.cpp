@@ -20,7 +20,7 @@ void Lobby::addPlayer(Player* player) {
     qDebug() << "Dodat je novi igrac u Lobby. Sada ih ima: " << getPlayersCount();
 
     if (getPlayersCount() >= 2) {
-        Session* session = new Session(players[0], players[1],  chooseRandomWords(reckoWordList), this);
+        auto* session = new Session(players[0], players[1],  chooseRandomWords(reckoWordList), this);
 
         players.removeFirst();
         players.removeFirst();

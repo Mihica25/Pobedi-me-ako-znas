@@ -44,7 +44,7 @@ void Server::newClientConnection()
         }
         qDebug() << "New client connected." << " Username: " << message;
 
-        Player* newPlayer = new Player(clientSocket, message, this);
+        auto* newPlayer = new Player(clientSocket, message, this);
 
         lobby->addPlayer(newPlayer);
     }
