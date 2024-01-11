@@ -6,26 +6,21 @@
 
 class Podrunda : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    explicit Podrunda();
-    std::pair<QString, double> getAnswerQuestion() const;
-    void setAnswerQuestion(QString pitanje, double odgovor);
+  explicit Podrunda ();
+  std::pair<QString, double> getAnswerQuestion () const;
+  void setAnswerQuestion (QString pitanje, double odgovor);
 
-    std::pair<QString, double> answerQuestion;
-    double guess;
-    int dobio_poene;
+  std::pair<QString, double> answerQuestion;
+  double guess;
+  int dobio_poene;
 
 signals:
 
-
 public slots:
 
-
-
 private:
-
-
 };
 
 #endif // PODRUNDA_H

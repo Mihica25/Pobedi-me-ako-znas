@@ -1,12 +1,13 @@
-#include <QApplication>
 #include "server.h"
+#include <QApplication>
 
-int main(int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+  QApplication a (argc, argv);
 
-    Server* server = new Server();
-    server->startServer(8000);
+  Server *server = new Server ();
+  server->startServer (8000);
 
-    return a.exec();
+  return a.exec ();
 }

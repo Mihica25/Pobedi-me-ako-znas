@@ -1,44 +1,43 @@
 #ifndef RESULTDIALOG_H
 #define RESULTDIALOG_H
 
-#include <QDialog>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QDateTime>
-#include <QVector>
-#include <QDateTime>
-#include <iostream>
 #include <QDebug>
+#include <QDialog>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QVector>
+#include <iostream>
 
-namespace Ui {
+namespace Ui
+{
 class ResultDialog;
 }
 
 class ResultDialog : public QDialog
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    explicit ResultDialog(QWidget *parent = nullptr);
-    ~ResultDialog();
+  explicit ResultDialog (QWidget *parent = nullptr);
+  ~ResultDialog ();
 
-    void showResults(QString &data);
+  void showResults (QString &data);
 
-    struct GameResult {
-            QString player1Name;
-            int player1Points;
-            QString player2Name;
-            int player2Points;
-            QDateTime dateTime;
-    };
+  struct GameResult
+  {
+	QString player1Name;
+	int player1Points;
+	QString player2Name;
+	int player2Points;
+	QDateTime dateTime;
+  };
 
 private:
-    QVBoxLayout *mainLayout;
+  QVBoxLayout *mainLayout;
 
-
-    QVector<GameResult> parseBestResults(QString &data);
-    void clearLayout(QLayout *layout);
-
+  QVector<GameResult> parseBestResults (QString &data);
+  void clearLayout (QLayout *layout);
 };
 
 #endif // RESULTDIALOG_H

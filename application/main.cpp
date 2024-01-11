@@ -1,19 +1,20 @@
-#include "mainwindow.h"
-#include <QApplication>
 #include "koznaui.h"
-#include "mojbroj.h"
-#include "podrundaui.h"
-#include "pocetniekran.h"
-#include "reckoui.h"
-#include "pogodistaui.h"
+#include "mainwindow.h"
 #include "memorija.h"
+#include "mojbroj.h"
+#include "pocetniekran.h"
+#include "podrundaui.h"
+#include "pogodistaui.h"
+#include "reckoui.h"
+#include <QApplication>
 
-int main(int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+  QApplication a (argc, argv);
 
-    PocetniEkran pe;
-    pe.show();
+  PocetniEkran pe;
+  pe.show ();
 
-    return a.exec();
+  return a.exec ();
 }

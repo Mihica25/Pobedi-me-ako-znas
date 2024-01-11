@@ -3,10 +3,11 @@
 #include "catch.hpp"
 #include <QApplication>
 
-int main(int argc, char* argv[])
+int
+main (int argc, char *argv[])
 {
 
-        QApplication app(argc, argv);
-        int result = Catch::Session().run(argc, argv);
-        return result;
+  QApplication app (argc, argv);
+  int result = Catch::Session ().run (argc, argv);
+  return result;
 }

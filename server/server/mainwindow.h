@@ -5,10 +5,10 @@
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+  MainWindow (QWidget *parent = nullptr);
+  ~MainWindow ();
 };
 #endif // MAINWINDOW_H

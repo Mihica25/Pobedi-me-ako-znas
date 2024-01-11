@@ -2,36 +2,36 @@
 #define PLAYER_H
 
 #include <QObject>
-#include <QTcpSocket>
 #include <QString>
+#include <QTcpSocket>
 
 class Player : public QObject
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    Player(QTcpSocket* socket, const QString& username, QObject *parent = nullptr,
-            bool ready = false);
-    ~Player();
+  Player (QTcpSocket *socket, const QString &username,
+		  QObject *parent = nullptr, bool ready = false);
+  ~Player ();
 
-    QString getPlayerUsername() const;
-    int getPoints() const;
-    void addPoints(int p);
-    void setPoints(int p);
-    int pointsKoZna;
+  QString getPlayerUsername () const;
+  int getPoints () const;
+  void addPoints (int p);
+  void setPoints (int p);
+  int pointsKoZna;
 
-    QTcpSocket* tcpSocket;
+  QTcpSocket *tcpSocket;
 
-    int podrunda_time;
-    int podrunda_guess;
-    int podrunda_resenje;
-    bool pobednik;
-    bool isReady;
-    int playerId;
+  int podrunda_time;
+  int podrunda_guess;
+  int podrunda_resenje;
+  bool pobednik;
+  bool isReady;
+  int playerId;
 
 private:
-    QString username;
-    int points;
+  QString username;
+  int points;
 };
 
 #endif // PLAYER_H

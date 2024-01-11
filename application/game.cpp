@@ -1,7 +1,6 @@
 #include "game.h"
 
-
-void Game::onIsFinished()
+void
+Game::onIsFinished ()
 {
-
 }

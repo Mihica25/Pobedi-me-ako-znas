@@ -2,67 +2,73 @@
 #include <QDebug>
 #include <typeinfo>
 
-PogodiSta::PogodiSta() {
-    loadRandomImage();
-}
+PogodiSta::PogodiSta () { loadRandomImage (); }
 
-PogodiSta::PogodiSta(int index, QString info_m, QString answ)
+PogodiSta::PogodiSta (int index, QString info_m, QString answ)
 {
-    loadRandomImage(index);
-    info = info_m;
-    answer = answ;
+  loadRandomImage (index);
+  info = info_m;
+  answer = answ;
 }
 
-void PogodiSta::setAnswer(const QString &newAnswer)
+void
+PogodiSta::setAnswer (const QString &newAnswer)
 {
-    answer = newAnswer;
+  answer = newAnswer;
 }
 
-QString PogodiSta::getAnswer() const
+QString
+PogodiSta::getAnswer () const
 {
-    return answer;
+  return answer;
 }
 
-void PogodiSta::setInfo(const QString &newInfo)
+void
+PogodiSta::setInfo (const QString &newInfo)
 {
-    info = newInfo;
+  info = newInfo;
 }
 
-
-QString PogodiSta::getInfo() const
+QString
+PogodiSta::getInfo () const
 {
-    return info;
+  return info;
 }
 
-QPixmap PogodiSta::getGuessingImage() const
+QPixmap
+PogodiSta::getGuessingImage () const
 {
-    return guessingImage;
+  return guessingImage;
 }
 
-
-void PogodiSta::loadRandomImage(const int index)
+void
+PogodiSta::loadRandomImage (const int index)
 {
-    QDir imageDir(":/guess_img/resources/guessing_images/");
-    QFileInfoList images = imageDir.entryInfoList(QDir::Files);
-    if (!images.isEmpty()){
-        QString imagePath;
-        if(index == -1) {
-            int randomIndex = QRandomGenerator::global()->bounded(images.size());
-            imagePath = images[randomIndex].filePath();
-            QStringList data = images[randomIndex].fileName().split(",");
-            answer = data[0];
-            info = "\"" + data[1].split(".")[0] + "\"";
-        }
-        else {
-            imagePath = images[index].filePath();
-        }
-        guessingImage.load(imagePath);
-        qDebug() << imagePath << " " << QString::number(index);
-    }
+  QDir imageDir (":/guess_img/resources/guessing_images/");
+  QFileInfoList images = imageDir.entryInfoList (QDir::Files);
+  if (!images.isEmpty ())
+	{
+	  QString imagePath;
+	  if (index == -1)
+		{
+		  int randomIndex
+			  = QRandomGenerator::global ()->bounded (images.size ());
+		  imagePath = images[randomIndex].filePath ();
+		  QStringList data = images[randomIndex].fileName ().split (",");
+		  answer = data[0];
+		  info = "\"" + data[1].split (".")[0] + "\"";
+		}
+	  else
+		{
+		  imagePath = images[index].filePath ();
+		}
+	  guessingImage.load (imagePath);
+	  qDebug () << imagePath << " " << QString::number (index);
+	}
 }
 
-int PogodiSta::calculatePoints(int roundNumber)
+int
+PogodiSta::calculatePoints (int roundNumber)
 {
-    return 5 * roundNumber;
+  return 5 * roundNumber;
 }
-

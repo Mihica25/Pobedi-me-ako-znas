@@ -1,32 +1,31 @@
 #ifndef RECKO_H
 #define RECKO_H
 
-#include <QString>
+#include <QDebug>
 #include <QDir>
 #include <QFileDialog>
+#include <QString>
 #include <QTextStream>
-#include <QDebug>
 
-class Recko {
+class Recko
+{
 
 public:
-    Recko();
+  Recko ();
 
-    void readQuizWords();
-    void newWordle();
-    void incrementRow();
-    int getCurrentRow();
-    void setCurrentRow(int row);
+  void readQuizWords ();
+  void newWordle ();
+  void incrementRow ();
+  int getCurrentRow ();
+  void setCurrentRow (int row);
 
-    QStringList getQuizWords();
+  QStringList getQuizWords ();
 
-
-    QString wordle = "";
+  QString wordle = "";
 
 private:
-    QStringList quizWords;
-    int currentRow = 1;
-
+  QStringList quizWords;
+  int currentRow = 1;
 };
 
 #endif // RECKO_H

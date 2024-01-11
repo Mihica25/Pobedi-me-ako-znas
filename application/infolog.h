@@ -1,26 +1,28 @@
 #ifndef INFOLOG_H
 #define INFOLOG_H
 
-#include <QMainWindow>
 #include <QDialog>
+#include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class InfoLog; }
+namespace Ui
+{
+class InfoLog;
+}
 QT_END_NAMESPACE
 
 class InfoLog : public QMainWindow
 {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    InfoLog(QWidget *parent = nullptr);
-    ~InfoLog();
+  InfoLog (QWidget *parent = nullptr);
+  ~InfoLog ();
 
 public slots:
-void cancel();
-
+  void cancel ();
 
 private:
-    Ui::InfoLog *ui;
+  Ui::InfoLog *ui;
 };
 #endif // INFOLOG_H

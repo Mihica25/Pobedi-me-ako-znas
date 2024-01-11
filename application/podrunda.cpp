@@ -1,24 +1,25 @@
 #include "podrunda.h"
 #include <QTimer>
 
-
-Podrunda::Podrunda()
+Podrunda::Podrunda ()
 {
-    std::pair<QString, double> getAnswerQuestion();
-    void setAnswerQuestion(QString pitanje, double odgovor);
+  std::pair<QString, double> getAnswerQuestion ();
+  void setAnswerQuestion (QString pitanje, double odgovor);
 
-    std::pair<QString, double> answerQuestion;
-    double guess;
-    int dobio_poene;
+  std::pair<QString, double> answerQuestion;
+  double guess;
+  int dobio_poene;
 }
 
-std::pair<QString, double> Podrunda::getAnswerQuestion() const
+std::pair<QString, double>
+Podrunda::getAnswerQuestion () const
 {
-    return answerQuestion;
+  return answerQuestion;
 }
 
-void Podrunda::setAnswerQuestion(QString pitanje, double odgovor)
+void
+Podrunda::setAnswerQuestion (QString pitanje, double odgovor)
 {
-    answerQuestion.first = pitanje;
-    answerQuestion.second = odgovor;
+  answerQuestion.first = pitanje;
+  answerQuestion.second = odgovor;
 }
