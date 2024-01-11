@@ -1,0 +1,8 @@
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/install/strip.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/install/local.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/install.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/list_install_components.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/rebuild_cache.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/edit_cache.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/application.dir
+/home/user/Desktop/pobedi-me-ako-znas/application/build/CMakeFiles/application_autogen.dir

@@ -1,0 +1,11 @@
+0,Londonsko Oko,mesto
+1,Drejk,osoba
+2,Lepa Brena,osoba
+3,Luvr,mesto
+4,Majkl Dzordan,osoba
+5,Nikola Tesla,osoba
+6,Novak Djokovic,osoba
+7,Kurt Kobejn,osoba
+8,Golden Gejt,mesto
+9,Burdz Kalifa,mesto
+10,Kamp Nou,mesto
