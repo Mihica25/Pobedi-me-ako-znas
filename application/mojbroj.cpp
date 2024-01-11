@@ -257,7 +257,7 @@ Mojbroj::buttonPressedNum ()
 		}
 	}
 
-  QPushButton *button = (QPushButton *)sender ();
+  auto *button = (QPushButton *)sender ();
   QString number = button->text ();
 
   m_mojbroj->chooseNumber (number.toInt ());
@@ -271,7 +271,7 @@ Mojbroj::buttonPressedNum ()
 void
 Mojbroj::buttonPressedOp ()
 {
-  QPushButton *button = (QPushButton *)sender ();
+  auto *button = (QPushButton *)sender ();
   QString operation = button->text ();
 
   m_mojbroj->chooseOperation (operation);
@@ -388,7 +388,7 @@ Mojbroj::del ()
   QHBoxLayout *horizontalLayout = ui->horizontalLayout_numbers;
   for (int i = 0; i < horizontalLayout->count (); i++)
 	{
-	  QPushButton *button = qobject_cast<QPushButton *> (
+	  auto *button = qobject_cast<QPushButton *> (
 		  horizontalLayout->itemAt (i)->widget ());
 	  if (button && !button->isEnabled () && button->text () == pair.second)
 		{

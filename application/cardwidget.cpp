@@ -55,7 +55,7 @@ CardWidget::paintEvent (QPaintEvent *event)
 	}
   else
 	{
-	  QColor color = QColor ("limegreen");
+	  auto color = QColor ("limegreen");
 	  painter.fillRect (0, 0, width (), height (), color);
 	}
 

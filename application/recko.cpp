@@ -20,7 +20,7 @@ Recko::readQuizWords ()
 void
 Recko::newWordle ()
 {
-  srand (time (NULL));
+  srand (time (nullptr));
   wordle = quizWords[rand () % quizWords.length ()];
 }
 

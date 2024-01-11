@@ -3,7 +3,7 @@
 
 Podrunda::Podrunda ()
 {
-  std::pair<QString, double> getAnswerQuestion ();
+  std::pair<QString, double> getAnswerQuestion ;
   void setAnswerQuestion (QString pitanje, double odgovor);
 
   std::pair<QString, double> answerQuestion;

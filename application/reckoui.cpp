@@ -291,7 +291,7 @@ ReckoUI::on_pbPotvrdi5 ()
 bool
 ReckoUI::quess ()
 {
-  QHBoxLayout *horizontalLayout = qobject_cast<QHBoxLayout *> (
+  auto *horizontalLayout = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (recko->getCurrentRow () - 1)
 		  ->layout ()
 		  ->itemAt (0)
@@ -300,7 +300,7 @@ ReckoUI::quess ()
   int hits = 0;
   for (int j = 0; j < horizontalLayout->count (); ++j)
 	{
-	  QLineEdit *lineEdit = qobject_cast<QLineEdit *> (
+	  auto *lineEdit = qobject_cast<QLineEdit *> (
 		  horizontalLayout->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -330,7 +330,7 @@ ReckoUI::quess ()
 void
 ReckoUI::colorRow (QString result)
 {
-  QHBoxLayout *horizontalLayout = qobject_cast<QHBoxLayout *> (
+  auto *horizontalLayout = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (recko->getCurrentRow () - 1)
 		  ->layout ()
 		  ->itemAt (0)
@@ -338,7 +338,7 @@ ReckoUI::colorRow (QString result)
 
   for (int j = 0; j < horizontalLayout->count (); ++j)
 	{
-	  QLineEdit *lineEdit = qobject_cast<QLineEdit *> (
+	  auto *lineEdit = qobject_cast<QLineEdit *> (
 		  horizontalLayout->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -359,7 +359,7 @@ void
 ReckoUI::writeWord (QString word)
 {
   qDebug () << (recko->getCurrentRow () - 1) << endl;
-  QHBoxLayout *horizontalLayout = qobject_cast<QHBoxLayout *> (
+  auto *horizontalLayout = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (recko->getCurrentRow () - 1)
 		  ->layout ()
 		  ->itemAt (0)
@@ -367,7 +367,7 @@ ReckoUI::writeWord (QString word)
 
   for (int j = 0; j < horizontalLayout->count (); ++j)
 	{
-	  QLineEdit *lineEdit = qobject_cast<QLineEdit *> (
+	  auto *lineEdit = qobject_cast<QLineEdit *> (
 		  horizontalLayout->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -380,7 +380,7 @@ ReckoUI::writeWord (QString word)
 QString
 ReckoUI::getWord ()
 {
-  QHBoxLayout *horizontalLayout = qobject_cast<QHBoxLayout *> (
+  auto *horizontalLayout = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (recko->getCurrentRow () - 1)
 		  ->layout ()
 		  ->itemAt (0)
@@ -388,7 +388,7 @@ ReckoUI::getWord ()
   QString word = "";
   for (int j = 0; j < horizontalLayout->count (); ++j)
 	{
-	  QLineEdit *lineEdit = qobject_cast<QLineEdit *> (
+	  auto *lineEdit = qobject_cast<QLineEdit *> (
 		  horizontalLayout->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -408,14 +408,14 @@ ReckoUI::disableRow (int index, bool disable)
 	{
 	  return;
 	}
-  QHBoxLayout *Row = qobject_cast<QHBoxLayout *> (
+  auto *Row = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (index)->layout ()->itemAt (0)->layout ());
-  QPushButton *Button = qobject_cast<QPushButton *> (
+  auto *Button = qobject_cast<QPushButton *> (
 	  ui->verticalLayout->itemAt (index)->layout ()->itemAt (1)->widget ());
 
   for (int j = 0; j < Row->count (); ++j)
 	{
-	  QLineEdit *lineEdit
+	  auto *lineEdit
 		  = qobject_cast<QLineEdit *> (Row->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -451,11 +451,11 @@ ReckoUI::clearAllRows ()
 void
 ReckoUI::clearRow (int index)
 {
-  QHBoxLayout *Row = qobject_cast<QHBoxLayout *> (
+  auto *Row = qobject_cast<QHBoxLayout *> (
 	  ui->verticalLayout->itemAt (index)->layout ()->itemAt (0)->layout ());
   for (int j = 0; j < Row->count (); ++j)
 	{
-	  QLineEdit *lineEdit
+	  auto *lineEdit
 		  = qobject_cast<QLineEdit *> (Row->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -510,11 +510,11 @@ ReckoUI::on_gameEnds ()
 void
 ReckoUI::disableSolution ()
 {
-  QHBoxLayout *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
+  auto *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
 
   for (int j = 0; j < Row->count (); ++j)
 	{
-	  QLineEdit *lineEdit
+	  auto *lineEdit
 		  = qobject_cast<QLineEdit *> (Row->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -527,11 +527,11 @@ ReckoUI::disableSolution ()
 void
 ReckoUI::clearSolution ()
 {
-  QHBoxLayout *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
+  auto *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
 
   for (int j = 0; j < Row->count (); ++j)
 	{
-	  QLineEdit *lineEdit
+	  auto *lineEdit
 		  = qobject_cast<QLineEdit *> (Row->itemAt (j)->widget ());
 
 	  if (lineEdit)
@@ -546,10 +546,10 @@ void
 ReckoUI::showSolution (QString word)
 {
   qDebug () << "showSolution() :)" << endl;
-  QHBoxLayout *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
+  auto *Row = qobject_cast<QHBoxLayout *> (ui->resenje->layout ());
   for (int j = 0; j < Row->count (); ++j)
 	{
-	  QLineEdit *lineEdit
+	  auto *lineEdit
 		  = qobject_cast<QLineEdit *> (Row->itemAt (j)->widget ());
 
 	  if (lineEdit)

@@ -22,7 +22,7 @@ Lobby::addPlayer (Player *player)
 
   if (getPlayersCount () >= 2)
 	{
-	  Session *session = new Session (players[0], players[1],
+	  auto *session = new Session (players[0], players[1],
 									  chooseRandomWords (reckoWordList), this);
 
 	  players.removeFirst ();

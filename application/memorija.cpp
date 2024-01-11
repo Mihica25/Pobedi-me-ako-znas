@@ -124,7 +124,7 @@ Memorija::initializeGame (QVector<int> &cardIdsVector)
 
 		  int cardId = cardIdsVector[indeks];
 
-		  CardWidget *cardWidget
+		  auto *cardWidget
 			  = new CardWidget (cardId, indeks, placeholder);
 		  cardWidget->show ();
 

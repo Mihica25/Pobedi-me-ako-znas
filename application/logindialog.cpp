@@ -7,7 +7,7 @@ loginDialog::loginDialog (QWidget *parent) : QDialog (parent)
   okButton = new QPushButton ("OK", this);
   cancelButton = new QPushButton ("Cancel", this);
 
-  QVBoxLayout *layout = new QVBoxLayout (this);
+  auto *layout = new QVBoxLayout (this);
   layout->addWidget (nameLineEdit);
   layout->addWidget (okButton);
   layout->addWidget (cancelButton);

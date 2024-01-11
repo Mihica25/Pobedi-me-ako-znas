@@ -40,7 +40,7 @@ ResultDialog::showResults (QString &data)
 						.arg (result.player2Points);
 	}
 
-  QLabel *resultLabel = new QLabel (resultText, this);
+  auto *resultLabel = new QLabel (resultText, this);
   QFont font ("Arial", 14);
   resultLabel->setFont (font);
   mainLayout->addWidget (resultLabel);
